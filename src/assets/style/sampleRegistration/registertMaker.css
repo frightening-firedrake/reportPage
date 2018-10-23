@@ -1,0 +1,346 @@
+.registertMaker{
+	/*border:1px solid #999;
+	border-radius:0.1rem 0.1rem 0 0;
+	border-bottom:none;*/
+}
+.registertMaker form{
+	margin-top:0;
+	border:1px solid #999;
+	border-radius:0.1rem 0.1rem 0 0;
+	border-color:#ccc;
+	/*background-color:rgba(242, 242, 242, 1);*/
+}
+.registertMaker .tbwrap{
+	border-left:1px solid #999;
+	border-right:1px solid #999;
+	border-color:#ccc;
+	
+}
+.registertMaker form p{
+	border:none;
+	border-bottom:1px solid rgb(204,204,204);
+}
+.registertMaker form >span{
+	float:right;
+	font-size:0.16rem;
+	padding-right:0.5rem;
+	line-height:0.3rem;
+}
+.registertMaker form >span>b{
+	font-weight: normal;
+	color:#2380FF;
+}
+.registertMaker .el-table::before{
+	display: none;
+}
+.registertMaker .trmwrap .tableHeader{
+	height: 0.5rem;
+	text-align: center;
+	line-height: 0.5rem;
+	background-color: #ffe7b8;
+	font-size:0.16rem;
+	color:#333333;
+	border:1px solid #dfdfdf;
+	border-color:#ccc;
+	
+}
+/*.tbwrap{
+	height:;
+	text-align: center;
+	color:#333333;
+	line-height:0.5rem;
+	font-size:0.16rem;
+	border:1px solid #dfdfdf;
+	border-top:none;
+	border-bottom:none;
+	position:relative;
+	background-color:#fbfbfb;
+}
+.tbwrap .tbwraplab{
+	position:absolute;
+	z-index: 6;
+	width:2rem;
+	text-align: center;
+	height:100%;
+	border-right:1px solid #dfdfdf;
+	border-bottom:1px solid #dfdfdf;
+	background-color:#fbfbfb;
+}
+.floatright{
+	float:right;
+}
+.tbwrap .add{
+	color:#58b481;
+	position:relative;
+}
+.tbwrap .add:after{
+	content: "";
+	position:absolute;
+	left:100%;
+	top:0;
+	height:100%;
+	width:1px;
+	background-color:#dfdfdf;
+}
+.tbwrap .action{
+	color:#e87373;
+}
+.tbwrap .left{
+	padding-left:2rem;
+}
+.tbwrap .item,.tbwrap .add{
+	height:0.5rem;
+	overflow: hidden;
+	border-bottom:1px solid #dfdfdf;
+	border-left:1px solid #dfdfdf;
+}
+.tbwrap .item .index{
+	border-right:1px solid #dfdfdf;
+}
+.tbwrap .libName{
+	height:0.5rem;
+	border:1px solid #dfdfdf;
+	border-top:none;
+}
+.trmwrap .tbrow{
+	position:relative;
+}
+.trmwrap .tbrow:before{
+	position:absolute;
+	top:100%;
+	bottom:0;
+	left:0;
+	width:100%;
+	height:1px;
+	background-color:#dfdfdf;
+	z-index: 2;
+	content: "";
+}
+.pointer{
+	cursor:pointer;
+}*/
+.trmwrap .bottom{
+	height:1rem;
+	background-color:#ffffff;
+    padding-top:0.3rem;
+}
+.trmwrap .bottom .create{
+	display: block;
+    height: 0.4rem;
+    line-height: 0.33rem;
+    margin-left: 0.3rem;
+    font-size: 0.24rem;
+    cursor: pointer;
+    width: 2.76rem;
+    margin: 0 auto;
+    /*margin-top: 0.3rem;*/
+    background-color: #58b481;
+    border-radius: 0.05rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0.04rem;
+    color: #ffffff;
+
+}
+.trmwrap .bottom .create span{
+	border: 1px solid #FFFFFF;
+    border-radius: 0.04rem;
+    padding: 0 0.2rem;
+    font-weight: 500;
+    line-height: 0.3rem;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.registertMaker .tableAddWrap{
+	height:0.5rem;
+	position:relative;
+	margin:0 -1px;
+	background-color:white;
+	border-top:1px solid #999;
+	border-color:#ccc;
+	/*border:1px solid #e6e7e7;*/
+	/*border-top:none;*/
+}
+.registertMaker .tableAddWrap .tableAdd {
+    float:right;
+   	padding:0 0.1rem;
+    height: 0.35rem;
+    line-height: 0.35rem;
+    text-align: center;
+    border-radius: 0 0 0.1rem 0.1rem;
+    background-color: #ffffff;
+    border: solid 1px #58b481;
+    color: #58b481;
+    font-size: 0.16rem;
+    cursor: pointer;
+    /*margin-right:17px;*/
+    margin-top:-1px;
+}
+.registertMaker .tableAddWrap .tableAdd p{
+    padding-left:0.35rem;
+    background-repeat:no-repeat;
+    background-position:left center;
+    background-size:0.3rem 0.3rem;
+    font-size:0.16rem;
+}
+.registertMaker .tableAddWrap .tableDel {
+    float:right;
+   	padding:0 0.1rem;
+    height: 0.35rem;
+    line-height: 0.35rem;
+    text-align: center;
+    border-radius: 0 0 0.1rem 0.1rem;
+    background-color: #ffffff;
+    border: solid 1px #E95858;
+    color: #E95858;
+    font-size: 0.16rem;
+    cursor: pointer;
+    margin-right:0.1rem;
+    margin-top:-1px;
+}
+.registertMaker .tableAddWrap .tableDel p{
+    padding-left:0.35rem;
+    background-repeat:no-repeat;
+    background-position:left center;
+    background-size:0.3rem 0.6rem;
+    font-size:0.16rem;
+}
+.trmwrap .el-table__empty-block{
+	/*height:3rem;*/
+	height:5rem;
+}
+.trmwrap .registertMaker .el-table__body-wrapper{
+	overflow-y:auto;
+}
+
+/*表格样式*/
+.listpagewrap{
+	position:relative;
+	height: 100%;
+}
+.el-main .registertMaker{
+    background: rgb(255, 255, 255);
+    /*padding: 0px 0.45rem;*/
+    /*max-height:8rem;
+    overflow: auto;*/
+}
+/*列表行文字*/
+.el-main .registertMaker .el-table__body-wrapper table tr{
+    color: #666666;
+    font-size: 0.16rem;
+    font-weight:normal;
+    cursor:pointer;
+}
+.el-main .registertMaker.nopointer .el-table__body-wrapper table tr{
+    cursor:default;
+}
+/*表格左右边颜色*/
+.el-main .registertMaker .el-table__body-wrapper,.el-main .registertMaker .el-table__header-wrapper{
+	/*border-left:1px solid #e6e7e7;
+	border-right:1px solid #e6e7e7;*/
+	border-color:#ccc;
+	
+}
+/*表头*/
+.el-main .registertMaker .el-table__header-wrapper table tr,.el-main .registertMaker .el-table__header-wrapper table tr th{
+   	background-color:#ffe7b8;
+    font-size: 0.18rem;
+    color:#000000;
+    height:0.5rem;
+    border-color:#999;
+    border-bottom-style:solid;
+	border-color:#ccc;
+    
+}
+/*表格颜色*/
+.el-main .registertMaker .el-table__body-wrapper table tr,.el-main .registertMaker .el-table__body-wrapper table tr th{
+    background-color:#f6f9fa;
+	border-color:#ccc;
+    
+}
+/*列表补边*/
+.listpagewrap{
+	box-sizing: border-box;
+	padding:0 0.19rem;
+	background:#ffffff;
+	border-left:0.41rem solid rgba(241, 241, 241, 1);
+	border-right:0.41rem solid rgba(241, 241, 241, 1);
+	/*height:auto;*/
+	min-height:100%;
+}
+/*表格行线*/
+.registertMaker .el-table td,.registertMaker .el-table th.is-leaf{
+	border-bottom:1px dashed #dfdfdf;
+	border-bottom-style:solid;
+	border-bottom-color:#999;
+	border-color:#ccc;
+	
+}
+.registertMaker .el-table__footer, .registertMaker .el-table__header{
+	width:100%!important;
+	margin:0 -1px;
+}
+.registertMaker .el-table__header-wrapper .el-table__header thead:before{
+	content:'';
+	width:17px;
+	height:1rem;
+	z-index: 6;
+	position: absolute;
+	right:1px;
+	top:0;
+	background:#ffe7b8;
+}
+.registertMaker .el-table__body{
+	width:100%!important;
+	margin:0 -1px;
+}
+/*.registertMaker .el-table::before{
+	display: none;
+}*/
+.registertMaker .el-table__body-wrapper{
+	width:100%!important;
+	overflow-x:hidden;
+	/*padding:1px;*/
+	/*min-height:3rem;*/
+	min-height:5rem;
+}
+.registertMaker .el-table__body tr{
+	width:100%!important;
+}
+/*.registertMaker .el-table__row:hover{
+	outline: 1px solid #378ef8;
+}*/
+/*.el-table--striped .el-table__body tr.el-table__row--striped td{
+	background-color:rgb(250,250,250)!important;
+}*/
+/*悬停颜色*/
+.registertMaker.el-table--enable-row-hover .el-table__body tr:hover>td{
+	background:#deede8;
+}
+.registertMaker .el-table__body tr.current-row:hover>td{
+	background:#ecf5ff;
+}
+/*去掉padding用line-height设置行高*/
+.registertMaker td, .registertMaker th{
+	padding:0!important;
+	border-color:#999;
+}
+.registertMaker td.last{
+	/*border-right:3px solid #999;
+	border-color:#ccc;*/
+}
+.registertMaker div.cell{
+    line-height:0.5rem;
+    padding:0;
+    white-space: nowrap;
+}
+/*加载中*/
+.registertMaker .el-icon-loading{
+	color:#1bb45f;
+}
+.registertMaker .el-loading-text{
+	color:#1bb45f;
+}

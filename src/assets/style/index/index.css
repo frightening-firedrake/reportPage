@@ -1,0 +1,137 @@
+.el-header{
+    height:0.7rem !important;
+    line-height:0.7rem;
+    padding:0 !important;
+    position:relative;
+    z-index: 6;
+}
+div.header{
+	width:100%;
+	height:100%;
+    background-color: #ffffff;
+	box-shadow: 1px 1px 5px 0px 
+		rgba(121, 121, 121, 0.35);
+}
+div.header .logo{
+	float:left;
+	height:0.7rem;
+	width:2.5rem;
+}
+div.header .logo img{
+	display: block;
+	height:0.7rem;
+	width:2.5rem;
+}
+div.header .manager,div.header .message,div.header .search_h{
+	float:right;
+	height:100%;
+}
+/*顶部搜索*/
+div.search_h{
+	width:5rem;
+	padding:0.15rem 0;
+}
+div.search_h .el-input{
+	height:100%;
+	width:100%;
+	padding:0;
+	display: block;
+	line-height:0.4rem;
+}
+div.search_h .el-input input{
+	height:100%;
+	width:100%;
+	border-radius:0.2rem;
+	background-color: #eff3f6;
+	border: solid 1px #eeeeee;
+	font-size:0.16rem;
+}
+div.search_h .el-input__prefix{
+	width:0.45rem;
+}
+div.search_h .el-input__prefix:after{
+	position:absolute;
+	content:'';
+	right:0;
+	top:0.07rem;
+	bottom:0.07rem;
+	width:1px;
+	background:rgb(158, 176, 195);
+}
+div.search_h .el-input--prefix .el-input__inner{
+	padding-left:0.6rem;
+}
+div.search_h .el-input__prefix .el-input__icon{
+	line-height:0.4rem;
+	font-size:0.2rem;
+	color:#9eb0c3;
+	border:none;
+	background:rgba(0,0,0,0);
+	outline:none;
+	padding:0;
+	cursor:pointer;
+}
+/*通知信息*/
+div.header div.message{
+	width:0.8rem;
+	text-align: center;
+	position:relative;
+}
+div.header div.message .el-icon-bell{
+	font-size:0.3rem;
+	cursor:pointer;
+}
+div.header div.message .el-badge__content.is-fixed{
+	top:0.15rem;
+}
+div.header div.message:after{
+	position:absolute;
+	content:'';
+	right:0;
+	top:0.23rem;
+	bottom:0.23rem;
+	width:2px;
+	background: rgba(158, 176, 195, 0.5);
+}
+/*头部管理员信息*/
+div.header div.manager{
+	
+}
+div.header div.manager .dropdown{
+	float:left;
+	width:1.14rem;
+}
+div.header div.manager .mphoto{
+	float:left;
+	width:0.4rem;
+	height:0.4rem;
+	margin-top:0.14rem;
+	margin-right:0.32rem;
+}
+div.header div.manager .mphoto img{
+	width:100%;
+	height:100%;
+	border-radius:50%;
+	display: block;
+}
+div.header div.manager .el-dropdown{
+	font-size:0.14rem;
+	padding:0 0.15rem;
+	color:#4c5e70;
+}
+div.header div.manager .el-dropdown i.el-icon--right{
+	color:#2dc0e8;
+}
+.el-dropdown-menu.logout{
+	font-size:0.14rem;
+	padding:0 0.15rem;
+	color:#4c5e70;
+	right:0.32rem;
+	left:auto!important;
+	width:1.54rem;
+}
+.el-dropdown-menu.logout .el-dropdown-menu__item{
+	font-size:0.16rem;
+	padding:0;
+	text-align:center;
+}
