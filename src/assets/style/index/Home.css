@@ -22,11 +22,11 @@
     background-color:white;
     padding: 15px;
 }
-.el-main .home_cards .home_card:hover{
+/*.el-main .home_cards .home_card:hover{
     background-image:url("~static/images/index/navhover.png");
     background-repeat: no-repeat;
     background-size:cover;
-}
+}*/
 .el-main .home_cards .home_card.pink{
     box-shadow: 0.02rem 0.04rem 0.12rem 0 rgb(241, 111, 110);
 }

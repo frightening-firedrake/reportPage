@@ -145,8 +145,8 @@ export default {
 	},
 	data() {
 		return {
-			saveURL: this.apiRoot + '/grain/user/edit',
-			datalistURL: this.apiRoot + '/grain/user/get',
+			saveURL: this.apiRoot + 'user/edit',
+			datalistURL: this.apiRoot + 'user/get',
 			searchURL: '/liquid/role2/data/search',
 			deleteURL: '/liquid/role2/data/delete',
 			checkedId: [],

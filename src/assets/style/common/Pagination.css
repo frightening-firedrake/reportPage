@@ -2,7 +2,7 @@ div.tfoot{
 	border-bottom:none;
 	border-right:none;
 	border-left:none;
-	border-top:1px solid #e6e7e7;
+	border-top:1px solid #c4c4c4;
 	background-color: #ffffff;
 	height:1.7rem;
 	position:relative;
@@ -21,7 +21,7 @@ div.tfoot .tfoot_btns p.leading_out{
 	margin:0rem;
 	font-size: 0.24rem;
 	cursor: pointer;
-	background-color: #58b481;
+	background-color: #4c90db;
 	border-radius: 0.05rem;
 	box-sizing: border-box;
 	padding:0.04rem;
@@ -47,7 +47,7 @@ div.tfoot .el-pagination .btn-next{
 	text-align:center;
 	min-width:0;
 	padding:0;
-	color: #007c36;
+	color: #4c90db;
 	font-size:0.14rem;
 	border:0.01rem solid #d5d5d5;
 }
@@ -60,7 +60,7 @@ div.tfoot .el-pagination .btn-prev{
 	text-align:center;
 	min-width:0;
 	padding:0;
-	color: #007c36;
+	color: #4c90db;
 	font-size:0.14rem;
 	border:0.01rem solid #d5d5d5;
 }
@@ -76,7 +76,7 @@ div.tfoot .el-pager li{
 	line-height: 0.28rem;
 	text-align: center;
 	font-size: 0.18rem;
-	color:#007c36;
+	color:#4c90db;
 	margin-left:0.04rem;
 	text-align:center;
 	min-width:0;
@@ -84,7 +84,7 @@ div.tfoot .el-pager li{
 }
 /*div.tfoot .el-pagination button:hover{
 	color:white;
-	background:#007c36;
+	background:#4c90db;
 }*/
 /*div.tfoot .el-pagination button.disabled{
 	color:white;
@@ -92,7 +92,7 @@ div.tfoot .el-pager li{
 }*/
 div.tfoot .el-pager li.active{
 	color:white;
-	background:#58b481;
+	background:#4c90db;
 	/*border-color:white;*/
 }
 /*div.tfoot .el-pagination span:not([class*=suffix]){

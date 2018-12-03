@@ -7,7 +7,7 @@
       <!--表格上的时间选框以及 创建-->
       <list-header :listHeader="listHeader" v-on:dateChange="dateChange" v-on:statusChange="statusChange" v-on:createSampling="createSampling" v-on:createlib="createlib" @createAut="createAut"></list-header>
       <!--表格-->
-      <sinograin-list class="list" :tabledata="tabledatas" :list="list" :items="items" :actions="actions" :rowType="rowType" v-on:getchecked="getchecked" :loading="loading" v-on:emptyCreate="emptyCreate" > 
+      <sinograin-list class="list nopointer" :tabledata="tabledatas" :list="list" :items="items" :actions="actions" :rowType="rowType" v-on:getchecked="getchecked" :loading="loading" v-on:emptyCreate="emptyCreate" > 
       </sinograin-list>
       <!--分页-->
       <sinograin-pagination :page="page" v-on:paginationEvent="paginationEvent" v-on:getCurrentPage="getCurrentPage"></sinograin-pagination>
@@ -56,7 +56,7 @@ export default {
     }.bind(this)); 	
 //	监听列表点击编辑事件
   	this.$root.eventHub.$on("editlistitem",function(id){  
-  		if(!this.$_ault_alert('role:edit')){
+		if(!this.$_ault_alert('role:edit')){
 			return
 		}
 //		console.log(id)
@@ -146,7 +146,7 @@ export default {
   	},
 //	获取列表数据方法
   	getlistdata(page){
-  		this.loading=true;
+//		this.loading=true;
   		// 获取列表数据（第？页）
 		this.$http({
 		    method: 'post',
@@ -167,9 +167,7 @@ export default {
 	    }).then(function (response) {
 		  	this.tabledatas=response.data.rows;
 	  		this.page.total=response.data.total;
-		  	
-
-		  		this.loading=false;
+		  	this.loading=false;
 
 		}.bind(this)).catch(function (error) {
 		    console.log(error);
@@ -225,8 +223,8 @@ export default {
   },
   data() {
     return {
-      datalistURL:this.apiRoot +'/grain/role/data',
-      searchURL:this.apiRoot +'/grain/role/data',
+      datalistURL:this.apiRoot +'role/data',
+      searchURL:this.apiRoot +'role/data',
       deleteURL:'/liquid/role/data/delete',
       searchText:'',
       checkedId:[],
@@ -248,10 +246,10 @@ export default {
 	  	submitText:'确定',
 	  },
       breadcrumb:{
-      	search:true,   
+//    	search:true,   
       	searching:'',
       },
-      loading:true,
+      loading:false,
 //    分页数据
       page: {
         size: 10,
@@ -309,6 +307,7 @@ export default {
       	auth:true,
       	show:true,
       	noview:true,
+      	actionWidth:100,
       }
     }
   }

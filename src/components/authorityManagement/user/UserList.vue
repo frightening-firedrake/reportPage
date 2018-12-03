@@ -7,7 +7,7 @@
       <!--表格上的时间选框以及 创建-->
       <list-header :listHeader="listHeader" v-on:dateChange="dateChange" v-on:statusChange="statusChange" v-on:createSampling="createSampling" v-on:createlib="createlib" @createAut="createAut"></list-header>
       <!--表格-->
-      <sinograin-list class="list" :tabledata="tabledatas" :list="list" :items="items" :actions="actions" v-on:getchecked="getchecked" :loading="loading" v-on:emptyCreate="emptyCreate" > 
+      <sinograin-list class="list nopointer" :tabledata="tabledatas" :list="list" :items="items" :actions="actions" v-on:getchecked="getchecked" :loading="loading" v-on:emptyCreate="emptyCreate" > 
       </sinograin-list>
       <!--分页-->
       <sinograin-pagination :page="page" v-on:paginationEvent="paginationEvent" v-on:getCurrentPage="getCurrentPage"></sinograin-pagination>
@@ -67,7 +67,7 @@ export default {
   	}.bind(this));
 //	监听列表点击授权事件
   	this.$root.eventHub.$on("authlistitem",function(row){ 
-  		if(!this.$_ault_alert('user:auth')){
+		if(!this.$_ault_alert('user:auth')){
 			return
 		}
 //		console.log(id)
@@ -150,7 +150,7 @@ export default {
   	},
 //	获取列表数据方法
   	getlistdata(page){
-  		this.loading=true;
+//		this.loading=true;
   		// 获取列表数据（第？页）
 		this.$http({
 		    method: 'post',
@@ -220,8 +220,8 @@ export default {
   },
   data() {
     return {
-      datalistURL:this.apiRoot +'/grain/user/data',
-      searchURL:this.apiRoot +'/grain/user/data',
+      datalistURL:this.apiRoot +'user/data',
+      searchURL:this.apiRoot +'user/data',
       deleteURL:'/liquid/role/data/delete',
       searchText:'',
       checkedId:[],
@@ -242,10 +242,10 @@ export default {
 	  	submitText:'确定',
 	  },
       breadcrumb:{
-      	search:true,   
+//    	search:true,   
       	searching:'',
       },
-      loading:true,
+      loading:false,
 //    分页数据
       page: {
         size: 10,
@@ -310,6 +310,7 @@ export default {
       	auth:true,
       	show:true,
       	noview:true,
+      	actionWidth:100,
       }
     }
   }

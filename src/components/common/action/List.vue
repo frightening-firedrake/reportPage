@@ -1,5 +1,5 @@
 <template>
-	<el-table ref="multipleTable" tooltip-effect="light" style="width: 100%" :data="tabledata" @selection-change="handleSelectionChange" :default-sort="{prop: actions.sort, order: 'ascending'}" v-loading="loading" :row-class-name="row_class_name" element-loading-customClass="table_loading" element-loading-text="loading..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(255,255,255, 0.8)" @row-click="rowClick">
+	<el-table ref="multipleTable" border tooltip-effect="light" style="width: 100%" :data="tabledata" @selection-change="handleSelectionChange" :default-sort="{prop: actions.sort, order: 'ascending'}" v-loading="loading" :row-class-name="row_class_name" element-loading-customClass="table_loading" element-loading-text="loading..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(255,255,255, 0.8)" @row-click="rowClick">
 		<!--		:height="actions.height?actions.height:'auto'"-->
 		<!--		height='scrollHeight'-->
 		<!--		max-height='3rem'-->
@@ -61,12 +61,18 @@
 					</template>
 					<template v-if="item.prop=='state'">
 						<template v-if="scope.row[item.prop]==-1">
-							<span style="color:#fc6500;">未归还</span>
+							<span style="color:#fc9400;">待审核</span>
 						</template><template v-if="scope.row[item.prop]==1">
-							<span style="color:#fc6500;">应归还</span>
+							<span style="color:#4c90db;">已接案</span>
 						</template>
 						<template v-if="scope.row[item.prop]==2">
-							<span style="color:#999999;">已归还</span>
+							<span style="color:#58b481;">侦办中</span>
+						</template>
+						<template v-if="scope.row[item.prop]==3">
+							<span style="color:#999999;">已结案 </span>
+						</template>
+						<template v-if="scope.row[item.prop]==4">
+							<span style="color:#ec5b3c;">未立案</span>
 						</template>
 					</template>
 					<template v-if="item.prop=='returnState'">
@@ -369,16 +375,22 @@
 				<template v-if="actions.exportExcel">
 					<button class="exportExcel" @click.stop="handleExportExcel(scope.$index, scope.row,scope)">{{actions.exporttitle?actions.exporttitle:'导出Excel表格'}}</button>
 				</template>
-				<!--是否包含查看操作-->
+				<!--是否包含查看详情操作-->
 				<template v-if="actions.view1">
+					<button class="view1" @click.stop="handleView(scope.$index, scope.row,scope)">查看详情</button>
+				</template>
+				<!--是否包含查看操作-->
+				<template v-if="actions.view">
 					<button class="view" @click.stop="handleView(scope.$index, scope.row,scope)">查看</button>
 				</template>
 				<!--是否包含编辑操作-->
 				<template v-if="actions.edit">
 					<!--<button class="edit" @click.stop="handleEdit(scope.$index, scope.row)">编辑</button>-->
 					<!--<button v-if="scope.row.checkPoint" class="undele" @click.stop="notAllowed()">编辑</button>-->
-					<button v-if="!$_ault_alert('all:edit')" class="undele" @click.stop="notAllowed()">编辑</button>
-					<button v-else class="edit" @click.stop="handleEdit(scope.$index, scope.row)">编辑</button>
+					<!--这里有问题改天处理一下-->
+					<!--<button v-if="!$_ault_alert('all:edit')" class="undele" @click.stop="notAllowed()">编辑</button>-->
+					<!--<button v-else class="edit" @click.stop="handleEdit(scope.$index, scope.row)">编辑</button>-->
+					<button class="edit" @click.stop="handleEdit(scope.$index, scope.row)">编辑</button>
 				</template>
 				<!--删除操作-->
 				<template v-if="actions.deleCaogao">
@@ -477,9 +489,9 @@ export default {
     //			console.log(this.loading)
   },
   computed: {
-    checkPointEdit() {
-      return this.$_ault_alert("all:edit");
-    },
+//  checkPointEdit() {
+//    return this.$_ault_alert("all:edit");
+//  },
     scrollHeight() {
       if (!this.actions.height) {
         return "auto";
@@ -795,6 +807,7 @@ export default {
       return res;
     },
     rowClick(row, event, column) {
+    	return
       if (this.actions.noview) {
         return;
       }

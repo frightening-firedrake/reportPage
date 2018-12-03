@@ -10,15 +10,17 @@ import store from './store/index'
 import axios from 'axios'
 import router from './router/index'
 //import 'vue2-animate/dist/vue2-animate.min.css';
+import VideoPlayer from 'vue-video-player'
+require('video.js/dist/video-js.css')
+require('vue-video-player/src/custom-theme.css')
+Vue.use(VideoPlayer)
 
 Vue.use(ElementUI);
-//Vue.prototype.apiRoot = 'http://m.ityyedu.com'
-//Vue.prototype.apiRoot = 'http://192.168.1.233:8080'//deng
-//Vue.prototype.apiRoot = 'http://192.168.1.230:80'//xuan
-   Vue.prototype.apiRoot = 'http://192.168.1.253:8080'//bo
-//Vue.prototype.apiRoot = 'http://192.168.1.248:8080'//bo旧
-//Vue.prototype.apiRoot = 'http://192.168.1.176:8082'
-//Vue.prototype.apiRoot = 'http://192.168.1.252:8083'//kun
+Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
+
+// Vue.prototype.apiRoot = 'https://192.168.1.253:8443/reportingSystem/'//bo
+// Vue.prototype.apiRoot = 'http://192.168.1.252:8081/reportingSystem/'//kun
+
 //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 //axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'
 //axios.defaults.withCredentials=true;
@@ -59,6 +61,7 @@ axios.interceptors.response.use(function (response) {
 		
 	}
 	if(response.data.access=='unauthorized'){
+		console.log(response.data.access)
 		app.$notify.error({
           	title: '错误',
           	message: '你没有权限进行此项操作！！！'
@@ -126,7 +129,9 @@ Vue.prototype.$_has = function(value) {
 //方法内权限判断
 Vue.prototype.$_ault_alert = function(value) {
 	let buttonpermsStr=store.getters.permissions;
+//	console.log(buttonpermsStr)
 	if(!buttonpermsStr){
+//		console.log('无任何权限字段')	
     	app.$notify.error({
 	      	title: '错误',
 	      	message: '你没有权限进行此项操作！！！'
@@ -138,6 +143,7 @@ Vue.prototype.$_ault_alert = function(value) {
 		if(buttonpermsStr.includes(value)){
 			return true
 		}else{
+//			console.log('无对应权限字段'+value)	
 			app.$notify.error({
 		      	title: '错误',
 		      	message: '你没有权限进行此项操作！！！'

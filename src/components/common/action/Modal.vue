@@ -1,10 +1,11 @@
 <template>
-	<el-dialog :title="modal.title" :visible.sync="modalVisible" custom-class="createlib" :width="dialogWidth" @close="dialogClose">
+	<el-dialog :title="modal.title" :visible.sync="modalVisible" :custom-class="customClass" :width="dialogWidth" @close="dialogClose">
 	  	<el-form :model="form" ref="modalform">
 	  		<template v-for="(item, index) in modal.formdatas">
-	  			<el-form-item v-if="!item.position&&item.type=='input'" :label="item.label" :prop="item.model" :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled}" :rules="[{ required: true, message: '内容不能为空'}]">
-			        <el-input v-model="form[item.model]" auto-complete="off" :disabled="item.disabled"></el-input>
-			    </el-form-item>
+	  			<el-form-item v-if="!item.position&&item.type=='input'&&!item.hidden" :label="item.label" :prop="item.model" :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled}" :rules="[{ required: true, message: '内容不能为空'}]">
+			        <el-input  v-model="form[item.model]" auto-complete="off" :disabled="item.disabled"></el-input>
+	  			</el-form-item>
+			    <input  v-if="!item.position&&item.type=='input'&&item.hidden" type="hidden"  v-model="form[item.model]" name="" />
 			    <el-form-item class="position" v-if="item.position" :label="item.label"  :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled}">
 			        <el-select v-model="form[item.modelselect]" placeholder="选择样品室" :disabled="item.disabled">
 				        <el-option label="样品1室" value="样品1室"></el-option>
@@ -16,12 +17,17 @@
 			        	{{position_error_message}}
 			        </div>
 			    </el-form-item>
-			    <el-form-item  class="select" v-if="!item.position&&item.type=='select'" :prop="item.model" :label="item.label"  :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled}" :rules="[{ required: true, message: '请选择'}]">
+			    <el-form-item  class="select" v-if="!item.position&&item.type=='select'&&!item.defaultz" :prop="item.model" :label="item.label"  :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled}" :rules="[{ required: true, message: '请选择'}]">
 			        <el-select v-model="form[item.model]" placeholder="请选择" :disabled="item.disabled" @change="function(val){return change(val,item.model)}" :no-data-text="item.empty?item.empty:'无数据'">
 				        <el-option v-for="item2 in item.selectitems" :label="item2.label" :value="item2.value" :key="item2.id"></el-option>    
 				    </el-select>
 			    </el-form-item>
-			    <el-form-item v-if="!item.position&&item.type=='textarea'" :label="item.label" :prop="item.model" :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled,textareaall:item.textareaall}" :rules="[{ required: true, message: '内容不能为空'}]">
+			    <el-form-item  class="select" v-if="!item.position&&item.type=='select'&&item.defaultz" :prop="item.model" :label="item.label"  :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled}" >
+			        <el-select v-model="defaultz" placeholder="请选择" :disabled="item.disabled" @change="function(val){return change(val,item.model)}" :no-data-text="item.empty?item.empty:'无数据'">
+				        <el-option v-for="item2 in item.selectitems" :label="item2.label" :value="item2.value" :key="item2.id"></el-option>    
+				    </el-select>
+			    </el-form-item>
+			    <el-form-item v-if="!item.position&&item.type=='textarea'" :label="item.label+':'" :prop="item.model" :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled,textareaall:item.textareaall}" :rules="[{ required: true, message: '内容不能为空'}]">
 			        <el-input
 					  	type="textarea"
 					  	:autosize="{ minRows: item.rows}"
@@ -67,20 +73,34 @@ export default {
 	beforeCreate(){
 //		console.log(this.$options.propsData)
 	},
+	beforeCreate(){
+
+//		this.form.resontype='101'
+	},
 	created(){
-//		console.log(this.form)
+
 		
 		this.modal.formdatas.forEach((item,index)=>{
-			if(item.value){				
+			if(item.defaultz){
+				this.defaultz=item.defaultz
+			}else if(item.value){				
 				this.form[item.model]=item.value
 			}
+			
 		})
+		if(this.modal.customClass){
+			this.customClass=this.customClass+' '+this.modal.customClass
+		}
+
 	},
 	mounted(){
+
 
 	},
     data() {
         return {
+        	customClass:'createlib',
+        	defaultz:'',
         	position_error:false,
         	position_error_message:'',
         	dialogWidth:'6.2rem',
@@ -138,6 +158,7 @@ export default {
     		this.$emit('dialogClose')
     	},
     	change(val,model){
+//			this.form[model]=val
 //  		console.log(val,model,this.form)
 			if(model=='depot'){
 				if(this.form['counter']){					
@@ -155,6 +176,10 @@ export default {
 			}else if(model=='sort'){
 				if(this.form['checkPoint']){					
 					this.form['checkPoint']='';
+				}
+			}else if(model=='reasontype'){
+				if(this.form['reason']){					
+					this.form['reason']=val;
 				}
 			}
             this.$emit('modelSelectChange',val,model);
@@ -177,9 +202,12 @@ export default {
 	background-color: rgba(88, 180, 129, 0.8);
 	position:relative;	
 }
+.createlib.blue .el-dialog__header{
+	background-color: rgba(76,144,219, 0.8);
+}
 .createlib .el-dialog__title{
 	font-size:0.18rem;
-	color:rgba(2255,255,255,1);
+	color:rgba(255,255,255,1);
 }
 .createlib .el-dialog__title:before{
 	position:absolute;
@@ -234,7 +262,7 @@ export default {
 }
 .createlib .el-dialog__body .el-textarea textarea{
 	/*line-height:0.5rem;*/
-	font-size:0.18rem;
+	font-size:0.16rem;
 	color:#333333;
 	border-width: 0;
 	/*border:none;*/
@@ -245,7 +273,7 @@ export default {
 	line-height: 0.5rem;
 	background-color: #fbfbfb;
 	/*border-right:1px solid #dfdfdf;*/
-	font-size:0.18rem;
+	font-size:0.16rem;
 	color:#333333;
 }
 .createlib .el-dialog__body .el-form-item__label:before{
@@ -261,7 +289,7 @@ export default {
 .createlib .el-dialog__body .el-input input{
 	line-height:0.5rem;
 	border:none;
-	font-size:0.18rem;
+	font-size:0.16rem;
 	color:#333333;
 	height:auto;
 }
@@ -302,6 +330,23 @@ export default {
 }
 .createlib .dialog-footer button.no:hover {
 	background:rgba(88,180,129,0.1);
+}
+
+.createlib.blue .dialog-footer button.yes {
+
+	background-color: rgba(76,144,219,1);
+	border-color: rgba(76,144,219, 1);
+}
+.createlib.blue .dialog-footer button.yes:hover {
+	background-color: rgba(76,144,219, 0.8);
+	border-color: rgba(76,144,219, 1);
+}
+.createlib.blue .dialog-footer button.no {
+	color: rgba(76,144,219, 1);
+	border-color: rgba(76,144,219, 1);
+}
+.createlib.blue .dialog-footer button.no:hover {
+	background-color: rgba(76,144,219, 0.1);
 }
 /*验证*/
 .createlib .el-form-item__error{

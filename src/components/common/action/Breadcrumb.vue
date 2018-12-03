@@ -188,10 +188,10 @@ import { mapState,mapMutations,mapGetters,mapActions} from 'vuex';
 <style>
 	/*面包屑导航*/
 	.breadcrumbwrap{
-		margin:0 -0.6rem;
-		padding:0 0.41rem;
-		height:0.77rem;
-		line-height: 0.77rem;
+		margin:0 -0.54rem;
+		padding:0 0.4rem;
+		height:0.6rem;
+		line-height: 0.6rem;
 		background-color: rgba(241, 241, 241, 1);
 		position:relative;
 		overflow: hidden;
@@ -203,8 +203,8 @@ import { mapState,mapMutations,mapGetters,mapActions} from 'vuex';
 		color:rgb(51,51,51);
 	}
 	.breadcrumbwrap .el-breadcrumb{
-		height:0.77rem;
-		line-height: 0.77rem;
+		height:0.6rem;
+		line-height: 0.6rem;
 	}
 	.breadcrumbwrap .el-breadcrumb__inner, .breadcrumbwrap .el-breadcrumb__inner a{
 		font-size: 0.18rem;
@@ -227,8 +227,8 @@ import { mapState,mapMutations,mapGetters,mapActions} from 'vuex';
 	}
 	.breadcrumbwrap .el-breadcrumb__item:last-child .el-breadcrumb__inner,.breadcrumbwrap .el-breadcrumb__item:last-child .el-breadcrumb__inner a,.breadcrumbwrap .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover, .breadcrumbwrap .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
 	    font-weight: 400;
-	    /*color:rgb(55,142,248);*/
-	    color:#007c36;
+	    color:#1a65b8;
+	    /*color:#007c36;*/
 	    cursor: text;
 	}
 	/*搜索*/
@@ -237,7 +237,7 @@ import { mapState,mapMutations,mapGetters,mapActions} from 'vuex';
 		width:3.13rem;
 		height:0.34rem;
 		line-height: 0.34rem;
-		top:0.21rem;
+		top:0.13rem;
 		right:0.41rem;
 	}
 	div.bread_search .el-input{

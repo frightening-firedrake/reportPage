@@ -1,14 +1,13 @@
 <template>
-	<!--<el-menu default-active="/index/sampling/libraryList" class="el-menu-vertical-demo" :router=true @open="handleOpen" @select="handleSelect" @close="handleClose" :collapse="this.isCollapse" :background-color="backgroundColor" :unique-opened=true>-->
-	<el-menu unique-opened :default-active="activePath" class="el-menu-vertical-demo" :router=true @open="handleOpen" @select="handleSelect" @close="handleClose" :collapse="this.isCollapse" :background-color="backgroundColor">
+
+	<!--<el-menu unique-opened :default-active="activePath" class="el-menu-vertical-demo" :router=true @open="handleOpen" @select="handleSelect" @close="handleClose" :collapse="this.isCollapse" :background-color="backgroundColor">-->
+	<el-menu :default-active="activePath" class="el-menu-vertical-demo" :router=true @open="handleOpen" @select="handleSelect" @close="handleClose" :collapse="this.isCollapse" :background-color="backgroundColor">
 		<!--用户信息-->
-		<div class="user" style="width:2.5rem;">
+		<!--<div class="user" style="width:2.5rem;">
 			<div class="photo">
 				<img :src="user.avater" alt="">
 			</div>
 			<div class="userinfo">
-				<!--<h3>{{roleName?roleName:"扦样员"}}-->
-				<!--					<span>({{userName?userName:"未登录"}})</span>-->
 				<h3>
 					<span>{{userName?userName:"未登录"}}</span>
 				</h3>
@@ -23,31 +22,18 @@
 					</template>
 				</p>
 			</div>
-		</div>
-		<!--导航-->
-		<!--  <div style="min-height:4.5rem;">-->
-		<!--<template v-for="item in navlist" v-if="checkAuth(userAuth,item.needAuth)&&item.pid==0">-->
+		</div>-->
 
-		<!--首页的不循环-->
-		<!--<el-submenu index="/index/home">
-
-					<template slot="title">
-						<div class="rightborder"></div>
-						<div class="rightarrow"></div>
-						<i class="iconfont icon-shouye firstlevel"></i>
-						<span slot="title">首页</span>
-					</template>
-			</el-submenu>-->
 		<el-menu-item index="/index/home">
-			<!--<div class="rightborder"></div>
-				<div class="rightarrow"></div>-->
-			<i class="iconfont icon-shouye firstlevel"></i>
+
+
+			<i class="iconfont icon-ziyuan firstlevel"></i>
 			<span slot="title">首页</span>
 		</el-menu-item>
 
 		<template v-for="item in navlist" v-if="item.pid==0">
 			<el-submenu :index="item.lid.toString()">
-				<!--<el-submenu :index="item.lid.toString()" key="item.lid">-->
+
 				<template slot="title">
 					<div class="rightborder"></div>
 					<div class="rightarrow"></div>
@@ -61,11 +47,11 @@
 
 				<template v-if="item.level==3">
 					<template v-for="item2 in navlist" v-if="item2.pid==item.lid">
-						<!--<el-submenu :index="item2.lid.toString()" key="item2.lid">-->
+
 						<el-submenu :index="item2.lid.toString()">
 							<template slot="title">
 								<i class="iconfont secondlevel" :class="item2.icon"></i>
-								<!--<span slot="title">{{item2.title}}</span>-->
+
 								<el-badge slot="title" v-if="item2.badge" :value="item2.badge" class="navbadge">
 									<span>{{item2.title}}</span>
 								</el-badge>
@@ -74,10 +60,10 @@
 
 							<template v-for="item3 in navlist" v-if="item3.pid==item2.lid">
 								<el-menu-item :index="item3.linkto">
-									<!--<el-menu-item :index="item3.linkto" key="item3.lid">-->
+
 									<div class="leftline"></div>
 									<i class="iconfont thirdlevel" :class="item3.icon"></i>
-									<!--<span>{{item3.title}}</span>-->
+
 									<el-badge slot="title" v-if="item3.badge" :value="item3.badge" class="navbadge">
 										<span>{{item3.title}}</span>
 									</el-badge>
@@ -93,9 +79,9 @@
 				<template v-if="item.level==2">
 					<template v-for="item4 in navlist" v-if="item4.pid==item.lid">
 						<el-menu-item :index="item4.linkto">
-							<!--<el-menu-item :index="item4.linkto" key="item4.lid">-->
+
 							<i class="iconfont secondlevel" :class="item4.icon"></i>
-							<!--<span>{{item4.title}}</span>-->
+
 							<el-badge slot="title" v-if="item4.badge" :value="item4.badge" class="navbadge">
 								<span>{{item4.title}}</span>
 							</el-badge>
@@ -142,328 +128,113 @@ export default {
   data() {
     return {
       //			isCollapse: false,
-      backgroundColor: "#d8e5e1",
+      backgroundColor: "#dff0f9",
       user: {
         name: "12345号",
         avater: "static/images/test/photo_01.png",
         status: 1
       },
       navlist: [
+     
         {
-          icon: "icon-wheat__easyic",
-          title: "粮库管理",
-          linkto: "",
-          level: 2,
-          pid: 0,
-          lid: 12,
-          needAuth: "grainDepot"
-        },
-
-        //				{
-        //					icon: 'icon-xinjian',
-        //					title: '新建扦样登记表',
-        //					linkto: '/index/grainDepot/createSampleReglc',
-        //					level: 2,
-        //					pid: 12,
-        //					lid: 13
-        //				},
-        {
-          icon: "icon-shenqingshenpi",
-          title: "扦样登记列表",
-          linkto: "/index/grainDepot/sampleRegListlc",
-          level: 2,
-          pid: 12,
-          lid: 14
-        },
-        {
-          icon: "icon-liuchengdingyi",
-          title: "扦样流程",
+          icon: "icon-hetong",
+          title: "扫黑除恶警情案件",
           linkto: "",
           level: 2,
           pid: 0,
           lid: 1
-          //					提示新信息
-          //					badge:8,
         },
         {
-          icon: "icon-xinshenqing",
-          title: "审批扦样列表",
-          linkto: "/index/sampling/examinationLibraryList",
+          icon: "icon-hetong",
+          title: "综合案件列表",
+          linkto: "/index/evilCriminalCases/comprehensiveCriminalCaseList",
           level: 2,
           pid: 1,
           lid: 2
-          //					提示新信息
-          //					badge:8,
         },
         {
-          icon: "icon-iconfontcolor69",
-          title: "扦样库点列表",
-          linkto: "/index/sampling/libraryList",
+          icon: "icon-daishenhe",
+          title: "待审核案件",
+          linkto: "/index/evilCriminalCases/pendingTrialCaseList",
           level: 2,
           pid: 1,
           lid: 3
         },
-        //				{
-        //					icon: 'icon-gongzuo2',
-        //					title: '工作底稿',
-        //					linkto: '',
-        //					level: 2,
-        //					pid: 1,
-        //					lid: 4
-        //				},
-        //				{
-        //					icon: 'icon-anquanbaogao',
-        //					title: '安全报告',
-        //					linkto: '',
-        //					level: 2,
-        //					pid: 1,
-        //					lid: 5
-        //				},
-        //				{
-        //					icon:'icon-anquanbaogao',
-        //					title: '监督检查情况',
-        //					linkto: '/index/sampling/SRLibraryList',
-        //					level: 2,
-        //					pid: 1,
-        //					lid: 4
-        //				},
+		{
+			icon: 'icon-tongguos',
+			title: '审核通过案件',
+			linkto: '/index/evilCriminalCases/passedCaseList',
+			level: 2,
+			pid: 1,
+			lid: 4
+		},
+		{
+			icon: 'icon-tongji',
+			title: '数据字典管理',
+			linkto: '',
+			level: 2,
+			pid: 0,
+			lid: 5
+		},
+
         {
-          icon: "icon-cangkuguanli-xian",
-          title: "样品管理",
-          linkto: "",
+          icon: "icon-fankui",
+          title: "反馈信息编辑",
+          linkto: "/index/dataDictionaryManagement/feedbackInformation",
           level: 2,
-          pid: 0,
+          pid: 5,
           lid: 6
         },
         {
-          icon: "icon-ruku",
-          title: "样品储存列表",
-          linkto: "/index/sampleManagement/sampleIn",
+          icon: "icon-tongji1",
+          title: "报表统计",
+          linkto: "",
           level: 2,
-          pid: 6,
+          pid: 0,
           lid: 7
         },
         {
-          icon: "icon-linshi",
-          title: "送样检验登记表",
-          linkto: "/index/sampleManagement/temporaryRegistration",
+          icon: "icon-tongji1",
+          title: "数据汇总情况统计",
+          linkto: "/index/reportStatistics/dataCollection",
           level: 2,
-          pid: 6,
-          lid: 28
-        },
-        {
-          icon: "icon-zhishicangku",
-          title: "样品储存管理",
-          linkto: "/index/sampleManagement/warehouseManagement",
-          level: 2,
-          pid: 6,
-          lid: 4
-        },
-        {
-          icon: "icon-fanganzhizuo_huaban",
-          title: "样品登记薄",
-          linkto: "/index/sampleManagement/sampleRegistration",
-          level: 2,
-          pid: 6,
-          lid: 5
-        },
-        {
-          icon: "icon-chuku",
-          title: "样品领取交接单",
-          linkto: "/index/sampleManagement/handover",
-          level: 2,
-          pid: 6,
+          pid: 7,
           lid: 8
         },
-        {
-          icon: "icon-taskList",
-          title: "任务列表",
-          linkto: "/index/sampleDetection/packingTaskList",
-          level: 2,
-          pid: 6,
-          lid: 10
-        },
-        {
-          icon: "icon-fanhui2",
-          title: "样品归还",
-          linkto: "/index/sampleManagement/returnSamples",
-          level: 2,
-          pid: 6,
-          lid: 25
-        },
-        {
-          icon: "icon-shiyan",
-          title: "样品检测",
-          linkto: "",
-          level: 2,
-          pid: 0,
-          lid: 9
-        },
-
-        {
-          icon: "icon-subcontractor",
-          title: "分装小样管理",
-          linkto: "/index/sampleDetection/packingBarcodeList",
-          level: 2,
-          pid: 9,
-          lid: 32
-        },
-        {
-          icon: "icon-jianyandan",
-          title: "样品原始检验单",
-          linkto: "/index/sampleDetection/checkList",
-          level: 2,
-          pid: 9,
-          lid: 11
-        },
-        {
-          icon: "icon-shenpi",
-          title: "审批检验单列表",
-          linkto: "/index/sampleDetection/examineList",
-          level: 2,
-          pid: 9,
-          lid: 28
-        },
-        {
-          icon: "icon-jiance",
-          title: "样品确认单列表",
-          linkto: "/index/sampleDetection/confirmationList",
-          level: 2,
-          pid: 9,
-          lid: 29
-        },
-        {
-          icon: "icon-baobiaoguanli",
-          title: "检测报表管理",
-          linkto: "",
-          level: 2,
-          pid: 0,
-          lid: 15
-        },
-        {
-          icon: "icon-baobiao",
-          title: "样品检测报表制作",
-          linkto: "/index/TestReportManagement/TestReportMaker",
-          level: 2,
-          pid: 15,
-          lid: 16
-        },
-        {
-          icon: "icon-dangan",
-          title: "中央事权粮检查（验）档案",
-          linkto: "/index/TestReportManagement/Archive",
-          level: 2,
-          pid: 15,
-          lid: 31,
-          wrap: true
-        },
-        {
-          icon: "icon-baogao1",
-          title: "检测报告制作",
-          linkto: "/index/TestReportManagement/TestReportFindSample",
-          level: 2,
-          pid: 15,
-          lid: 30
-        },
-        {
-          icon: "icon-jiandukaohe",
-          title: "监督检查报告",
-          linkto: "/index/TestReportManagement/SuperviseList",
-          level: 2,
-          pid: 15,
-          lid: 17
-        },
-        {
-          icon: "icon-baobiaoguanli",
-          title: "质量验收报告",
-          linkto: "/index/TestReportManagement/QualityAcceptance",
-          level: 2,
-          pid: 15,
-          lid: 24
-        },
+        
         {
           icon: "icon-quanxianguanli",
           title: "权限管理",
           linkto: "",
           level: 2,
           pid: 0,
-          lid: 18,
-          needAuth: "AuthorityManagement"
+          lid: 9,
+//        needAuth: "AuthorityManagement"
         },
         {
           icon: "icon-jiaoseguanli",
           title: "角色管理",
           linkto: "/index/AuthorityManagement/RoleList",
           level: 2,
-          pid: 18,
-          lid: 19
+          pid: 9,
+          lid: 10
         },
         {
           icon: "icon-yonghuguanli",
           title: "用户管理",
           linkto: "/index/AuthorityManagement/UserList",
           level: 2,
-          pid: 18,
-          lid: 20
+          pid: 9,
+          lid: 11
         },
         {
           icon: "icon-ziyuanguanli",
           title: "资源管理",
           linkto: "/index/AuthorityManagement/ResourcesList",
           level: 2,
-          pid: 18,
-          lid: 21
+          pid: 9,
+          lid: 12
         },
-        {
-          icon: "icon-pingtaixinxiguanli",
-          linkto: "",
-          title: "信息管理",
-          level: 2,
-          pid: 0,
-          lid: 22
-        },
-        {
-          icon: "icon-xinjian2",
-          linkto: "/index/InformationManagement/InformationAdd",
-          title: "添加直属库",
-          level: 2,
-          pid: 22,
-          lid: 23,
-          needAuth: "InformationManagement"
-        },
-        {
-          icon: "icon-tianjia",
-          linkto: "/index/InformationManagement/Informationpoint",
-          title: "添加库点",
-          level: 2,
-          pid: 22,
-          lid: 26,
-          needAuth: "InformationManagement"
-        },
-        {
-          icon: "icon-fangzi",
-          linkto: "/index/InformationManagement/SampleRoomAdd",
-          title: "添加样品室",
-          level: 2,
-          pid: 22,
-          lid: 27
-        },
-        {
-          icon: "icon-woshijiajuguizishounaxianxing",
-          linkto: "/index/InformationManagement/ContainerAdd",
-          title: "添加柜子货架",
-          level: 2,
-          pid: 22,
-          lid: 33
-        }
-        //				{
-        //					icon: 'icon-iocn02001',
-        //					linkto: '/index/InformationManagement/PlaceAdd',
-        //					title: '添加货位数',
-        //					level: 2,
-        //					pid: 22,
-        //					lid: 28,
-        //				},
       ]
     };
   },

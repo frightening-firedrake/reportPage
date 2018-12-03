@@ -44,6 +44,10 @@ Mock.Random.extend({
     var charsname = [1, 2, 3, 4, 5, 6]
     return this.pick(charsname)
   },
+  state: function () {
+    var state = [-1,1, 2, 3, 4]
+    return this.pick(state)
+  },
   examineName:function(){
     var examineName = ["测定记录","测定记录","杂志、不完善粒测定记录","杂志、不完善粒测定记录","水分测定记录","水分测定记录","真菌毒素检测记录","真菌毒素检测记录","面筋吸水量测定记录","馒头品尝评分记录表","脂肪酸值测定记录","玉米品尝分记录表"]
     return this.pick(examineName)
@@ -772,6 +776,24 @@ var sampleexamine = Mock.mock("/liquid/sampleexamine/data",{
     }
   ]
 })
+//综合案件列表
+var zysq = Mock.mock('/grain/sample/data', {
+  'rows|3-10': [
+    {
+      'id|+1': 1,
+      threadArea: "山西省",
+      clueAddress: "山西省太原市迎泽区95号",
+      industryField: "国家政治安全",
+      informType: "威胁政治安全特别是政权安全",
+      phoneNumber: "18335152521",
+      state: "@state",
+      assessor: "Admin",
+      createTime: "2018-09-27",
+      
+    }
+  ],
+  total: 56,
+});
 export default {
   //	LibraryList:LibraryList,
 }

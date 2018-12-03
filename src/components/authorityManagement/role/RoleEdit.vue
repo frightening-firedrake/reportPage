@@ -179,9 +179,9 @@ export default {
   },
   data() {
     return {
-      getRoleURL:this.apiRoot +'/grain/role/data',
-      saveURL:this.apiRoot +'/grain/role/edit',
-      datalistURL:this.apiRoot +'/grain/role/get',
+      getRoleURL:this.apiRoot +'role/data',
+      saveURL:this.apiRoot +'role/edit',
+      datalistURL:this.apiRoot +'role/get',
       searchURL:'/liquid/role2/data/search',
       deleteURL:'/liquid/role2/data/delete',
       checkedId:[],

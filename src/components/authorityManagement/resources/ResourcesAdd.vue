@@ -7,7 +7,7 @@
       <!--提示-->
       <!--<sinograin-prompt :alerts="alerts"></sinograin-prompt>-->
       <!--表单-->
-      <auth-form :formdatas="formdatas" @submit='submit' @actionAdd="actionAdd" @actionDel='actionDel'></auth-form> 
+      <auth-form :btnloading="btnloading" :formdatas="formdatas" @submit='submit' @actionAdd="actionAdd" @actionDel='actionDel'></auth-form> 
     </div>
 </template>
 
@@ -172,11 +172,11 @@ export default {
 	    });
   	},
   	submit(data){
-  		if(!this.$_ault_alert('resource:save')){
+		if(!this.$_ault_alert('resource:save')){
 			return
 		}
-
-  		this.loading=false;
+		
+  		this.btnloading=true;
   		// 获取列表数据（第？页）
 		this.$http({
 		    method: 'post',
@@ -197,6 +197,7 @@ export default {
 				params:JSON.stringify(data.actions),
 			}
 	    }).then(function (response) {
+  			this.btnloading=false;
 			this.$router.go(-1)
 		}.bind(this)).catch(function (error) {
 		    console.log(error);
@@ -205,11 +206,12 @@ export default {
   },
   data() {
     return {
-      getResourceURL:this.apiRoot +'/grain/resource/get/resourceAndOperation',
-      saveURL:this.apiRoot +'/grain/resource/save',
+      getResourceURL:this.apiRoot +'resource/get/resourceAndOperation',
+      saveURL:this.apiRoot +'resource/save',
       searchURL:'/liquid/role2/data/search',
       deleteURL:'/liquid/role2/data/delete',
       checkedId:[],
+      btnloading:false,
 	  createlibVisible:false,
       breadcrumb:{
       	search:false,   

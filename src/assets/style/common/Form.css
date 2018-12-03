@@ -17,7 +17,8 @@ form.sampling >p{
 	border-right:solid 1px #dfdfdf;
     height: 0.6rem;
     line-height: 0.6rem;
-    color: rgb(0,0,0);
+    /*color: rgb(0,0,0);*/
+    color:#005dc4;
     font-size: 0.2rem;
     background-color: rgba(242, 242, 242, 1);
     padding-left: 0.4rem;
@@ -134,7 +135,7 @@ form.sampling .el-form-item .el-form-item__content>.el-textarea{
 	vertical-align:middle;
 }
 form.sampling .el-form-item .el-form-item__content>.el-textarea textarea{
-	height:100%!important;
+	/*height:100%!important;*/
 	line-height:0.3rem;
 	border:none;
 	padding-right:7em;
@@ -175,7 +176,7 @@ form.sampling .el-form-item .el-form-item__content .el-input-number{
 form.sampling .el-form-item .el-form-item__content .el-input-number .el-input-number__decrease{
 	width:0.2rem;
 	height:100%;
-	background:#58b481;
+	background:#4c90db;
 	border-radius:0;
 	color:#ffffff;
 	font-size:0.14rem;
@@ -190,7 +191,7 @@ form.sampling .el-form-item .el-form-item__content .el-input-number .el-input-nu
 form.sampling .el-form-item .el-form-item__content .el-input-number .el-input-number__increase{
 	width:0.2rem;
 	height:100%;
-	background:#58b481;
+	background:#4c90db;
 	border-radius:0;
 	color:#ffffff;
 	font-size:0.14rem;
@@ -304,7 +305,7 @@ form.sampling .btns .exportexcel{
 	/*margin:0 0 0 0.3rem;*/
 	font-size: 0.24rem;
 	cursor: pointer;
-	background-color: #58b481;
+	background-color: #4c90db;
 	border-radius: 0.05rem;
 	box-sizing: border-box;
 	padding:0.04rem;
@@ -321,19 +322,19 @@ form.sampling .btns .el-button+.el-button{
 	margin-left:0.57rem;
 }
 form.sampling .btns button.yes {
-	background-color: rgb(88,180,129);
-	border-color:rgb(88,180,129);
+	background-color: rgb(76, 144, 219);
+	border-color:rgb(76, 144, 219);
 }
 form.sampling .btns button.yes:hover {
-	background-color: rgba(88,180,129,0.8);
-	border-color:#58b481;
+	background-color: rgba(76, 144, 219,0.8);
+	border-color:#4c90db;
 }
 form.sampling .btns button.no {
-	color: #58b481;
-	border-color:#58b481;
+	color: #4c90db;
+	border-color:#4c90db;
 }
 form.sampling .btns button.no:hover {
-	background:rgba(88,180,129,0.1);
+	background:rgba(76, 144, 219,0.1);
 }
 /*问题加一按钮*/
 form.sampling .btns .addproblem{
@@ -346,8 +347,8 @@ form.sampling .btns .addproblem{
 	text-align:center;
 	border-radius:0 0 0.1rem 0.1rem;
 	background-color: #ffffff;
-	border: solid 1px #58b481;
-	color: #58b481;
+	border: solid 1px #4c90db;
+	color: #4c90db;
 	font-size:0.16rem;
 	cursor:pointer;
 }
@@ -569,11 +570,14 @@ div.line{
 	background:#ffffff;
 }
 /*下拉菜单*/
+.select .el-input__icon{
+	line-height:0.5rem;
+}
 .el-select-dropdown__item{
 	font-size:0.16rem;
 }
 .el-select-dropdown__item.selected{
-	color: #58b481;
+	color: #4c90db;/*我在Form.css*/
 }
 .el-checkbox-group{
 	height:100%;
@@ -655,8 +659,8 @@ form.sampling .tableAdd {
     text-align: center;
     border-radius: 0 0 0.1rem 0.1rem;
     background-color: #ffffff;
-    border: solid 1px #58b481;
-    color: #58b481;
+    border: solid 1px #4c90db;
+    color: #4c90db;
     font-size: 0.16rem;
     cursor: pointer;
 	/*margin-top:-0.6rem;*/

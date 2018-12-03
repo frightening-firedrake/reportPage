@@ -43,7 +43,8 @@
 </template>
 <style>
 .tfootbtns{
-	height:0.75rem;
+	/*height:0.75rem;*/
+	min-height:0.75rem;
 	background:#ffffff;
 	position:relative;
 	text-align: center;
@@ -62,7 +63,8 @@
 }
 .btn-center{
 	text-align: center;
-	padding:0.12rem 0;
+	/*padding:0.12rem 0;*/
+	padding:0.4rem 0;
 }
 .btn-center button {
     font-size: 0.18rem;
@@ -131,18 +133,21 @@
 	height:0.4rem;
 	line-height: 0.33rem;
 	/*margin:0 0 0 0.3rem;*/
-	font-size: 0.24rem;
+	/*font-size: 0.24rem;*/
+	font-size: 0.18rem;
 	cursor: pointer;
-	background-color: #58b481;
-	border-radius: 0.05rem;
+	/*background-color: #58b481;*/
+	background-color: rgb(76,144,219);
+	/*border-radius: 0.05rem;*/
+	border-radius: 0.1rem;
 	box-sizing: border-box;
 	padding:0.04rem;
 	color:#ffffff;
 	z-index: 6;
 }
 .tfootbtns div.btntfoot span{
-	border:1px solid #FFFFFF;
-	border-radius:0.04rem;
+	/*border:1px solid #FFFFFF;
+	border-radius:0.04rem;*/
 	padding:0 0.2rem;
 	font-weight: 500;
 }
@@ -154,7 +159,11 @@
 }
 .tfootbtns div.btntfoot.btn-one{
 	display: inline-block;
-	margin-top:0.125rem;
+	/*margin-top:0.125rem;*/
+	padding:0;
+	margin:0.4rem auto;
+	height:0.5rem;
+	line-height:0.5rem;
 	position: static;
 }
 .editModel .editModelWrap .tableAdd {

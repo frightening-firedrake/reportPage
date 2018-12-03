@@ -7,7 +7,7 @@
       <!--提示-->
       <!--<sinograin-prompt :alerts="alerts"></sinograin-prompt>-->
       <!--表单-->
-      <auth-form :formdatas="formdatas" @submit='submit'></auth-form> 
+      <auth-form :btnloading="btnloading" :formdatas="formdatas" @submit='submit'></auth-form> 
     </div>
 </template>
 
@@ -75,7 +75,7 @@ export default {
 		if(!this.$_ault_alert('role:save')){
 			return
 		}
-  		this.loading=false;
+  		this.btnloading=true;
   		// 获取列表数据（第？页）
 		this.$http({
 		    method: 'post',
@@ -98,6 +98,7 @@ export default {
 
 			}
 	    }).then(function (response) {
+  			this.btnloading=false;
 			this.$router.go(-1)
 		}.bind(this)).catch(function (error) {
 		    console.log(error);
@@ -130,10 +131,11 @@ export default {
   },
   data() {
     return {
-      getRoleURL:this.apiRoot +'/grain/role/data',
-      saveURL:this.apiRoot +'/grain/role/save',
+      getRoleURL:this.apiRoot +'role/data',
+      saveURL:this.apiRoot +'role/save',
       searchURL:'/liquid/role2/data/search',
       deleteURL:'/liquid/role2/data/delete',
+      btnloading:false,
       checkedId:[],
 	  createlibVisible:false,
       breadcrumb:{

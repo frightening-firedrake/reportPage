@@ -1,39 +1,40 @@
 <template>
-    <div class="login" style="background-image:url(static/images/login/login_big.png)">
+    <div class="login" style="background-image:url(static/images/login/bj1.png)">
         <div class="login_box">
+        	<span class="sjx"></span>
+        	<img class="loginbj2" src="static/images/login/bj2.png" alt="" />
+        	<span class="auth">山西硬汉网络科技科技有限公司 版权所有</span>
             <el-form ref="form"  class="login_form" :model="loginForm">
+            	<h1 class="title">登录账户</h1>
             	<p v-if="loginError" class="loginError"><span class="el-icon-warning"></span>{{errorMessage}}</p>
             	<p v-else class="loginError"></p>
-                <el-form-item label=""  :class="{focus:isfocus}">
-                	<el-input
-					    placeholder="请输入您的账号"
-					    v-model="loginForm.name">
-					    <i slot="prefix" class="iconfont icon-icon-test"></i>
+                <el-form-item label="">
+                	<el-input @focus="focusUser=true" @blur="focusUser=false" placeholder="请输入您的账号" v-model="loginForm.name">
+					    <template slot="prepend">
+					    	<div class="prependimg" :class="{focus:focusUser}" style="background-image:url(static/images/login/user.png)"></div>
+					    </template>
 					</el-input>
-                    <!--<i class="iconfont icon-zhanghao"></i>-->
-                    <!--<el-input type="text" placeholder="请输入您的账号" v-model="loginForm.name" @focus="focus" @blur="blur"></el-input>-->
                 </el-form-item>
                 <el-form-item label="" >
-                	<el-input
-                		type='password'
-					    placeholder="请输入您的密码"
-					    v-model="loginForm.password">
-					    <i slot="prefix" class="iconfont icon-mima"></i>
+                	<el-input @focus="focusPass=true" @blur="focusPass=false"  type='password' placeholder="请输入您的密码" v-model="loginForm.password">
+					    <template  slot="prepend">
+					    	<div class="prependimg" :class="{focus:focusPass}" style="background-image:url(static/images/login/pass.png)"></div>
+					    </template>
 					</el-input>
-                    <!--<i class="iconfont icon-mima"></i>
-                    <el-input type="password" placeholder="请输入您的密码"   v-model="loginForm.password"></el-input>-->
                 </el-form-item>
-                <el-form-item label="" class="code" @click="addBorder()">
-                	<el-input
-					    placeholder="请输入验证码"
-					    @blur="checkcode"
-					    v-model="loginForm.number">
-					    <i slot="prefix" class="iconfont icon-yanzhengma"></i>
-					</el-input>
-                    <!--<i class="iconfont icon-yanzhengma"></i>-->
-                    <!--<el-input   placeholder="请输入验证码" v-model="loginForm.number"></el-input>-->
-                </el-form-item>
-                <img class="code_img" :src="captcha" @click="change()" alt="验证码加载中...">
+                <div class="el-form-item">
+	                <el-form-item label="" class="code" @click="addBorder()">
+	                	<el-input  @focus="focusYzm=true" @blur="checkcode" placeholder="请输入验证码" v-model="loginForm.number">
+						    <template  slot="prepend">
+						    	<div class="prependimg" :class="{focus:focusYzm}" style="background-image:url(static/images/login/yzm.png)"></div>
+						    </template>
+						</el-input>
+	                </el-form-item>
+	                <!--好看的验证码-->
+	                <div id="code_canvas" class="code_img" @click="change()"></div>
+	                <!--难看的验证码-->
+	                <!--<img class="code_img" :src="captcha" @click="change()" alt="验证码加载中...">-->                	
+                </div>
                 <el-button class="login_submit" @click="submitForm()">登录</el-button>
             </el-form>
         </div>
@@ -41,6 +42,7 @@
 </template>
 <script>
 import "@/assets/style/common/login.css";
+import "static/code/code.js";
 import { mapState,mapMutations,mapGetters,mapActions} from 'vuex';
 export default {
 	computed:{
@@ -56,9 +58,10 @@ export default {
         change() {
         	this.$http({
 			    method: 'post',
-				url:  this.apiRoot + '/grain/captcha?d='+new Date().getTime(),
-				withCredentials: true,
-       			crossDomain: true,
+//				url:  "http://m.ityyedu.com/grain/" + 'captcha?d='+new Date().getTime(),
+				url:  this.apiRoot + 'captcha?d='+new Date().getTime(),
+//				withCredentials: true,
+//     			crossDomain: true,
 				transformRequest: [function (data) {
 					// Do whatever you want to transform the data
 					let ret = ''
@@ -78,18 +81,29 @@ export default {
 //	           	this.captcha = response.data;
 //          	this.captcha = this.apiRoot + '/grain/captcha?d='+new Date().getTime()
 	           	this.captchaId = response.data.captcha; 
+//	           	下面是一个好看的验证码但是鉴于某人眼瞎有时需要关掉
+	           	var container=document.querySelector('#code_canvas')
+	           	container.innerHTML="";
+	           	var option={};
+				option.id="code_canvas"
+				option.zlcode=response.data.captcha
+				var verifyCode = new GVerify(option);
 	        }.bind(this)).catch(function (error) {
 	            console.log(error);
 	        }.bind(this));
 //          this.captcha = this.apiRoot + '/grain/captcha?d='+new Date().getTime()
         },
         submitForm() {
+//      	if(this.test){
+//             	this.$router.push({ path: '/index'});
+//      		return
+//      	}
         	if(!this.checkcode()){
         		return
         	}
             this.$http({
 		    method: 'post',
-			url: this.apiRoot +  '/grain/login',
+			url: this.apiRoot +  'login',
 			transformRequest: [function (data) {
 				// Do whatever you want to transform the data
 				let ret = ''
@@ -141,6 +155,7 @@ export default {
         },
 //      失去焦点时是否需要验证码的验证
         checkcode(){
+        	this.focusYzm=false;
 			if(this.captchaId==this.loginForm.number){
                 this.loginError=false;			
 				return true;
@@ -149,21 +164,17 @@ export default {
 				this.errorMessage="您输入的验证码信息不正确，请重新输入！";
 				return false;
 			}
-        },
-        focus(a,b){
-        	console.log(this,a,b)
-        	this.isfocus=true
-        },
-        blur(){
-        	this.isfocus=false   
-        },
+       	},
     },
     data() {
         return {
+        	test:true,
+        	focusUser:false,
+        	focusPass:false,
+        	focusYzm:false,
         	loginError:false,
             captcha:'',
             captchaId:'',
-        	isfocus:false,
             loginForm: {
                 name:"",
                 password:"",

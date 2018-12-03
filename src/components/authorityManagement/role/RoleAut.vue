@@ -145,8 +145,8 @@ export default {
   data() {
     return {
 //    datalistURL:this.apiRoot +'/grain/resource/get/resourceAndOperation',
-      datalistURL:this.apiRoot +'/grain/resource/listAll',
-      authURL:this.apiRoot +'/grain/role/auth',
+      datalistURL:this.apiRoot +'resource/listAll',
+      authURL:this.apiRoot +'role/auth',
       searchURL:'/liquid/role2/data/search',
       deleteURL:'/liquid/role2/data/delete',
       checkedId:[],

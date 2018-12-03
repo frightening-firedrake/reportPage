@@ -104,7 +104,7 @@ export default {
   		console.log('titleEvent');
   	},
   	submit(data,tree){
-  		if(!this.$_ault_alert('user:auth')){
+		if(!this.$_ault_alert('user:auth')){
 			return
 		}
 //		处理ids数据
@@ -142,8 +142,8 @@ export default {
   },
   data() {
     return {
-      datalistURL:this.apiRoot +'/grain/user/getRoles',
-      authURL:this.apiRoot +'/grain/user/auth',
+      datalistURL:this.apiRoot +'user/getRoles',
+      authURL:this.apiRoot +'user/auth',
       searchURL:'/liquid/role2/data/search',
       deleteURL:'/liquid/role2/data/delete',
       checkedId:[],

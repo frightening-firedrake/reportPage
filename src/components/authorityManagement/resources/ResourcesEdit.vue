@@ -276,11 +276,11 @@ export default {
   },
   data() {
     return {
-      datalistURL:this.apiRoot +'/grain/resource/checkResource',
-      getResourceURL:this.apiRoot +'/grain/resource/get/resourceAndOperation',
-      editURL:this.apiRoot +'/grain/resource/edit',
+      datalistURL:this.apiRoot +'resource/checkResource',
+      getResourceURL:this.apiRoot +'resource/get/resourceAndOperation',
+      editURL:this.apiRoot +'resource/edit',
       searchURL:'/liquid/role2/data/search',
-      deleteURL:this.apiRoot +'/grain/resource/delete',
+      deleteURL:this.apiRoot +'resource/delete',
       checkedId:[],
 	  createlibVisible:false,
       breadcrumb:{

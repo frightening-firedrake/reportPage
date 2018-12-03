@@ -17,6 +17,13 @@
 			    </el-radio-group>
 			</div>
 		</div>
+		<!--这里加了个搜索框-->
+		<div class="search"  v-if="listHeader.search">
+			<el-input :placeholder="listHeader.placeholder" v-model="search" class="searchInputwrap">
+			    <el-button slot="append" icon="el-icon-search" @click="searchingfor"></el-button>
+			</el-input>
+		</div>
+		
 		<div class="status2" v-if="listHeader.status2">
 			<p>
 				{{listHeader.statusTitle2?listHeader.statusTitle2:'状态:'}}
@@ -97,13 +104,44 @@
 				</el-select>
 			</div>
 		</div>
-		<!--下拉选择任务筛选-->
-		<div class="dataSelete libSelete mission" v-if="listHeader.task">			
-			<p>选择任务:</p>
+
+		<!--下拉筛选进度-->
+		<div class="dataSelete Selete2 state" v-if="listHeader.state">			
+			<p>案件进度:</p>
 			<div>
-			    <el-select v-model="selectTask"  placeholder="请选择任务名" popper-class='headerSelectlib1' @change="selectTaskChange">
+			    <el-select v-model="state"  placeholder="请选择" popper-class='headerSelectlib11' @change="stateChange">
 					<el-option  label="全部"  value="全部"></el-option>								        									        
-					<el-option v-for="item4 in listHeader.taskList" :label="item4.taskName" :key="item4.id" :value="item4.id"></el-option>								        									        
+					<el-option v-for="item4 in listHeader.stateList" :label="item4.name" :key="item4.id" :value="item4.id"></el-option>								        									        
+				</el-select>
+			</div>
+		</div>
+		<!--下拉选择任务筛选-->
+		<div class="dataSelete Selete2 threadArea" v-if="listHeader.threadArea">			
+			<p>线报地域:</p>
+			<div>
+			    <el-select v-model="threadArea"  placeholder="请选择" popper-class='headerSelectlib11' @change="threadAreaChange">
+					<el-option  label="全部"  value="全部"></el-option>								        									        
+					<el-option v-for="item4 in listHeader.threadAreaList" :label="item4.threadAreaName" :key="item4.id" :value="item4.id"></el-option>								        									        
+				</el-select>
+			</div>
+		</div>
+		<!--下拉筛选行业-->
+		<div class="dataSelete Selete2 industryField" v-if="listHeader.industryField">			
+			<p>行业领域:</p>
+			<div>
+			    <el-select v-model="industryField"  placeholder="请选择" popper-class='headerSelectlib11' @change="industryFieldChange">
+					<el-option  label="全部"  value="全部"></el-option>								        									        
+					<el-option v-for="item4 in industryFieldList" :label="item4.name" :key="item4.id" :value="item4.id"></el-option>								        									        
+				</el-select>
+			</div>
+		</div>
+		<!--下拉筛选类型-->
+		<div class="dataSelete Selete2 informType" v-if="listHeader.informType">			
+			<p>举报类型:</p>
+			<div>
+			    <el-select v-model="informType"  placeholder="请选择" popper-class='headerSelectlib11' @change="informTypeChange">
+					<el-option  label="全部"  value="全部"></el-option>								        									        
+					<el-option v-for="item4 in informTypeList" :label="item4.name" :key="item4.id" :value="item4.id"></el-option>								        									        
 				</el-select>
 			</div>
 		</div>
@@ -128,26 +166,6 @@
 					新建库
 				</div>
 			</template>
-			<template v-if="listHeader.connect">				
-				<div class="create" @click="connect" style="background-image:url('static/images/sys/create.png');">
-					新建样品领取交接单
-				</div>
-			</template>
-			<template v-if="listHeader.createSampling">				
-				<div class="create" @click="createSampling" style="background-image:url('static/images/sys/create.png');">
-					新建扦样
-				</div>
-			</template>
-			<template v-if="listHeader.createPackling">				
-				<div class="create" @click="createPackling" style="background-image:url('static/images/sys/create.png');">
-					新建任务
-				</div>
-			</template>
-			<template v-if="listHeader.autH">				
-				<div class="create" @click="createAut" style="background-image:url('static/images/sys/create.png');">
-					{{listHeader.autH}}
-				</div>
-			</template>
 			<template v-if="listHeader.addbtn">				
 				<div class="create" @click="addbtn" style="background-image:url('static/images/sys/create.png');">
 					{{listHeader.addbtn}}
@@ -159,6 +177,11 @@
 						<i class="iconfont icon-ccgl-yundanpicisaomiao-4-copy"></i>
 						扫描条形码
 					</span>					
+				</div>
+			</template>
+			<template v-if="listHeader.autH">				
+				<div class="create" @click="createAut" style="background-image:url('static/images/sys/create.png');">
+					{{listHeader.autH}}
 				</div>
 			</template>
 		</div>
@@ -182,12 +205,19 @@
 		height: 0.54rem;
 		line-height:0.54rem;
 		border-radius: 0.1rem 0.1rem 0 0;
-		border: solid 1px #eaeaea;
+		border: solid 1px #d7d7d7;
 		border-bottom: none;
-		margin-top: 0.05rem;
+		margin-top: 0.2rem;
+		overflow:hidden;
 	}
 	div.listHeader.deep{
 		border-color:#ccc;
+	}
+	div.listHeader.notop{
+		margin-top: 0;
+	}
+	div.listHeader.noborder{
+		border:0;
 	}
 	/*标题*/
 	div.listHeader p{
@@ -196,7 +226,7 @@
 		color:#000000;
 		padding-left:0.35rem;
 		position:relative;
-		margin-right:0.18rem;
+		margin-right:0.11rem;
 	}
 	div.listHeader p:before{
 		content:'';
@@ -222,8 +252,8 @@
 		padding-left:0.34rem;
 		box-sizing: border-box;
 		border-radius:0.05rem;
-		border:1px solid #58b481;
-		color: #58b481;
+		border:1px solid #4c90db;
+		color: #4c90db;
 		font-size:0.2rem;
 		text-align:right;
 		background-repeat: no-repeat;
@@ -337,8 +367,21 @@
 	div.listHeader div.dataSelete >p:before{
 		background:#1bb45f;
 	}
+	div.listHeader div.dataSelete.state >p:before{
+		background:#fa8564;
+	}
+	div.listHeader div.dataSelete.threadArea >p:before{
+		background:#fc9400;
+	}
+	div.listHeader div.dataSelete.industryField >p:before{
+		background:#4b8fdb;
+	}
+	div.listHeader div.dataSelete.informType >p:before{
+		background:#adc683;
+	}
 	div.listHeader div.dataSelete.mission >p:before{
 		background:#ff4c78;
+
 	}
 	div.listHeader div.dataSelete >div{
 		float:left;
@@ -427,12 +470,22 @@
 		width:4rem;*/
 	}
 	div.listHeader .el-select{
-		margin-left:0.2rem;
+		/*margin-left:0.2rem;*/
+	}
+	div.listHeader  .el-select .el-input .el-input__suffix i{
+		line-height:0.54rem;
+	}
+	div.listHeader div.Selete2 >div{
+		float:left;
+		width:1.8rem;
+		line-height:0.54rem;
 	}
 	div.listHeader .el-select .el-input input{
-		height:0.36rem;
-		width:2.75rem;
-		line-height:0.34rem;
+		/*height:0.36rem;
+		line-height:0.34rem;*/
+		height:0.26rem;
+		line-height:0.24rem;
+		width:100%;
 		border:solid  0.01rem #dfdfdf;
 		font-size:0.16rem;
 		background:#f2f2f2;
@@ -485,6 +538,33 @@
 	div.listHeader.checks{
 		height: 1.62rem;
 	}
+	/*搜索框*/
+	div.listHeader .search{
+		width:3rem;
+		float:left;
+		line-height:0.54rem;
+		padding-left:0.16rem;
+	}
+	div.listHeader .search .searchInputwrap{
+
+	}
+	div.listHeader .search .searchInputwrap input{
+		height:0.32rem;
+		border-radius:0.16rem 0 0 0.16rem;
+		font-size:0.16rem;
+		border-color:#dfdfdf;
+		background-color: #f2f2f2;
+	}
+	div.listHeader .search .searchInputwrap .el-input-group__append{
+		border-radius:0 0.16rem 0.16rem 0;
+		background-color: #4c90db;
+		padding:0 0.1rem;
+		border-color:#4c90db;
+	}
+	div.listHeader .search .searchInputwrap .el-input-group__append i{
+		font-size:0.2rem;
+		color:white;
+	}
 </style>
 <script>
 //import SinograinModal from '@/components/common/action/Modal.vue';
@@ -531,6 +611,11 @@ export default {
 	        selectlib2:'全部',
 	        selectTask:'全部',
 		    remSelect:'',
+		    informType:'全部', //举报类别
+		    threadArea:'山西省', //地域
+			industryField:'全部', //行业领域
+			state:'全部', //案件进度
+			search:'',//
 //		   	 筛选列表
 //	  	  	restaurants: [{"value": "春季抽查"},{"value": "秋季普查"},{"value": "2017年度轮换验收"},{"value": "2018年度轮换验收"},{"value": "收购巡查"}],
         };
@@ -552,6 +637,9 @@ export default {
 //  		console.log(this.date_select);
     		this.$emit('dateChange',this.date_select);
     	},
+    	searchingfor(){
+    		this.$emit('search',this.search);
+    	},
     	selectlibChange1(){
 			this.selectlib2='全部';
 			this.$emit('selectlibChange','pLibraryId',this.selectlib);
@@ -563,8 +651,21 @@ export default {
     			this.$emit('selectlibChange','libraryId',this.selectlib2);
     		}
     	},	
-    	selectTaskChange(){
-			this.$emit('selectTaskChange',this.selectTask);
+//  	地域
+    	threadAreaChange(){
+			this.$emit('threadAreaChange',this.threadArea);
+    	},
+//  	案件进度
+    	stateChange(){
+			this.$emit('stateChange',this.state);
+    	},
+//  	行业领域
+    	industryFieldChange(){
+			this.$emit('industryFieldChange',this.industryField);
+    	},
+//  	举报类型
+    	informTypeChange(){
+			this.$emit('informTypeChange',this.informType);
     	},
     	statusChange(){
 //  		console.log(this.radio_status)
@@ -618,7 +719,7 @@ export default {
 	  	},
     },
     computed: {
-  		...mapGetters(["remarkses"]),
+  		...mapGetters(["remarkses","informTypeList","industryFieldList","stateList"]),
 	    subtitle(){
 	    	return this.listHeader.subtitle;
 //          const route = this.$route.name.split("/")

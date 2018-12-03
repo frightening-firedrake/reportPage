@@ -7,7 +7,7 @@
       <!--表格上的时间选框以及 创建-->
       <list-header :listHeader="listHeader" v-on:dateChange="dateChange" v-on:statusChange="statusChange" v-on:createSampling="createSampling" v-on:createlib="createlib" @createAut="createAut"></list-header>
       <!--表格-->
-      <sinograin-list class="list" :tabledata="tabledatas" :list="list" :items="items" :actions="actions" v-on:getchecked="getchecked" :loading="loading" v-on:emptyCreate="emptyCreate" > 
+      <sinograin-list class="list nopointer" :tabledata="tabledatas" :list="list" :items="items" :actions="actions" v-on:getchecked="getchecked" :loading="loading" v-on:emptyCreate="emptyCreate" > 
       </sinograin-list>
       <!--分页-->
       <sinograin-pagination :page="page" v-on:paginationEvent="paginationEvent" v-on:getCurrentPage="getCurrentPage"></sinograin-pagination>
@@ -59,7 +59,7 @@ export default {
     }.bind(this)); 	
 //	监听列表点击编辑事件
   	this.$root.eventHub.$on("editlistitem",function(id){ 
-  		if(!this.$_ault_alert('resource:edit')){
+		if(!this.$_ault_alert('resource:edit')){
 			return
 		}
 //		console.log(id)
@@ -143,7 +143,7 @@ export default {
   	},
 //	获取列表数据方法
   	getlistdata(page){
-  		this.loading=true;
+//		this.loading=true;
   		// 获取列表数据（第？页）
 		this.$http({
 		    method: 'post',
@@ -213,8 +213,8 @@ export default {
   },
   data() {
     return {
-      datalistURL:this.apiRoot +'/grain/resource/data',
-      searchURL:this.apiRoot +'/grain/resource/data',
+      datalistURL:this.apiRoot +'resource/data',
+      searchURL:this.apiRoot +'resource/data',
       deleteURL:'/liquid/role/data/delete',
       checkedId:[],
       searchText:'',
@@ -235,10 +235,11 @@ export default {
 	  	submitText:'确定',
 	  },
       breadcrumb:{
-      	search:true,   
+//    	search:true,   
       	searching:'',
       },
-      loading:true,
+//    loading:true,
+      loading:false,
 //    分页数据
       page: {
         size: 10,
@@ -303,6 +304,7 @@ export default {
       	auth:false,
       	show:true,
       	noview:true,
+      	actionWidth:100,
       }
     }
   }

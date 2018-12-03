@@ -163,7 +163,7 @@ export default {
 				}
 				this.$http({
 				    method: 'post',
-					url: this.apiRoot +'/grain/role/findBydisplayName',
+					url: this.apiRoot +'role/findBydisplayName',
 					transformRequest: [function (data) {
 						// Do whatever you want to transform the data
 						let ret = ''
@@ -192,7 +192,7 @@ export default {
 			var userName = ( rule, value, callback ) => {
 				this.$http({
 				    method: 'post',
-					url: this.apiRoot +'/grain/user/findByuserName',
+					url: this.apiRoot +'user/findByuserName',
 					transformRequest: [function (data) {
 						// Do whatever you want to transform the data
 						let ret = ''
@@ -221,7 +221,7 @@ export default {
 			var resourceName = ( rule, value, callback ) => {
 				this.$http({
 				    method: 'post',
-					url: this.apiRoot +'/grain/resource/findByresourceName',
+					url: this.apiRoot +'resource/findByresourceName',
 					transformRequest: [function (data) {
 						// Do whatever you want to transform the data
 						let ret = ''

@@ -90,7 +90,7 @@
 				</div>
         	</div>
 			
-            <el-button class="yes" type="primary" @click="onSubmit('form')">确认</el-button>
+            <el-button class="yes" type="primary" :loading="btnloading" @click="onSubmit('form')">确认</el-button>
             <el-button class="no" @click="cancel('form')">取消</el-button>
         </div>
         
@@ -103,7 +103,7 @@
 <script>
 import "@/assets/style/common/Form.css";
 export default {
-    props: ["formdatas"],
+    props: ["formdatas","btnloading"],
     created(){
     	
     },
@@ -163,7 +163,7 @@ export default {
 				}
 				this.$http({
 				    method: 'post',
-					url: this.apiRoot +'/grain/role/findBydisplayName',
+					url: this.apiRoot +'role/findBydisplayName',
 					transformRequest: [function (data) {
 						// Do whatever you want to transform the data
 						let ret = ''
@@ -191,7 +191,7 @@ export default {
 			var userName = ( rule, value, callback ) => {
 				this.$http({
 				    method: 'post',
-					url: this.apiRoot +'/grain/user/findByuserName',
+					url: this.apiRoot +'user/findByuserName',
 					transformRequest: [function (data) {
 						// Do whatever you want to transform the data
 						let ret = ''
@@ -219,7 +219,7 @@ export default {
 			var resourceName = ( rule, value, callback ) => {
 				this.$http({
 				    method: 'post',
-					url: this.apiRoot +'/grain/resource/findByresourceName',
+					url: this.apiRoot +'resource/findByresourceName',
 					transformRequest: [function (data) {
 						// Do whatever you want to transform the data
 						let ret = ''
@@ -244,9 +244,9 @@ export default {
 
             }
         return {
-        labelWidth:'2rem',
-        errorinline:false,
-        disabled:true,
+	        labelWidth:'2rem',
+	        errorinline:false,
+	        disabled:true,
         
             rules: {
                 phone:[
