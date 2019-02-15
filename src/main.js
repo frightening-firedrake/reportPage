@@ -18,8 +18,8 @@ Vue.use(VideoPlayer)
 Vue.use(ElementUI);
 Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
 
-// Vue.prototype.apiRoot = 'https://192.168.1.253:8443/reportingSystem/'//bo
-// Vue.prototype.apiRoot = 'http://192.168.1.252:8081/reportingSystem/'//kun
+// Vue.prototype.apiRoot = 'http://192.168.1.253:8080/reportingSystem/'//bo
+// Vue.prototype.apiRoot = 'http://192.168.1.252:8083/reportingSystem/'//kun
 
 //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 //axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'

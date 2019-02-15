@@ -127,13 +127,13 @@
 		<div class="emptymargin"></div>
 		    <!--举报人基本信息-->
 		   	<el-form-item label="举报人姓名：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
-		    	<el-input v-model="formdatas.form.informerName" :disabled="disabled"></el-input>
+		    	<el-input v-model="formdatas.form.encryptName" :disabled="disabled"></el-input>
 			</el-form-item>
 			<el-form-item label="举报人电话：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
-			    <el-input v-model="formdatas.form.phoneNumber" :disabled="disabled"></el-input>
+			    <el-input v-model="formdatas.form.encryptPhoneNumber" :disabled="disabled"></el-input>
 			</el-form-item>
 			<el-form-item label="举报人其他联系方式：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
-			    <el-input v-model="formdatas.form.otherContactWay" :disabled="disabled"></el-input>
+			    <el-input v-model="formdatas.form.encryptOtherContectWay" :disabled="disabled"></el-input>
 			</el-form-item>
 			<el-form-item label="举报时间：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
 			    <el-input v-model="formdatas.form.createTime" :disabled="disabled"></el-input>
@@ -421,6 +421,14 @@
     	float:left;
     	margin-bottom:0.2rem;
     	padding-right:0.2rem;
+  	}
+  	.el-upload-list__item-actions .el-upload-list__item-preview{
+  		width:100%;
+  		height:100%;
+  		position:absolute;
+  		top:0;
+  		right:0;
+  		font-size:0.48rem;
   	}
 </style>
 <script>

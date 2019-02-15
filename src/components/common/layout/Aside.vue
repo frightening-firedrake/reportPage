@@ -235,6 +235,14 @@ export default {
           pid: 9,
           lid: 12
         },
+        {
+          icon: "icon-diqufenbu",
+          title: "地区管理",
+          linkto: "/index/AuthorityManagement/RegionalManagement",
+          level: 2,
+          pid: 9,
+          lid: 13
+        },
       ]
     };
   },

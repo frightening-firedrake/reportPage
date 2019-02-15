@@ -53,6 +53,11 @@ export default {
 	}
   },
   created(){
+  	if(this.$_has('information:getEncrypt')){
+		this.datalistURL=this.apiRoot + 'information/accessData'
+	}else{
+		this.datalistURL=this.apiRoot + 'information/noAccessData'
+	}
 //	console.log(this.$route.query)
 //  获取列表数据（第一页）
 	this.getlistdata(1)
@@ -199,7 +204,7 @@ export default {
 			params.informType=this.informType
 		}
 		if(this.searchText){
-			params.phoneNumber=this.searchText
+			params.encryptPhoneNumber=this.searchText
 		}
 
   		this.loading=false;
@@ -341,7 +346,7 @@ export default {
       }],
 //    表格数据
       listHeader:{
-      	search:true,
+      	search:false,
       	placeholder:'请输入举报人电话',
       	date1:false,
       	date1Title:'储存时间：',
@@ -410,7 +415,7 @@ export default {
       },
       {
         id: 5,
-        prop:'phoneNumber',
+        prop:'encryptPhoneNumber',
         label:"举报人电话",
 //      status:true,
 //      width:80,

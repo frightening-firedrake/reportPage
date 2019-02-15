@@ -31,8 +31,9 @@ import ResourcesEdit from '@/components/authorityManagement/resources/ResourcesE
 import ResourcesAdd from '@/components/authorityManagement/resources/ResourcesAdd.vue'
 import ResourcesList from '@/components/authorityManagement/resources/ResourcesList.vue'
 
-import error403 from '@/components/error/error403.vue'
+import RegionalManagement from '@/components/authorityManagement/regional/RegionalManagement.vue'
 
+import error403 from '@/components/error/error403.vue'
 
 
 Vue.use(Router)
@@ -237,7 +238,13 @@ const routes = [{
                 component: ResourcesAdd,
                 meta: { needAuth: '资源管理' },
             },
-
+//			地域管理我是不懂MD也没人给我讲明白
+            {
+                path: "AuthorityManagement/RegionalManagement",
+                name: "权限管理/地区管理",
+                component: RegionalManagement,
+//              meta: { needAuth: '地区管理' },
+            },
         ]
     },
 

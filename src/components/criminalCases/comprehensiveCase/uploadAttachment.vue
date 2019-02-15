@@ -38,7 +38,7 @@
 <!--			  multiple-->
 			  <i class="el-icon-upload"></i>
 			  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-			  <div class="el-upload__tip" slot="tip">只能上传不超过500kb的文件，上传文件列表右侧出现对勾表示上传成功！！</div>
+			  <div class="el-upload__tip" slot="tip">只能上传不超过400Mb的文件，上传文件列表右侧出现对勾表示上传成功！！</div>
 			</el-upload>
 			<div class="btn-center-uplaod">
 			    <el-button class="rbtn" :disabled="tfbtns.btnCenter.ldisabled"  @click="btnCenterNo">{{tfbtns.btnCenter.btnTextL?tfbtns.btnCenter.btnTextL:'不同意'}}</el-button>

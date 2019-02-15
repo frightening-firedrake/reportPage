@@ -57,7 +57,7 @@
     					</div>
     				</li>
     				<template v-if="!msg.length">
-    					<div class="empty">暂无新消息通知</div>
+    					<div class="empty">{{empty}}</div>
     				</template>
     			</ul>
     		</div>
@@ -336,7 +336,16 @@ export default {
 //  获取列表数据（第一页）
 	this.findSumAndValid()
 	this.findNum()
-	this.getdata()
+	if(this.$_has('information:getEncrypt')){
+		this.datalistURL3=this.apiRoot + 'information/accessData'
+	}else{
+		this.datalistURL3=this.apiRoot + 'information/noAccessData'
+	}
+	if(this.$_has('information:data')){
+		this.getdata()
+	}else{
+		this.empty="您没有权限进行此项操作！"		
+	}
 	clearInterval(this.T)
 	this.T=setInterval(this.ontime,10000)
 	
@@ -359,7 +368,9 @@ export default {
 	//定时获取数据
 	ontime(){
 		this.findNum()
-		this.getdata()
+		if(this.$_has('information:data')){
+			this.getdata()
+		}
 	},
 //	获取数据方法
   	findSumAndValid(){
@@ -616,6 +627,7 @@ export default {
       	datalistURL1: this.apiRoot + 'information/findSumAndValid',
       	datalistURL2: this.apiRoot + 'information/findNum',
       	datalistURL3: this.apiRoot + 'information/data',
+      	empty:'暂无新消息通知',
       	msgTotal:'',
       	sum:[],
       	validNumber:[],

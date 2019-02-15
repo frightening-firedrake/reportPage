@@ -61,14 +61,18 @@ export default {
   created(){
 //	console.log(this.$route.query)
 //  获取列表数据（第一页）
-
+	if(this.$_has('information:getEncrypt')){
+		this.DetailsURL=this.apiRoot + 'information/accessGet'
+	}else{
+		this.DetailsURL=this.apiRoot + 'information/noAccessGet'
+	}
 	this.getfeedbackInformation()
 	this.getDetails()
 	if(this.$route.query.state==-1){
 		this.tfbtns={
 	    	btnCenter:{
-				btnTextL:'通过审核',
-				btnTextR:'未通过审核',
+				btnTextL:'未通过审核',
+				btnTextR:'通过审核',
 				doubleColor:true,
 			},     	
 	    };
@@ -131,9 +135,9 @@ export default {
 	    	this.formdatas.form.clueAddress=response.data.information.clueAddress//线报详址
 	    	this.formdatas.form.industryField=response.data.information.industryField//行业领域
 	    	this.formdatas.form.informType=response.data.information.informType//举报类别
-	    	this.formdatas.form.informerName=response.data.informer?response.data.informer.informerName?response.data.informer.informerName:'匿名':'匿名'//举报人姓名
-	    	this.formdatas.form.phoneNumber=response.data.informer?response.data.informer.phoneNumber?response.data.informer.phoneNumber:'匿名':'匿名'//手机号码
-	    	this.formdatas.form.otherContactWay=response.data.informer?response.data.informer.otherContactWay?response.data.informer.otherContactWay:'匿名':'匿名'//其他联系方式
+	    	this.formdatas.form.encryptName=response.data.informer?response.data.informer.encryptName?response.data.informer.encryptName:'匿名':'匿名'//举报人姓名
+	    	this.formdatas.form.encryptPhoneNumber=response.data.informer?response.data.informer.encryptPhoneNumber?response.data.informer.encryptPhoneNumber:'匿名':'匿名'//手机号码
+	    	this.formdatas.form.encryptOtherContectWay=response.data.informer?response.data.informer.encryptOtherContectWay?response.data.informer.encryptOtherContectWay:'无':'无'//其他联系方式
 	    	this.formdatas.form.createTime=response.data.information.createTime//举报时间
 //	    	report images url videos src
 	    	this.formdatas.reports[0].report=response.data.information.informContent//举报文字内容
@@ -337,11 +341,14 @@ export default {
 
   	//	表单底部触发事件btnCenterNo btnCenterYes btnLeft btnRight btnOne
 	tfootEvent(date){
-		if(!this.$_ault_alert('information:toExamine')){
-			return
-		}
+//		if(!this.$_ault_alert('information:toExamine')){
+//			return
+//		}
 		console.log(date);
-		if(date=='btnCenterL'){
+		if(date=='btnCenterR'){
+			if(!this.$_ault_alert('information:toExamine')){
+				return
+			}
 			this.isPass=1;
 			var modal={
 			  	title:'通过审核',
@@ -369,7 +376,10 @@ export default {
 			this.modalVisible=true;
 //			this.disagree()
 //			this.$router.go(-1)
-		}else if(date=='btnCenterR'){
+		}else if(date=='btnCenterL'){
+			if(!this.$_ault_alert('information:toExamine')){
+				return
+			}
 			this.isPass=4;
 			var modal={
 			  	title:'未通过审核',
@@ -418,6 +428,9 @@ export default {
 		}else if(date=='btnRight'){
 //			this.exportExcel(this.$route.query.pId)
 		}else if(date=='btnOne'){
+			if(!this.$_ault_alert('information:upload')){
+				return
+			}
 			var path=this.$route.path+'/uploadAttachment';
 			var id=this.$route.query.id;
 			var state=this.$route.query.state;
@@ -527,9 +540,9 @@ export default {
 	        industryField:'',//行业领域
 	        informType:'',//举报类别
 	
-	        informerName:'',    //举报人姓名
-	        phoneNumber:'',      //手机号码
-	        otherContactWay:'',  //其他联系方式
+	        encryptName:'',    //举报人姓名
+	        encryptPhoneNumber:'',      //手机号码
+	        encryptOtherContectWay:'',  //其他联系方式
 			createTime:'',//举报时间
       	},
       	// 		state:'',//案件进度
