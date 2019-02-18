@@ -7,7 +7,7 @@
       <!--表格上的时间选框以及 创建-->
       <list-header :listHeader="listHeader" v-on:dateChange="dateChange" v-on:statusChange="statusChange" v-on:createSampling="createSampling" v-on:createlib="createlib" @createAut="createAut"></list-header>
       <!--表格-->
-      <regional-list :regional="regional"></regional-list>
+      <regional-list :regional="regional" @addRegional="addRegional"></regional-list>
       <!--分页-->
       <!--<sinograin-pagination :page="page" v-on:paginationEvent="paginationEvent" v-on:getCurrentPage="getCurrentPage"></sinograin-pagination>-->
       <!--输入弹框-->
@@ -69,7 +69,6 @@ export default {
   },
   destroy(){
   	this.$root.eventHub.$off("editlistitem")
-
   	this.$root.eventHub.$off('delelistitem')
   },
   methods: {
@@ -210,7 +209,79 @@ export default {
   	getchecked(checkedId){
   		this.checkedId=checkedId;
   	},
-
+//  添加地区
+	addRegional(type,shengId,shiId){
+//		console.log(type,shengId,shiId)
+		var sheng=this.regional.filter((val)=>{
+			return val.id==shengId
+		})
+		var shi=this.regional.filter((val)=>{
+			return val.id==shiId
+		})
+//		console.log(sheng,shi)
+		if(type=="sheng"){
+			this.modal={
+		  		title:'新建地区',
+			  	customClass:'blue',
+				formdatas:[
+					{
+			  			label:"省级:",
+			  			model:"sheng",
+			  			type:'input',
+			  		},
+		  		],
+		  		submitText:'提交',
+		  	};
+		}else if(type=="shi"){
+			this.modal={
+		  		title:'新建地区',
+			  	customClass:'blue',
+				formdatas:[
+					{
+			  			label:"省级:",
+			  			model:"sheng",
+			  			type:'input',
+			  			value:sheng[0].name,
+			  			disabled:true,
+			  		},
+			  		{
+			  			label:"市级:",
+			  			model:"shi",
+			  			type:'input',
+			  		},
+		  		],
+		  		submitText:'提交',
+		  	};
+		}else if(type=="qu"){
+			this.modal={
+		  		title:'新建地区',
+			  	customClass:'blue',
+				formdatas:[
+					{
+			  			label:"省级:",
+			  			model:"sheng",
+			  			type:'input',
+			  			value:sheng[0].name,
+			  			disabled:true,
+			  		},
+			  		{
+			  			label:"市级:",
+			  			model:"shi",
+			  			type:'input',
+			  			value:shi[0].name,
+			  			disabled:true,
+			  		},
+			  		{
+			  			label:"县(区)级:",
+			  			model:"xianqu",
+			  			type:'input',
+			  		},
+		  		],
+		  		submitText:'提交',
+		  	};
+		}
+		this.modalVisible=true;
+	}
   },
   data() {
     return {

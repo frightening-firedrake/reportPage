@@ -11,6 +11,9 @@
 						</li>
 						<li v-if="item.id!=shengId" class="" :key="index" @click="shengChange(item.id)">{{item.name}}</li>
 					</template>
+					<li class="addRegionalLi">
+						<span class="addRegional" @click="addRegional('sheng')">+新建省级地区</span>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -25,6 +28,9 @@
 						</li>
 						<li v-if="item.id!=shiId" class="" :key="index" @click="shiChange(item.id)">{{item.name}}</li>
 					</template>
+					<li class="addRegionalLi" v-if="shengId">
+						<span class="addRegional" @click="addRegional('shi')">+新建市级地区</span>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -36,6 +42,9 @@
 						<li v-if="item.id==xianquId" class="current" :key="index" @click="xianquChange(item.id)">{{item.name}}</li>
 						<li v-if="item.id!=xianquId" class="" :key="index" @click="xianquChange(item.id)">{{item.name}}</li>
 					</template>
+					<li class="addRegionalLi" v-if="shiId">
+						<span class="addRegional" @click="addRegional('qu')">+新建县(区)级地区</span>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -43,6 +52,16 @@
 	</div>
 </template>
 <style>
+	.addRegionalLi{
+		cursor: default!important;
+	}
+	.addRegional{
+		border:1px solid #4c90db;
+		padding:0.06rem 0.2rem;
+		border-radius:0.3rem;
+		color:#4c90db;
+		cursor: pointer;
+	}
 	.regionalWrap{
 		/*left:0rem;
 		right:0rem;
@@ -134,6 +153,10 @@ export default {
     	xianquChange(id){
     		this.xianquId=id
 //  		this.$emit('dateChange',this.date_select);
+    	},
+    	addRegional(type){
+//  		console.log(type,this.shengId,this.shiId,this.xianquId)
+    		this.$emit('addRegional',type,this.shengId,this.shiId);
     	},
     },
     computed: {
