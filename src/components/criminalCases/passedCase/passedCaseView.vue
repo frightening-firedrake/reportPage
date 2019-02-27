@@ -276,7 +276,8 @@ export default {
 		submitdata.feedbackInformation=form.reason
 		submitdata.state=this.isPass
 		submitdata.assessorId=this.userId
-
+		submitdata.acceptUnits=form.acceptUnits
+		
 		this.toExamine(submitdata)
 	},
 	toExamine(data){
@@ -356,6 +357,7 @@ export default {
 			var modal={
 			  	title:'通过审核',
 			  	customClass:'blue',
+			  	select3:true,
 				formdatas:[
 					{
 			  			label:"审核员:",
@@ -363,6 +365,10 @@ export default {
 						value: "admin",
 //			  			disabled:true,
 			  			type:'input',
+			  		},
+			  		{
+			  			label:"受理单位:",
+			  			type:'select3',
 			  		},
 			  		{
 			  			label:"自动反馈信息",
@@ -387,6 +393,7 @@ export default {
 			var modal={
 			  	title:'未通过审核',
 			  	customClass:'blue',
+			  	select3:true,
 				formdatas:[
 					{
 			  			label:"审核员:",
@@ -394,6 +401,10 @@ export default {
 						value: "admin",
 //			  			disabled:true,
 			  			type:'input',
+			  		},
+			  		{
+			  			label:"受理单位:",
+			  			type:'select3',
 			  		},
 			  		{
 			  			label:"未通过原因:",
