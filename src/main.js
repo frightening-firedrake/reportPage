@@ -16,9 +16,10 @@ require('vue-video-player/src/custom-theme.css')
 Vue.use(VideoPlayer)
 
 Vue.use(ElementUI);
-Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
+//温馨提示注意同步修改ueditor.config.js
+//Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
 
-// Vue.prototype.apiRoot = 'http://192.168.1.253:8080/reportingSystem/'//bo
+   Vue.prototype.apiRoot = 'http://192.168.1.219:8083/reportingSystem/'//bo
 // Vue.prototype.apiRoot = 'http://192.168.1.252:8083/reportingSystem/'//kun
 
 //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';

@@ -46,7 +46,7 @@ export default {
   },
   computed:{
 	...mapState(["modal_id_number","viewdata","editdata","aultdata","messions","mask"]),
-	...mapGetters(["userId"]),
+	...mapGetters(["userId","userName"]),
 //	问题筛选
 	reportFilter(){
 //		if(this.problemStatus=="all"){
@@ -56,7 +56,8 @@ export default {
 //				return item.isDeal==this.problemStatus;
 //			})
 //		}
-	}
+	},
+	
   },
   created(){
 //	console.log(this.$route.query)
@@ -141,6 +142,9 @@ export default {
 	    	this.formdatas.form.clueAddress=response.data.information.clueAddress//线报详址
 	    	this.formdatas.form.industryField=response.data.information.industryField//行业领域
 	    	this.formdatas.form.informType=response.data.information.informType//举报类别
+	    	
+	    	this.formdatas.form.acceptUnits=response.data.information.acceptUnits//受理单位
+	    	
 	    	this.formdatas.form.encryptName=response.data.informer?response.data.informer.encryptName?response.data.informer.encryptName:'匿名':'匿名'//举报人姓名
 	    	this.formdatas.form.encryptPhoneNumber=response.data.informer?response.data.informer.encryptPhoneNumber?response.data.informer.encryptPhoneNumber:'匿名':'匿名'//手机号码
 	    	this.formdatas.form.encryptOtherContectWay=response.data.informer?response.data.informer.encryptOtherContectWay?response.data.informer.encryptOtherContectWay:'无':'无'//其他联系方式
@@ -274,9 +278,11 @@ export default {
 	},
   	//	填入新建数据
 	createlibitem(form){
+//		console.log(form)
 		var submitdata={};
 		submitdata.id=this.$route.query.id
 		submitdata.feedbackInformation=form.reason
+		submitdata.acceptUnits=form.acceptUnits
 		submitdata.state=this.isPass
 		submitdata.assessorId=this.userId
 		this.tfbtns.loading=true;
@@ -358,13 +364,21 @@ export default {
 			var modal={
 			  	title:'通过审核',
 			  	customClass:'blue',
+			  	select3:true,
 				formdatas:[
 					{
 			  			label:"审核员:",
 			  			model:"autograph",
-						value: "admin",
+						value: this.userName,
 //			  			disabled:true,
 			  			type:'input',
+			  		},
+			  		{
+			  			label:"受理单位:",
+//			  			model:"acceptUnits",
+//						value: "山西省公安厅网络举报中心",
+//			  			disabled:true,
+			  			type:'select3',
 			  		},
 			  		{
 			  			label:"自动反馈信息",
@@ -389,13 +403,21 @@ export default {
 			var modal={
 			  	title:'未通过审核',
 			  	customClass:'blue',
+			  	select3:true,
 				formdatas:[
 					{
 			  			label:"审核员:",
 			  			model:"autograph",
-						value: "admin",
+						value: this.userName,
 //			  			disabled:true,
 			  			type:'input',
+			  		},
+			  		{
+			  			label:"受理单位:",
+//			  			model:"acceptUnits",
+//						value: "山西省公安厅网络举报中心",
+//			  			disabled:true,
+			  			type:'select3',
 			  		},
 			  		{
 			  			label:"未通过原因:",
@@ -492,7 +514,7 @@ export default {
 			{
 	  			label:"审核员:",
 	  			model:"autograph",
-				value: "admin",
+				value: "",
 //	  			disabled:true,
 	  			type:'input',
 	  		},
@@ -544,7 +566,7 @@ export default {
 	        clueAddress:'',//线报详址
 	        industryField:'',//行业领域
 	        informType:'',//举报类别
-	
+			acceptUnits:'',//受理单位
 	        encryptName:'',    //举报人姓名
 	        encryptPhoneNumber:'',      //手机号码
 	        encryptOtherContectWay:'',  //其他联系方式

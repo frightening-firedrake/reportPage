@@ -4,12 +4,16 @@
             <p class="tableName">
             	{{formdatas.title}}
             </p>
-        	<!--<div class="newbtns">							
-				<div class="create" @click="addsafety" style="background-image:url('static/images/sys/create.png');">
+        	<div class="newbtns">							
+				<!--<div class="create" @click="addsafety" style="background-image:url('static/images/sys/create.png');">
 					新增安全问题报告
-				</div>
-			</div>-->
-        </template>      
+				</div>-->
+				<div class="exportE" @click="exportOne">导出表格</div>
+			</div>
+        </template>   
+        <el-form-item label="报警单号：" prop="pnumber" class="full" v-bind:class="{disabled:disabledshow}">
+		    <el-input v-model="formdatas.form.alarmNumber" :disabled="disabled"></el-input>
+		</el-form-item>
 		<el-form-item label="线报地域：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
 		    <el-input v-model="formdatas.form.threadArea" :disabled="disabled"></el-input>
 		</el-form-item>
@@ -137,6 +141,9 @@
 			</el-form-item>
 			<el-form-item label="举报时间：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
 			    <el-input v-model="formdatas.form.createTime" :disabled="disabled"></el-input>
+			</el-form-item>
+			<el-form-item v-if="formdatas.form.acceptUnits" label="受理单位：" prop="pnumber" class="full" v-bind:class="{disabled:disabledshow}">
+			    <el-input v-model="acceptUnits" :disabled="disabled"></el-input>
 			</el-form-item>
 			<!--案件进度-->
 			<!--未立案-->
@@ -317,6 +324,19 @@
 		padding-right:0.07rem;
 		cursor:pointer;
 	}
+	div.newbtns div.exportE{
+		height:0.32rem;
+		line-height:0.3rem;
+		/*width:1.07rem;*/
+		padding:0 0.1rem;
+		box-sizing: border-box;
+		border-radius:0.05rem;
+		border:1px solid #4c90DB;
+		color: #4c90DB;
+		font-size:0.16rem;
+		text-align:center;
+		cursor:pointer;
+	}
 	.emptymargin{
 		float:left;
 		height:0.2rem;
@@ -438,6 +458,7 @@ export default {
     props: ["formdatas","reportFilter"],
     created(){
 //  	console.log(this.reportFilter)
+		this.getRegionAll()
     },
     mounted: function() {
 //		console.log(this.formdatas)
@@ -457,6 +478,12 @@ export default {
 // 			})[0].name
 			return this.formdatas.form.informType
  		},
+ 		acceptUnits(){
+ 			var region=this.arrRegionAll.find((item)=>{
+ 				return item.id==this.formdatas.form.acceptUnits
+ 			})
+   			return region?region.regionName:'';
+ 		}
     },
     data() {
     	
@@ -466,6 +493,7 @@ export default {
         	state2:'侦办中',
         	state3:'已结案',
         	state4:'未立案',
+        	arrRegionAll:[],
         	limit:5,
 			problemStatic:'all',
 	        dialogImageUrl: '',
@@ -531,6 +559,35 @@ export default {
 			        }
 			    }
 			return playerOptions
+		},
+		getRegionAll(){
+//			if(!this.$_ault_alert('safety:edit')){
+//				return
+//			}
+
+			this.$http({
+			    method: 'post',
+				url: this.apiRoot + 'region/getAll',
+				transformRequest: [function (data) {
+					// Do whatever you want to transform the data
+					let ret = ''
+					for (let it in data) {
+					ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+					}
+					return ret
+				}],
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				data:{},
+		    }).then(function (response) {
+				this.arrRegionAll=response.data?response.data:[];
+			}.bind(this)).catch(function (error) {
+			    console.log(error);
+			}.bind(this));
+	  	},
+	  	exportOne(){
+			var id=this.$route.query.id;
+			var loadiframe=document.getElementById('fordownload');
+			loadiframe.src=this.apiRoot+'export/exportWord'+'?id='+id+'&sessionid='+this.Token;
 		}
     }
 

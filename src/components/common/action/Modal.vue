@@ -36,6 +36,19 @@
 					  	v-model="form[item.model]">
 					</el-input>
 			    </el-form-item>
+			  
+			    <el-form-item  class="select" v-if="!item.position&&item.type=='select3'" :prop="item.model" :label="item.label"  :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled}" >
+			        <el-select v-model="select1" placeholder="请选择" no-data-text="无数据" @change="select1Change">
+				        <el-option v-for="item1 in selectitems1" :label="item1.label" :value="item1.id" :key="item1.id"></el-option>    
+				    </el-select>
+				    <el-select v-model="select2" placeholder="请选择" no-data-text="无数据" @change="select2Change">
+				        <el-option v-for="item2 in selectitems2" :label="item2.label" :value="item2.id" :key="item2.id"></el-option>    
+				    </el-select>
+				    <el-select v-model="select3" placeholder="请选择" no-data-text="无数据" @change="select3Change">
+				        <el-option v-for="item3 in selectitems3" :label="item3.label" :value="item3.id" :key="item3.id"></el-option>    
+				    </el-select>
+			    </el-form-item>
+			    
 	  		</template>
 	  		
 	  	<!--<el-form :model="createlib" ref="modalform">
@@ -69,6 +82,21 @@ export default {
     computed:{
 		...mapState(["modal_id_number","viewdata","editdata","aultdata","messions","mask","isCollapse"]),
 		...mapGetters(["modal_id"]),
+		selectitems1(){
+			return this.arrRegionAll.filter((item)=>{
+				return item.pId==-1
+			})
+		},
+		selectitems2(){
+			return this.arrRegionAll.filter((item)=>{
+				return item.pId==this.select1
+			})
+		},
+		selectitems3(){
+			return this.arrRegionAll.filter((item)=>{
+				return item.pId==this.select2
+			})
+		},
 	},
 	beforeCreate(){
 //		console.log(this.$options.propsData)
@@ -78,8 +106,9 @@ export default {
 //		this.form.resontype='101'
 	},
 	created(){
-
-		
+		if(this.modal.select3){			
+			this.getRegionAll()
+		}
 		this.modal.formdatas.forEach((item,index)=>{
 			if(item.defaultz){
 				this.defaultz=item.defaultz
@@ -88,9 +117,11 @@ export default {
 			}
 			
 		})
+		
 		if(this.modal.customClass){
 			this.customClass=this.customClass+' '+this.modal.customClass
 		}
+		
 
 	},
 	mounted(){
@@ -103,6 +134,10 @@ export default {
         	defaultz:'',
         	position_error:false,
         	position_error_message:'',
+        	select1:1,
+        	select2:'',
+        	select3:'',
+        	arrRegionAll:[],
         	dialogWidth:'6.2rem',
         	modalVisible: true,
 		    form:{
@@ -143,7 +178,10 @@ export default {
         	this.position_error=false;
 			this.$refs[formname].validate((valid) => {
                 if (valid) {
-                 		
+                 	if(this.modal.select3){
+                 		var acceptUnits=this.select3?this.select3:this.select2?this.select2:this.select1;
+                 		this.form.acceptUnits=acceptUnits
+                 	}
                 	this.$emit('createlibitem',this.form,this.modal.title);
 					this.$emit('dialogClose')
 //					this.$refs['modalform'].resetFields();				
@@ -184,6 +222,49 @@ export default {
 			}
             this.$emit('modelSelectChange',val,model);
     	},
+    	getRegionAll(){
+//			if(!this.$_ault_alert('safety:edit')){
+//				return
+//			}
+
+			this.$http({
+			    method: 'post',
+				url: this.apiRoot + 'region/getAll',
+				transformRequest: [function (data) {
+					// Do whatever you want to transform the data
+					let ret = ''
+					for (let it in data) {
+					ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+					}
+					return ret
+				}],
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				data:{},
+		    }).then(function (response) {
+				this.arrRegionAll=[];
+				if(response.data){
+					response.data.forEach((item)=>{
+						var obj={};
+						obj.id=item.id;
+						obj.pId=item.pId;
+						obj.label=item.regionName;
+						this.arrRegionAll.push(obj)
+					})
+				}
+			}.bind(this)).catch(function (error) {
+			    console.log(error);
+			}.bind(this));
+	  	},
+	  	select1Change(val){
+			this.select2="";
+			this.select3="";
+	  	},
+	  	select2Change(val){
+			this.select3="";
+	  	},
+	  	select3Change(val){
+
+	  	},
    	},
     
 }

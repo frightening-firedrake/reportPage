@@ -362,7 +362,7 @@ export default {
       	createSampling:false,
       	status:false,
       	date:false,
-      	autH:"新建地区",
+//    	autH:"新建地区",
       	class:'notop noborder',
       },
 //    地区

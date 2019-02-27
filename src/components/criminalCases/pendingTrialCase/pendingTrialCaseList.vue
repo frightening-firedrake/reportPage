@@ -66,6 +66,7 @@ export default {
     this.$root.eventHub.$off("viewlistitem")
     this.$root.eventHub.$off("editlistitem")
     this.$root.eventHub.$off("printlistitem")
+    this.$root.eventHub.$off("exportOne")
 //	监听列表删除事件
     this.$root.eventHub.$on('delelistitem',function(rowid,list){
     	this.tabledatas=this.tabledatas.filter(function(item){
@@ -93,10 +94,17 @@ export default {
   	this.$root.eventHub.$on("printlistitem",function(code){  
 		this.printitem(code);	
   	}.bind(this));
+  	//	监听列表点击导出表格
+  	this.$root.eventHub.$on("exportOne",function(id,row){  
+		this.exportOne(id);	
+  	}.bind(this));
   },
   destroy(){
-  	this.$root.eventHub.$off("viewlistitem")
   	this.$root.eventHub.$off('delelistitem')
+    this.$root.eventHub.$off("viewlistitem")
+    this.$root.eventHub.$off("editlistitem")
+    this.$root.eventHub.$off("printlistitem")
+    this.$root.eventHub.$off("exportOne")
   },
   methods: {
   	...mapMutations(['create_modal_id','is_mask','create_modal','close_modal']),
@@ -203,7 +211,7 @@ export default {
 			params.informType=this.informType
 		}
 		if(this.searchText){
-			params.encryptPhoneNumber=this.searchText
+			params.alarmNumber=this.searchText
 		}
 
   		this.loading=false;
@@ -296,11 +304,17 @@ export default {
 		LODOP.PRINT(); 
 
 	},
+	exportOne(id){
+//		console.log(id)
+		var loadiframe=document.getElementById('fordownload');
+		loadiframe.src=this.exportURL+'?id='+id+'&sessionid='+this.Token;
+	}
   },
   data() {
     return {
       datalistURL: this.apiRoot+'information/data',
 	  searchURL:this.apiRoot + '/grain/sample/data',
+      exportURL: this.apiRoot+'export/exportWord',
       deleteURL:'/liquid/role2/data/delete',
   	  state:-1,
   	  threadArea:"全部",
@@ -345,8 +359,8 @@ export default {
       }],
 //    表格数据
       listHeader:{
-      	search:false,
-      	placeholder:'请输入举报人电话',
+      	search:true,
+      	placeholder:'请输入报警单号',
       	date1:false,
       	date1Title:'储存时间：',
       	selectlib:false,
@@ -378,26 +392,35 @@ export default {
       items: [
       {
         id: 1,
-        prop:'threadArea',
-        label: "线报地域",
+        prop:'alarmNumber',
+        label: "报警单号",
+        minWidth:110,
 //      status:true,
 //      sort:true
       },
       {
         id: 2,
+        prop:'threadArea',
+        label: "线报地域",
+        width:100,
+//      status:true,
+//      sort:true
+      },
+      {
+        id: 3,
         prop:'clueAddress',
         label: "线报详址",
 //      sort:true
       },
       {
-        id: 3,
+        id: 4,
         prop:'industryField',
         label:"行业领域",
 //      width:80,
 //      sort:true,
       },
       {
-        id: 4,
+        id: 5,
         prop:'informType',
         label: "举报类别",
 //      minWidth:130,
@@ -406,34 +429,34 @@ export default {
 //      sort:true,
       },
       {
-        id: 5,
+        id: 6,
         prop:'encryptPhoneNumber',
         label:"举报人电话",
 //      status:true,
-//      width:80,
+        width:100,
 //      sort:true,
       },
       {
-        id: 6,
+        id: 7,
 //      prop:'sampleState',
         prop:'state',
         label:"案件进度",
         status:true,
-//      width:80,
+        width:80,
 //      sort:true,
       },
 //    {
-//      id: 7,
+//      id: 8,
 //      prop:'assessor',
 //      label:"审核员",
 ////      width:80,
 ////      sort:true,
 //    },
       {
-        id: 8,
+        id: 9,
         prop:'createTime',
         label:"举报时间",
-//      width:80,
+        width:100,
 //      sort:true,
       },
 
@@ -442,13 +465,14 @@ export default {
       	selection:false,
       	number:false,
       	view1:true,
+      	export1:true,
 //    	edit:true,
       	show:true,
       	dele:false,
       	manuscript:false,
       	safetyReport:false,
       	printSampleIn:false,
-      	actionWidth:100,
+//    	actionWidth:100,
 //    	sort:'sampleNum',
       },
 

@@ -24,7 +24,7 @@
                 </el-form-item>
                 <div class="el-form-item">
 	                <el-form-item label="" class="code" @click="addBorder()">
-	                	<el-input  @focus="focusYzm=true" @blur="checkcode" placeholder="请输入验证码" v-model="loginForm.number">
+	                	<el-input  @focus="focusYzm=true" @blur="checkcode" @keyup.enter.native="submitForm()" placeholder="请输入验证码" v-model="loginForm.number">
 						    <template  slot="prepend">
 						    	<div class="prependimg" :class="{focus:focusYzm}" style="background-image:url(static/images/login/yzm.png)"></div>
 						    </template>

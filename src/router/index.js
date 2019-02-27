@@ -33,6 +33,13 @@ import ResourcesList from '@/components/authorityManagement/resources/ResourcesL
 
 import RegionalManagement from '@/components/authorityManagement/regional/RegionalManagement.vue'
 
+import ReportTypes from '@/components/InformationManagement/ReportTypes.vue'
+import Confidentiality from '@/components/InformationManagement/Confidentiality.vue'
+import RewardRules from '@/components/InformationManagement/RewardRules.vue'
+import ReportNotes from '@/components/InformationManagement/ReportNotes.vue'
+import AboutUs from '@/components/InformationManagement/AboutUs.vue'
+
+
 import error403 from '@/components/error/error403.vue'
 
 
@@ -244,6 +251,45 @@ const routes = [{
                 name: "权限管理/地区管理",
                 component: RegionalManagement,
 //              meta: { needAuth: '地区管理' },
+            },
+            
+            
+            //        资讯快递InformationManagement
+            {
+                path: "InformationManagement",
+                name: '资讯快递',
+                component: ReportTypes,
+                redirect: 'InformationManagement/ReportTypes',
+            },
+            {
+                path: "InformationManagement/ReportTypes",
+                name: "资讯快递/举报种类管理",
+                component: ReportTypes,
+//              meta: { needAuth: '举报种类管理' },
+            },
+            {
+                path: "InformationManagement/Confidentiality",
+                name: "资讯快递/保密规定管理",
+                component: Confidentiality,
+//              meta: { needAuth: '保密规定管理' },
+            },
+            {
+                path: "InformationManagement/RewardRules",
+                name: "资讯快递/奖励规定管理",
+                component: RewardRules,
+//              meta: { needAuth: '奖励规定管理' },
+            },
+            {
+                path: "InformationManagement/ReportNotes",
+                name: "资讯快递/举报须知管理",
+                component: ReportNotes,
+//              meta: { needAuth: '举报须知管理' },
+            },
+            {
+                path: "InformationManagement/AboutUs",
+                name: "资讯快递/关于我们管理",
+                component: AboutUs,
+//              meta: { needAuth: '关于我们管理' },
             },
         ]
     },

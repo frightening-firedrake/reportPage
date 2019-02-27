@@ -135,6 +135,9 @@ export default {
 	    	this.formdatas.form.clueAddress=response.data.information.clueAddress//线报详址
 	    	this.formdatas.form.industryField=response.data.information.industryField//行业领域
 	    	this.formdatas.form.informType=response.data.information.informType//举报类别
+	    	
+	    	this.formdatas.form.acceptUnits=response.data.information.acceptUnits//受理单位
+
 	    	this.formdatas.form.encryptName=response.data.informer?response.data.informer.encryptName?response.data.informer.encryptName:'匿名':'匿名'//举报人姓名
 	    	this.formdatas.form.encryptPhoneNumber=response.data.informer?response.data.informer.encryptPhoneNumber?response.data.informer.encryptPhoneNumber:'匿名':'匿名'//手机号码
 	    	this.formdatas.form.encryptOtherContectWay=response.data.informer?response.data.informer.encryptOtherContectWay?response.data.informer.encryptOtherContectWay:'无':'无'//其他联系方式
@@ -539,7 +542,7 @@ export default {
 	        clueAddress:'',//线报详址
 	        industryField:'',//行业领域
 	        informType:'',//举报类别
-	
+			acceptUnits:'',//受理单位
 	        encryptName:'',    //举报人姓名
 	        encryptPhoneNumber:'',      //手机号码
 	        encryptOtherContectWay:'',  //其他联系方式

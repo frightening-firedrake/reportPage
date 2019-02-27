@@ -1,7 +1,7 @@
 <template>
 
 	<!--<el-menu unique-opened :default-active="activePath" class="el-menu-vertical-demo" :router=true @open="handleOpen" @select="handleSelect" @close="handleClose" :collapse="this.isCollapse" :background-color="backgroundColor">-->
-	<el-menu :default-active="activePath" class="el-menu-vertical-demo" :router=true @open="handleOpen" @select="handleSelect" @close="handleClose" :collapse="this.isCollapse" :background-color="backgroundColor">
+	<el-menu unique-opened :default-active="activePath" class="el-menu-vertical-demo" :router=true @open="handleOpen" @select="handleSelect" @close="handleClose" :collapse="this.isCollapse" :background-color="backgroundColor">
 		<!--用户信息-->
 		<!--<div class="user" style="width:2.5rem;">
 			<div class="photo">
@@ -242,6 +242,55 @@ export default {
           level: 2,
           pid: 9,
           lid: 13
+        },
+        {
+          icon: "icon-zixunliebiao",
+          title: "资讯快递",
+          linkto: "",
+          level: 2,
+          pid: 0,
+          lid: 14,
+//        needAuth: "AuthorityManagement"
+        },
+        {
+          icon: "icon-leimupinleifenleileibie",
+          title: "举报种类管理",
+          linkto: "/index/InformationManagement/ReportTypes",
+          level: 2,
+          pid: 14,
+          lid: 15
+        },
+        {
+          icon: "icon-bianmaguize",
+          title: "保密规定管理",
+          linkto: "/index/InformationManagement/Confidentiality",
+          level: 2,
+          pid: 14,
+          lid: 16
+        },
+        {
+          icon: "icon-jianglijilu",
+          title: "奖励规定管理",
+          linkto: "/index/InformationManagement/RewardRules",
+          level: 2,
+          pid: 14,
+          lid: 17
+        },
+        {
+          icon: "icon-shiyongxuzhi",
+          title: "举报须知管理",
+          linkto: "/index/InformationManagement/ReportNotes",
+          level: 2,
+          pid: 14,
+          lid: 18
+        },
+        {
+          icon: "icon-guanyuwomen",
+          title: "关于我们管理",
+          linkto: "/index/InformationManagement/AboutUs",
+          level: 2,
+          pid: 14,
+          lid: 19
         },
       ]
     };

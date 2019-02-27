@@ -15,6 +15,7 @@
 		<template v-for="item in items">
 
 			<el-table-column show-overflow-tooltip v-if="!item.status" :min-width="item.minWidth?item.minWidth:'80'" :width="item.width?item.width:'auto'" :resizable="resizable" align="center" :key="item.id" :label="item.label" :sortable="item.sort" :prop="item.prop" :class-name="item.class" :sort-method="item.smethod">
+				
 			</el-table-column>
 
 			<el-table-column show-overflow-tooltip v-if="item.status" :min-width="item.minWidth?item.minWidth:'80'" :width="item.width?item.width:'auto'" :resizable="resizable" align="center" :key="item.id" :label="item.label" :sortable="item.sort" :prop="item.prop" :class-name="item.class">
@@ -379,6 +380,10 @@
 				<template v-if="actions.view1">
 					<button class="view1" @click.stop="handleView(scope.$index, scope.row,scope)">查看详情</button>
 				</template>
+				<!--是否包含导出表格操作-->
+				<template v-if="actions.export1">
+					<button class="export1" @click.stop="export1(scope.$index, scope.row,scope)">导出表格</button>
+				</template>
 				<!--是否包含查看操作-->
 				<template v-if="actions.view">
 					<button class="view" @click.stop="handleView(scope.$index, scope.row,scope)">查看</button>
@@ -597,6 +602,9 @@ export default {
       } else {
         this.$root.eventHub.$emit("viewlistitem", row.id, row);
       }
+    },
+    export1(index, row) {
+      this.$root.eventHub.$emit("exportOne", row.id, row);
     },
     repeat(index, row, scope) {
       //			if (row.sampleState) {
