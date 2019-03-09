@@ -163,7 +163,7 @@ export default {
   		...mapGetters(["remarkses"]),
        	list1(){
     		return	this.regional.filter((item)=>{
-    			return item.pId===0
+    			return item.pId===-1
     		})
 	    },
 	    list2(){

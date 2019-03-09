@@ -4,7 +4,10 @@
 	</div>
 </template>
 <style>
-
+	/*原值为9999*/
+	.edui-editor.edui-default{
+		z-index: 20!important;
+	}
 </style>
 <script>
 	//import AppConfig from '@/config'
@@ -50,11 +53,12 @@
 	    	this.editor.addListener( 'ready', function() {
 
 	    		_this.ready=true
-				if(_this.$route.query.model=="edit"){
+	    		//新建编辑双模式在此处处理
+//				if(_this.$route.query.model=="edit"){
 //	    			_this.editor.setContent(_this.content,false);
 //	    			_this.setUEContent(_this.content,false);
 	    			_this.setUEContent2();
-				}
+//				}
 				_this.$emit("ready")
 		  	});
 

@@ -40,7 +40,7 @@ export default {
   },
   computed:{
 	...mapState(["modal_id_number","viewdata","editdata","aultdata","messions","mask"]),
-	...mapGetters(["userName"]),
+	...mapGetters(["userName","userId"]),
 	tabledatasFilter(){
 
 		if(this.filterStatus=="全部"){
@@ -232,6 +232,7 @@ export default {
 			data: {
 				page:page,
 			    rows:this.page.size,
+			    userId:this.userId,
 				params:JSON.stringify(params)
 			}
 	    }).then(function (response) {

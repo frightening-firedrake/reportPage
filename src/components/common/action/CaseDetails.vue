@@ -142,8 +142,8 @@
 			<el-form-item label="举报时间：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
 			    <el-input v-model="formdatas.form.createTime" :disabled="disabled"></el-input>
 			</el-form-item>
-			<el-form-item v-if="formdatas.form.acceptUnits" label="受理单位：" prop="pnumber" class="full" v-bind:class="{disabled:disabledshow}">
-			    <el-input v-model="acceptUnits" :disabled="disabled"></el-input>
+			<el-form-item v-if="formdatas.form.acceptUnitsWord" label="受理单位：" prop="pnumber" class="full" v-bind:class="{disabled:disabledshow}">
+			    <el-input v-model="formdatas.form.acceptUnitsWord" :disabled="disabled"></el-input>
 			</el-form-item>
 			<!--案件进度-->
 			<!--未立案-->
@@ -458,7 +458,7 @@ export default {
     props: ["formdatas","reportFilter"],
     created(){
 //  	console.log(this.reportFilter)
-		this.getRegionAll()
+//		this.getRegionAll()
     },
     mounted: function() {
 //		console.log(this.formdatas)
@@ -478,12 +478,12 @@ export default {
 // 			})[0].name
 			return this.formdatas.form.informType
  		},
- 		acceptUnits(){
- 			var region=this.arrRegionAll.find((item)=>{
- 				return item.id==this.formdatas.form.acceptUnits
- 			})
-   			return region?region.regionName:'';
- 		}
+// 		acceptUnits(){
+// 			var region=this.arrRegionAll.find((item)=>{
+// 				return item.id==this.formdatas.form.acceptUnits
+// 			})
+// 			return region?region.regionName:'';
+// 		}
     },
     data() {
     	

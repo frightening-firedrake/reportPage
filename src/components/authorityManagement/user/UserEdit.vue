@@ -42,7 +42,6 @@ export default {
 		//	console.log(this.$route.query)
 		//  获取列表数据（第一页）
 		this.getdata()
-		this.getdata()
 
 	},
 	destroy() {
@@ -166,11 +165,13 @@ export default {
 			}],
 			formdatas: {
 				title: '编辑用户',
+      			select3:true,
 				form: {
 					userName: "",
 					userPass: '',
 					phone: "",
 					email: "",
+          			regionId: "",
 					//        action:['查看','增加'],
 					//        resourceType:'2',
 				},
@@ -179,6 +180,7 @@ export default {
 					{ label: '用户密码：', type: "input", },
 					{ label: '电话号码：', type: "input", },
 					{ label: '邮箱号码：', type: "input", },
+      				{ label: '所属地域：', type:"select3", class:'full',},
 					//    		{label:'分配角色：',type:"num",},
 					//    		{label:'备注：',type:"input",class:'full'},
 					//    		{label:'相关操作：',type:"checkbox",class:'full',

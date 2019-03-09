@@ -44,7 +44,7 @@ export default {
   },
   created(){
 //  获取列表数据（第一页）
-	this.getlistdata(1)
+	this.getlistdata()
 //	移除监听事件
     this.$root.eventHub.$off('delelistitem')
     this.$root.eventHub.$off("editlistitem")
@@ -102,7 +102,8 @@ export default {
 	},
 //	填入新建数据
 	createlibitem(data){
-		console.log(data);
+		var regionName=data[this.regionName]
+		this.addRegionP(regionName,this.pId)
 	},
 //	关闭新建弹框
 	dialogClose(){
@@ -142,9 +143,7 @@ export default {
 		}.bind(this));
   	},
 //	获取列表数据方法
-  	getlistdata(page){
-//		this.loading=true;
-  		// 获取列表数据（第？页）
+  	getlistdata(){
 		this.$http({
 		    method: 'post',
 			url: this.datalistURL,
@@ -158,15 +157,43 @@ export default {
 				return ret
 			}],
 			data: {
-			    page:page,
-			    rows:this.page.size,
+			    
 			}
 	    }).then(function (response) {
-		  	this.tabledatas=response.data.rows;
-	  		this.page.total=response.data.total;
-		  	
+		  	this.regional=response.data.map((item)=>{
+		  		var obj={};
+		  		obj.id=item.id;
+		  		obj.pId=item.pId;
+		  		obj.name=item.regionName;
+		  		return obj
+		  	});
 
-		  		this.loading=false;
+		}.bind(this)).catch(function (error) {
+		    console.log(error);
+		}.bind(this));
+  	},
+//	新建地区方法
+  	addRegionP(regionName,pId){
+		this.$http({
+		    method: 'post',
+			url: this.addRegionURL,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: [function (data) {
+				// Do whatever you want to transform the data
+				let ret = ''
+				for (let it in data) {
+				ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+				}
+				return ret
+			}],
+			data: {
+			    regionName:regionName,
+			    pId:pId
+			}
+	    }).then(function (response) {
+		  	if(response.data.success){
+		  		this.getlistdata()
+		  	}
 
 		}.bind(this)).catch(function (error) {
 		    console.log(error);
@@ -211,6 +238,9 @@ export default {
   	},
 //  添加地区
 	addRegional(type,shengId,shiId){
+		if(!this.$_ault_alert('region:save')){
+			return
+		}
 //		console.log(type,shengId,shiId)
 		var sheng=this.regional.filter((val)=>{
 			return val.id==shengId
@@ -218,8 +248,10 @@ export default {
 		var shi=this.regional.filter((val)=>{
 			return val.id==shiId
 		})
+		this.regionName=type;
 //		console.log(sheng,shi)
 		if(type=="sheng"){
+			this.pId=-1;
 			this.modal={
 		  		title:'新建地区',
 			  	customClass:'blue',
@@ -233,6 +265,7 @@ export default {
 		  		submitText:'提交',
 		  	};
 		}else if(type=="shi"){
+			this.pId=sheng[0].id;
 			this.modal={
 		  		title:'新建地区',
 			  	customClass:'blue',
@@ -253,6 +286,7 @@ export default {
 		  		submitText:'提交',
 		  	};
 		}else if(type=="qu"){
+			this.pId=shi[0].id;
 			this.modal={
 		  		title:'新建地区',
 			  	customClass:'blue',
@@ -273,7 +307,7 @@ export default {
 			  		},
 			  		{
 			  			label:"县(区)级:",
-			  			model:"xianqu",
+			  			model:"qu",
 			  			type:'input',
 			  		},
 		  		],
@@ -285,13 +319,16 @@ export default {
   },
   data() {
     return {
-      datalistURL:this.apiRoot +'resource/data',
+      datalistURL:this.apiRoot +'region/getAll',
+      addRegionURL:this.apiRoot +'region/save',
       searchURL:this.apiRoot +'resource/data',
       deleteURL:'/liquid/role/data/delete',
       checkedId:[],
       searchText:'',
       list:"librarylist",
 	  modalVisible:false,
+	  pId:-1,
+	  regionName:'',
 	  modal:{
 	  	title:'新建地区',
 		  	customClass:'blue',
@@ -367,28 +404,7 @@ export default {
       },
 //    地区
 	  regional:[
-	  	{id:1,pId:0,name:'山西省'},
-	  	{id:2,pId:0,name:'陕西省'},
-	  	{id:3,pId:0,name:'河北省'},
-	  	{id:4,pId:0,name:'河南省'},
-	  	{id:5,pId:0,name:'甘肃省'},
-	  	{id:6,pId:1,name:'太原市'},
-	  	{id:7,pId:1,name:'临汾市'},
-	  	{id:8,pId:1,name:'大同市'},
-	  	{id:9,pId:1,name:'朔州市'},
-	  	{id:10,pId:1,name:'阳泉市'},
-	  	{id:11,pId:1,name:'吕梁市'},
-	  	{id:12,pId:1,name:'忻州市'},
-	  	{id:13,pId:1,name:'长治市'},
-	  	{id:14,pId:1,name:'晋城市'},
-	  	{id:15,pId:1,name:'运城市'},
-	  	{id:16,pId:6,name:'晋源区'},
-	  	{id:17,pId:6,name:'小店区'},
-	  	{id:18,pId:6,name:'迎泽区'},
-	  	{id:19,pId:6,name:'万柏林区'},
-	  	{id:20,pId:6,name:'尖草坪区'},
-	  	{id:21,pId:6,name:'杏花岭区'},
-	  	{id:22,pId:2,name:'西安市'},
+	  	
 	  ]
       
     }

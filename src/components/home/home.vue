@@ -323,7 +323,7 @@ export default {
   },
   computed:{
 	...mapState(["mask"]),
-	...mapGetters(["modal_id"]),
+	...mapGetters(["modal_id","userId"]),
 	msgTotalChange(){
 		let auto=document.querySelector('#auto')
 		if(this.msgTotal){			
@@ -336,6 +336,7 @@ export default {
 //  获取列表数据（第一页）
 	this.findSumAndValid()
 	this.findNum()
+	this.findAllIndustry()
 	if(this.$_has('information:getEncrypt')){
 		this.datalistURL3=this.apiRoot + 'information/accessData'
 	}else{
@@ -363,7 +364,7 @@ export default {
 //  this.setChart();
   },
   methods: {
-  	...mapMutations(['close_modal']),
+  	...mapMutations(['close_modal',"setIndustryFieldList"]),
   	...mapActions(['addAction']),
 	//定时获取数据
 	ontime(){
@@ -373,6 +374,38 @@ export default {
 		}
 	},
 //	获取数据方法
+	findAllIndustry(){
+		this.$http({
+		    method: 'post',
+			url: this.findAllIndustryURL,
+			transformRequest: [function (data) {
+				// Do whatever you want to transform the data
+				let ret = ''
+				for (let it in data) {
+				ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+				}
+				return ret
+			}],
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			data: {
+//			    userId:this.userId,
+			}
+	    }).then(function (response) {
+//		{id:'10.境外黑社会',name:'10.境外黑社会'},
+	    	if(response.data){
+	    		var payload={};
+	    		payload.industryFieldList=response.data.map((item)=>{
+	    			var obj={};
+	    			obj.id=item.content;
+	    			obj.name=item.content
+	    			return obj
+	    		})
+	    		this.setIndustryFieldList(payload)
+	    	}
+		}.bind(this)).catch(function (error) {
+		    console.log(error);
+		}.bind(this));
+	},
   	findSumAndValid(){
 		this.$http({
 		    method: 'post',
@@ -387,7 +420,7 @@ export default {
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			data: {
-			    
+			    userId:this.userId,
 			}
 	    }).then(function (response) {
 	    	var arr_sum=[];
@@ -424,7 +457,7 @@ export default {
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			data: {
-			    
+			    userId:this.userId,
 			}
 	    }).then(function (response) {
 			this.menu[0].subtitle=response.data.sum
@@ -454,6 +487,7 @@ export default {
 			data: {
 				page:1,
 			    rows:10,
+			    userId:this.userId,
 			    params: JSON.stringify(params)
 			}
 	    }).then(function (response) {
@@ -626,7 +660,8 @@ export default {
     	T:'',
       	datalistURL1: this.apiRoot + 'information/findSumAndValid',
       	datalistURL2: this.apiRoot + 'information/findNum',
-      	datalistURL3: this.apiRoot + 'information/data',
+      	datalistURL3: this.apiRoot + 'information/data',//created重写了
+      	findAllIndustryURL: this.apiRoot + 'information/findAllIndustry',
       	empty:'暂无新消息通知',
       	msgTotal:'',
       	sum:[],

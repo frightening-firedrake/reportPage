@@ -170,7 +170,7 @@ export default {
   },
   computed:{
 	...mapState(["mask"]),
-	...mapGetters(["modal_id"]),
+	...mapGetters(["modal_id","userId"]),
 	
   },
   created(){
@@ -203,7 +203,8 @@ export default {
 				return ret
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			data: {			    
+			data: {			
+				userId:this.userId,
 			}
 	    }).then(function (response) {
 	    	var arr_sum=[];
@@ -238,7 +239,8 @@ export default {
 				return ret
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			data: {			    
+			data: {		
+				userId:this.userId,
 			}
 	   }).then(function (response) {
 	    	this.industryData[0].value=response.data.GJZZAQNumber;
@@ -250,7 +252,16 @@ export default {
 	    	this.industryData[6].value=response.data.HDDNumber;
 	    	this.industryData[7].value=response.data.FFGLFDNumber;
 	    	this.industryData[8].value=response.data.CSMJJFNumber;
-	    	this.industryData[9].value=response.data.JWHSHNumber;	    	
+	    	this.industryData[9].value=response.data.JWHSHNumber;	  
+	    	
+	    	this.industryData[10].value=response.data.DJGMNumber;	    	
+	    	this.industryData[11].value=response.data.HESLBHSNumber;	    	
+	    	this.industryData[12].value=response.data.LDJYNumber;	    	
+	    	this.industryData[13].value=response.data.JJFZNumber;	    	
+	    	this.industryData[14].value=response.data.GSHZSNumber;	    	
+	    	this.industryData[15].value=response.data.KHZRNumber;	    	
+	    	this.industryData[16].value=response.data.WLWXNumber;	    	
+	    	
 	    	this.setChart2();
     		this.setChart3();
 		}.bind(this)).catch(function (error) {
@@ -411,8 +422,11 @@ export default {
 	},
 setChart2() {
 	    let myChart = echarts.init(document.getElementById('chart2'))
+		var xAxisData=this.industryData.map((item)=>{
+	    	return item.name
+	    })
 //	    var xAxisData=['国家政治安全', '黄赌毒', '欺行霸市', '基层政治', '征地拆迁', '插手民间纠纷', '宗族势力村霸', '非法高利放贷、暴力讨债', '建设工程运输、矿产、渔业', '境外黑社会']
-	    var xAxisData=['国家政治\n安全', '基层政治', '宗族势力\n村霸', '征地拆迁', '建设工程\n运输、矿\n产、渔业', '欺行霸市', '黄赌毒', '非法高利\n放贷、暴\n力讨债', '插手民间\n纠纷', '境外黑\n社会']
+//	    var xAxisData=['国家政治\n安全', '基层政治', '宗族势力\n村霸', '征地拆迁', '建设工程\n运输、矿\n产、渔业', '欺行霸市', '黄赌毒', '非法高利\n放贷、暴\n力讨债', '插手民间\n纠纷', '境外黑\n社会','盗掘古墓\n走私文物','黑恶势力\n保护伞','垄断经营\n逃税漏税\n敲诈勒索','以经济发\n展、志愿\n慈善捐款\n为幌子从\n事非法活\n动','以公司\n合作社等\n形式\n掩盖违法\n犯罪行为','恐吓滋扰\n聚众造势\n等软暴力','网络威胁\n恐吓侮辱\n诽谤滋扰']
 	    var color=this.color
 		var data=this.industryData
 	    myChart.setOption({
@@ -421,7 +435,16 @@ setChart2() {
 		        show:false,
 		    },
 		    tooltip: {
-		    	show:false,
+		    	show:true,
+//		    	trigger: 'axis',
+		        backgroundColor:'#ffffff',
+		        extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);',
+//		        alwaysShowContent:true,
+		        textStyle:{
+		        	color:'#333',
+		        	fontSize:13, 
+		        },
+		    	
 		    },
 		    legend: {
 		    	show:false,
@@ -433,7 +456,8 @@ setChart2() {
 		    	top:'15',
 		        left: '80',
 		        right: '85',
-		     	bottom: '45',
+//		     	bottom: '45',
+		     	bottom: '10',
 		//      containLabel: true
 		    },
 		    toolbox: {
@@ -449,12 +473,14 @@ setChart2() {
 		    },
 		    xAxis: {
 		    	type: 'category',
+		    	show: false,
 //		        boundaryGap: false,
 				axisTick:{
 					show:false,
 				},
 		        axisLabel:{
 		        	align:'center',
+		        	rotate:80,
 		        	interval:0,
 			        formatter: function (value, index) {
 			        	var str='';
@@ -484,7 +510,10 @@ setChart2() {
 		        	label: {
 			        	normal:{					        		
 				        	show:true,
-				        	formatter :103,
+				        	formatter :function(params){
+				        		var value=params.value!=0?params.value:'';
+				        		return value
+				        	},
 				        	position:'top',
 				        	distance :5,
 				        	color:'#333333',
@@ -506,7 +535,10 @@ setChart2() {
 	
 	setChart3() {
 	    let myChart = echarts.init(document.getElementById('chart3'))
-		var xAxisData=['国家政治安全', '基层政治','宗族势力村霸','征地拆迁','建设工程运输、矿产、渔业','欺行霸市','黄赌毒','非法高利放贷、暴力讨债','插手民间纠纷','境外黑社会']
+	    var xAxisData=this.industryData.map((item)=>{
+	    	return item.name
+	    })
+//		var xAxisData=['国家政治安全', '基层政治','宗族势力村霸','征地拆迁','建设工程运输、矿产、渔业','欺行霸市','黄赌毒','非法高利放贷、暴力讨债','插手民间纠纷','境外黑社会']
 		var data=this.industryData
 	    myChart.setOption({
 	        title : {
@@ -516,14 +548,21 @@ setChart2() {
 		    color:this.color,
 			tooltip : {
 		    	show:false,
+		    	backgroundColor:'#ffffff',
+		        extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);',
+//		        alwaysShowContent:true,
+		        textStyle:{
+		        	color:'#333',
+		        	fontSize:13, 
+		        },
 //		        trigger: 'item',
-//		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		        formatter: "{a} <br/>{b} : {d}%"
 //		        formatter: function (params) {
 //					console.log(params)
 //		        }
 		    },
 		    legend: {
-		        orient: 'vertical',
+//		        orient: 'vertical',
 //		        top: '50%',
 		        bottom: 0,
 		        left: 0,
@@ -531,6 +570,7 @@ setChart2() {
 		        itemWidth :14,
 		        itemHeight :14,
 		        data: xAxisData,
+		        itemGap:10,
 //		        selectedMode :false,
 		        formatter: function (name) {
 					return name
@@ -559,7 +599,7 @@ setChart2() {
 		            
 					label: {
 			        	normal:{					        		
-//				        	show:false,
+				        	show:false,
 				        	position :'outside',
 				        	formatter :'{d}%',
 				        	fontSize:13, 
@@ -590,18 +630,25 @@ setChart2() {
   },
   data() {
     return {
-	    color:['#70abec','#a3d2ed','#a2eef5','#edc688','#aec785','#a6a2f5','#c4ebd8','#ffdb6a','#ffe7c1','#f5b5a2'],   	
+	    color:['#70abec','#dff0f9','#a2eef5','#edc688','#c2d89d','#a6a2f5','#c4ebd8','#ffdb6a','#ffe7c1','#f5b5a2','#a5defd','#ebc4ea','#f2b2c7','#e9ed88','#d3cefc','#f5d9a2','#fba46f'],   	
     	industryData:[
-            {value : 0,name:'国家政治安全',name2:'国家政治安全'},
-            {value : 0,name:'基层政治',name2:'基层政治'},
-            {value : 0,name:'宗族势力村霸',name2:'宗族势力村霸'},
-            {value : 0,name:'征地拆迁',name2:'征地拆迁'},
-            {value : 0,name:'建设工程运输、矿产、渔业',name2:'建设工程运输、矿产、渔业'},
-            {value : 0,name:'欺行霸市',name2:'欺行霸市'},
-		    {value : 0,name:'黄赌毒',name2:'黄赌毒'},
-		    {value : 0,name:'非法高利放贷、暴力讨债',name2:'非法高利放贷、暴力讨债'},
-		    {value : 0,name:'插手民间纠纷',name2:'插手民间纠纷'},
-		    {value : 0,name:'境外黑社会',name2:'境外黑社会'},
+            {value : 0,name:'国家政治安全'},
+            {value : 0,name:'基层政权'},
+            {value : 0,name:'宗族势力、村霸'},
+            {value : 0,name:'征地、拆迁'},
+            {value : 0,name:'建设工程、运输、矿产、渔业'},
+            {value : 0,name:'欺行霸市'},
+		    {value : 0,name:'黄赌毒'},
+		    {value : 0,name:'非法高利放贷、暴力讨债'},
+		    {value : 0,name:'插手民间纠纷'},
+		    {value : 0,name:'境外黑社会'},
+		    {value : 0,name:'盗掘古墓、倒卖走私文物'},
+		    {value : 0,name:'黑恶势力保护伞'},
+		    {value : 0,name:'垄断经营、逃税漏税、敲诈勒索'},
+		    {value : 0,name:'以经济发展、志愿慈善捐款为幌子从事非法活动'},
+		    {value : 0,name:'以公司、合作社等形式掩盖违法犯罪行为'},
+		    {value : 0,name:'恐吓、滋扰、聚众造势等软暴力'},
+		    {value : 0,name:'网络威胁、恐吓、侮辱诽谤、滋扰'},
         ],
     	datalistURL1: this.apiRoot + 'information/findSumAndValid',
       	datalistURL2: this.apiRoot + 'information/findAllInformerType',

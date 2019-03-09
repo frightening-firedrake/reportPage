@@ -40,7 +40,7 @@ export default {
   },
   computed:{
 	...mapState(["modal_id_number","viewdata","editdata","aultdata","messions","mask"]),
-	...mapGetters(["userName","stateList","Token"]),
+	...mapGetters(["userName","stateList","Token","userId"]),
 	tabledatasFilter(){
 
 		if(this.filterStatus=="全部"){
@@ -63,6 +63,7 @@ export default {
 //	console.log(this.$route.query)
 //  获取列表数据（第一页）
 	this.getlistdata(1)
+//	this.getRegionData()
 //	移除监听事件
     this.$root.eventHub.$off('delelistitem')
     this.$root.eventHub.$off("viewlistitem")
@@ -234,6 +235,7 @@ export default {
 			data: {
 				page:page,
 			    rows:this.page.size,
+			    userId:this.userId,
 				params:JSON.stringify(params),
 				
 			}
@@ -243,6 +245,37 @@ export default {
 	  		this.page.total=response.data.total;
 	  		this.page.currentPage=page;
 	  		
+		}.bind(this)).catch(function (error) {
+		    console.log(error);
+		}.bind(this));
+  	},
+  	getRegionData(){
+  		this.$http({
+		    method: 'post',
+			url: this.regionURL,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: [function (data) {
+				// Do whatever you want to transform the data
+				let ret = ''
+				for (let it in data) {
+				ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+				}
+				return ret
+			}],
+			data: {
+			    
+			}
+	    }).then(function (response) {
+	    	this.listHeader.threadAreaList=response.data.map((item)=>{
+		  		var obj={};
+		  		obj.id=item.id;
+		  		obj.pId=item.pId;
+		  		obj.threadAreaName=item.regionName;
+		  		return obj
+		  	});
+			this.listHeader.threadAreaList=this.listHeader.threadAreaList.sort((a,b)=>{
+				return a.pId-b.pId
+			})
 		}.bind(this)).catch(function (error) {
 		    console.log(error);
 		}.bind(this));
@@ -318,7 +351,8 @@ export default {
       datalistURL: this.apiRoot+'information/data',
 	  searchURL:this.apiRoot + '/grain/sample/data',
       deleteURL:'/liquid/role2/data/delete',
-      exportURL: this.apiRoot+'export/exportWord',
+      exportURL:this.apiRoot+'export/exportWord',
+      regionURL:this.apiRoot+'region/getAll',
   	  state:"全部",
   	  threadArea:"全部",
 //	  threadArea:"山西省",

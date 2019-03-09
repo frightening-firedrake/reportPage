@@ -116,7 +116,7 @@
 			</div>
 		</div>
 		<!--下拉选择任务筛选-->
-		<div class="dataSelete Selete2 threadArea" v-if="listHeader.threadArea">			
+		<div class="dataSelete Selete2 threadArea" v-if="listHeader.threadArea1">			
 			<p>线报地域:</p>
 			<div>
 			    <el-select v-model="threadArea"  placeholder="请选择" popper-class='headerSelectlib11' @change="threadAreaChange">

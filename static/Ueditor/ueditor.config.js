@@ -32,11 +32,11 @@
 
         // 服务器统一请求接口路径
 
-//      , serverUrl: "https://education.ityyedu.com/educationSystem/ueditor/exec"//测试服务器
-//      , serverUrl: "http://192.168.1.252:8083/educationSystem/ueditor/exec"//kun
-        , serverUrl: "http://http://192.168.1.219:8083/educationSystem/ueditor/exec"//bo
-//		, serverUrl: "https://education.szyd.xafy.edu.cn/educationSystem/ueditor/exec"//kun
-//		, serverUrl: "https://szyd.xafy.edu.cn/educationSystem/ueditor/exec"//kun
+//      , serverUrl: "https://education.ityyedu.com/reportingSystem/ueditor/exec"//测试服务器
+        , serverUrl: "http://192.168.1.244:8083/reportingSystem/ueditor/exec"//kun
+//      , serverUrl: "http://192.168.1.219:8083/reportingSystem/ueditor/exec"//bo
+//		, serverUrl: "https://education.szyd.xafy.edu.cn/reportingSystem/ueditor/exec"//kun
+//		, serverUrl: "https://szyd.xafy.edu.cn/reportingSystem/ueditor/exec"//kun
 
 
 

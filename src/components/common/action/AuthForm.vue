@@ -41,6 +41,25 @@
 				    </el-select>
 				</el-form-item>
             </template>
+            
+            <template v-if="formdatas.labels[index]['type']=='select3'">
+		        <el-form-item class="select3" :label="formdatas.labels[index]['label']" :prop="'form.'+key" v-bind:class="formdatas.labels[index]['class']"
+		        >
+				    <el-select v-model="select1" placeholder="请选择" no-data-text="无数据" @change="select1Change">
+				        <el-option v-for="item1 in selectitems1" :label="item1.label" :value="item1.id" :key="item1.id"></el-option>    
+				    </el-select>
+				    <el-select v-model="select2" placeholder="请选择" no-data-text="无数据" @change="select2Change">
+				        <el-option v-for="item2 in selectitems2" :label="item2.label" :value="item2.id" :key="item2.id"></el-option>    
+				    </el-select>
+				    <el-select v-model="select3" placeholder="请选择" no-data-text="无数据" @change="select3Change">
+				        <el-option v-for="item3 in selectitems3" :label="item3.label" :value="item3.id" :key="item3.id"></el-option>    
+				    </el-select>
+				    
+				    <div v-if="!select1&&select3Validate" class="el-form-item__error">
+			          请完善选择内容
+			        </div>
+				</el-form-item>
+            </template>
         </template> 
         
         <template v-for="(value,index) in formdatas.actions">
@@ -98,20 +117,46 @@
     </el-form>
 </template>
 <style>
-
+form.sampling .el-form-item.select3 .el-form-item__content .el-select .el-input input{
+	width: 1.55rem;
+}
+.select3 .el-input__icon{
+	line-height:0.5rem;
+}
+.el-form-item.select3:not(.is-no-asterisk)>.el-form-item__label:before{
+	content: '*';
+    color: #f56c6c;
+    margin-right: 4px;
+}
 </style>
 <script>
 import "@/assets/style/common/Form.css";
 export default {
     props: ["formdatas","btnloading"],
     created(){
-    	
+    	if(this.formdatas.select3){			
+			this.getRegionAll()
+		}
     },
     mounted: function() {
 //		console.log(this.formdatas)
     },
     computed:{
-    	
+    	selectitems1(){
+			return this.arrRegionAll.filter((item)=>{
+				return item.pId==-1
+			})
+		},
+		selectitems2(){
+			return this.arrRegionAll.filter((item)=>{
+				return item.pId==this.select1
+			})
+		},
+		selectitems3(){
+			return this.arrRegionAll.filter((item)=>{
+				return item.pId==this.select2
+			})
+		},
     },
     data() {
 
@@ -276,12 +321,17 @@ export default {
                 	{ required: true, message: '请完善输入内容', trigger: 'blur' },
                 ],
 
-            }
+            },
+            select1:'',
+        	select2:'',
+        	select3:'',
+        	select3Validate:false,
+        	arrRegionAll:[],
         }
     },
     methods: {  
         onSubmit(formname) {
-
+			this.select3Validate=true;
             this.$refs[formname].validate((valid) => {
                 if (valid) {
                 	var formobj={};
@@ -291,6 +341,12 @@ export default {
                 	}
                 	if(this.formdatas.actions){                		
 						formobj.actions=this.formdatas.actions
+                	}
+                	if(this.formdatas.select3){
+                		formobj.regionId=this.select3?this.select3:this.select2?this.select2:this.select1;
+                		if(!formobj.regionId){
+                			return
+                		}
                 	}
                 	this.$emit('submit',formobj)            		
 
@@ -313,6 +369,48 @@ export default {
         actionDel(){
         	this.$emit('actionDel');
         },
+        select1Change(val){
+			this.select2="";
+			this.select3="";
+	  	},
+	  	select2Change(val){
+			this.select3="";
+	  	},
+	  	select3Change(val){
+
+	  	},
+	  	getRegionAll(){
+//			if(!this.$_ault_alert('safety:edit')){
+//				return
+//			}
+			this.$http({
+			    method: 'post',
+				url: this.apiRoot + 'region/getAll',
+				transformRequest: [function (data) {
+					// Do whatever you want to transform the data
+					let ret = ''
+					for (let it in data) {
+					ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+					}
+					return ret
+				}],
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				data:{},
+		    }).then(function (response) {
+				this.arrRegionAll=[];
+				if(response.data){
+					response.data.forEach((item)=>{
+						var obj={};
+						obj.id=item.id;
+						obj.pId=item.pId;
+						obj.label=item.regionName;
+						this.arrRegionAll.push(obj)
+					})
+				}
+			}.bind(this)).catch(function (error) {
+			    console.log(error);
+			}.bind(this));
+	  	},
     }
 
 }

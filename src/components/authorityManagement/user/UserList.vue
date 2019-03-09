@@ -276,9 +276,15 @@ export default {
       tabledatas:[],
       items: [
       {
-        id: 2,
+        id: 1,
         prop:'userName',
         label: "用户名",
+//      sort:true,
+      },
+      {
+        id:2,
+        prop:'regionName',
+        label:"所属地域",
 //      sort:true,
       },
       {

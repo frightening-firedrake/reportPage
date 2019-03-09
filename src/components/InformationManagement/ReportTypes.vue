@@ -85,20 +85,22 @@ export default {
         ],
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         data: {
-          id: this.$route.query.id
+//        id: this.$route.query.id
         }
       })
         .then(
           function(response) {
-            console.log(response);
-            let res = response.data;
-            let form = {
-              title: res.title,
-              summarize: res.summarize,
-              articleSource: res.articleSource,
-              content: res.content
-            };
-            this.formdatas.form = form;
+						if(response.data.length){
+							this.detailsId=response.data[0].id
+	            let res = response.data[0];
+	            let form = {
+	              title: res.title,
+	//            summarize: res.summarize,
+	//            articleSource: res.articleSource,
+	              content: res.textContent
+	            };
+	            this.formdatas.form = form;
+						}
           }.bind(this)
         )
         .catch(
@@ -110,6 +112,50 @@ export default {
 
     //	获取搜索数据
     searchingfor(searching) {},
+    articleSave(data) {
+      this.$http({
+        method: "post",
+        url: this.articleSaveURL,
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        transformRequest: [
+          function(data) {
+            // Do whatever you want to transform the data
+            let ret = "";
+            for (let it in data) {
+              ret +=
+                encodeURIComponent(it) +
+                "=" +
+                encodeURIComponent(data[it]) +
+                "&";
+            }
+            return ret;
+          }
+        ],
+        data: data
+      })
+        .then(
+          function(response) {
+      			this.formdatas.loading = false;
+            if (response.data.success) {
+              this.$notify({
+                title: "操作成功",
+                message: "文章修改成功！！！",
+                type: "success"
+              });
+            } else {
+              this.$notify.error({
+                title: "操作失败",
+                message: "文章修改失败！！！"
+              });
+            }
+          }.bind(this)
+        )
+        .catch(
+          function(error) {
+            console.log(error);
+          }.bind(this)
+        );
+    },
     articleEdit(data) {
       this.$http({
         method: "post",
@@ -133,13 +179,15 @@ export default {
       })
         .then(
           function(response) {
+      			this.formdatas.loading = false;
+          	
             if (response.data.success) {
               this.$notify({
                 title: "操作成功",
                 message: "文章修改成功！！！",
                 type: "success"
               });
-              this.$router.go(-1);
+//            this.$router.go(-1);
               //				this.$router.push({path: '/index/evilCriminalCases/comprehensiveCriminalCaseList/criminalCasesView',query:{id:id,state:row.state}})
 
               //		        this.getDetails()
@@ -162,24 +210,31 @@ export default {
     },
     //获取文档内容
     submit(form) {
-    	if(!this.$_ault_alert('activity:edit')){
+    	if(!this.$_ault_alert('kind:save')){
 	  			return
 	  	}
+			var data={};
+			data.title=form.title;
+			data.textContent=form.content;
       this.formdatas.loading = true;
-      form.author=this.userName;
-      form.id=this.$route.query.id;
-      console.log(form);
-      this.articleEdit(form)
+			if(this.detailsId){				
+				data.id=this.detailsId;
+      	this.articleEdit(data)
+			}else{				
+				this.articleSave(data)
+			}
     }
   },
 
   data() {
     return {
-      DetailsURL: this.apiRoot + "activity/getById",
-      articleEditURL: this.apiRoot + "activity/edit",
+      DetailsURL: this.apiRoot + "kind/findAll",
+      articleSaveURL: this.apiRoot + "kind/save",
+      articleEditURL: this.apiRoot + "kind/edit",
       editURL: this.apiRoot + "/grain/safetyReport/edit",
       searchURL: "/liquid/role2/data/search",
       createlibVisible: false,
+      detailsId:'',
       breadcrumb: {
         search: false,
         searching: ""

@@ -112,12 +112,7 @@ export default {
 				return ret
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			data: {
-				userName:data.userName,
-				email:data.email,
-				phone:data.phone,
-				userPass:data.userPass
-			}
+			data: data
 	    }).then(function (response) {
   			this.btnloading=false;
 		  	this.$router.go(-1)
@@ -150,11 +145,13 @@ export default {
       }],
       formdatas: {
       	title:'新建用户',
+      	select3:true,
       	form:{
       	  userName:"",
           userPass:'',
           phone: "",
           email: "",
+          regionId: "",
 //        action:['查看','增加'],
 //        resourceType:'2',
       	},
@@ -163,6 +160,7 @@ export default {
       		{label:'用户密码：',type:"input",},
       		{label:'手机号码：',type:"input",},
       		{label:'邮箱号码：',type:"input",},
+      		{label:'所属地域：',type:"select3",class:'full',},
 //    		{label:'分配角色：',type:"num",},
 //    		{label:'备注：',type:"input",class:'full'},
 //    		{label:'相关操作：',type:"checkbox",class:'full',
