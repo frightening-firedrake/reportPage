@@ -54,7 +54,11 @@ export default {
   },
   created(){
   	if(this.$_has('information:getEncrypt')){
-		this.datalistURL=this.apiRoot + 'information/accessData'
+		if(this.userId==1){
+			this.datalistURL=this.apiRoot + 'information/accessDataAll'			
+		}else{			
+			this.datalistURL=this.apiRoot + 'information/accessData'
+		}
 	}else{
 		this.datalistURL=this.apiRoot + 'information/noAccessData'
 	}

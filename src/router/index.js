@@ -254,40 +254,40 @@ const routes = [{
             },
             
             
-            //        资讯快递InformationManagement
+            //        信息管理InformationManagement
             {
                 path: "InformationManagement",
-                name: '资讯快递',
+                name: '信息管理',
                 component: ReportTypes,
                 redirect: 'InformationManagement/ReportTypes',
             },
             {
                 path: "InformationManagement/ReportTypes",
-                name: "资讯快递/举报种类管理",
+                name: "信息管理/举报种类管理",
                 component: ReportTypes,
                 meta: { needAuth: '举报种类管理' },
             },
             {
                 path: "InformationManagement/Confidentiality",
-                name: "资讯快递/保密规定管理",
+                name: "信息管理/保密规定管理",
                 component: Confidentiality,
                 meta: { needAuth: '保密规定管理' },
             },
             {
                 path: "InformationManagement/RewardRules",
-                name: "资讯快递/奖励规定管理",
+                name: "信息管理/奖励规定管理",
                 component: RewardRules,
                 meta: { needAuth: '奖励规定管理' },
             },
             {
                 path: "InformationManagement/ReportNotes",
-                name: "资讯快递/举报须知管理",
+                name: "信息管理/举报须知管理",
                 component: ReportNotes,
                 meta: { needAuth: '举报须知管理' },
             },
             {
                 path: "InformationManagement/AboutUs",
-                name: "资讯快递/关于我们管理",
+                name: "信息管理/关于我们管理",
                 component: AboutUs,
                 meta: { needAuth: '关于我们管理' },
             },

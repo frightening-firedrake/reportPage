@@ -175,6 +175,13 @@ export default {
   },
   created(){
 //  获取列表数据（第一页）
+	if(this.userId==1){
+		this.datalistURL1=this.apiRoot + 'information/findSumAndValidAll';
+  		this.datalistURL2=this.apiRoot + 'information/findAllInformerTypeAll';
+	}else{			
+		this.datalistURL1=this.apiRoot + 'information/findSumAndValid';
+  		this.datalistURL2=this.apiRoot + 'information/findAllInformerType';
+	}
 	this.getlistdata()
 	this.findAllInformerType()
   },
@@ -191,6 +198,10 @@ export default {
   	...mapActions(['addAction']),
 //	获取数据方法
   	getlistdata(){
+  		var data={}
+  		if(this.userId!==1){
+  			data.userId=this.userId
+  		}
 		this.$http({
 		    method: 'post',
 			url: this.datalistURL1,
@@ -203,9 +214,7 @@ export default {
 				return ret
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			data: {			
-				userId:this.userId,
-			}
+			data: data
 	    }).then(function (response) {
 	    	var arr_sum=[];
 	    	var arr_validNumber=[];
@@ -227,6 +236,10 @@ export default {
 		}.bind(this));
   	},
   	findAllInformerType(){
+  		var data={}
+  		if(this.userId!==1){
+  			data.userId=this.userId
+  		}
   		this.$http({
 		    method: 'post',
 			url: this.datalistURL2,
@@ -239,9 +252,7 @@ export default {
 				return ret
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			data: {		
-				userId:this.userId,
-			}
+			data: data
 	   }).then(function (response) {
 	    	this.industryData[0].value=response.data.GJZZAQNumber;
 	    	this.industryData[1].value=response.data.JCZQNumber;
@@ -598,11 +609,16 @@ setChart2() {
 //		            selectedMode :'single',
 		            
 					label: {
+
+
+
+
 			        	normal:{					        		
 				        	show:false,
 				        	position :'outside',
 				        	formatter :'{d}%',
-				        	fontSize:13, 
+				        	color:'#333',
+				        	fontSize:13,
 			        	},
 			        	emphasis:{
 				        	show:true,
@@ -613,6 +629,9 @@ setChart2() {
 				        	show:true,
 				        	length1:10,
 				        	length2:5,
+				        	lineStyle:{
+				        		color:'#333',				        		
+				        	}
 			        	},
 			        },
 		            data:data,

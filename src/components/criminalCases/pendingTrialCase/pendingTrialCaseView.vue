@@ -142,6 +142,7 @@ export default {
 	    	this.formdatas.form.encryptPhoneNumber=response.data.informer?response.data.informer.encryptPhoneNumber?response.data.informer.encryptPhoneNumber:'匿名':'匿名'//手机号码
 	    	this.formdatas.form.encryptOtherContectWay=response.data.informer?response.data.informer.encryptOtherContectWay?response.data.informer.encryptOtherContectWay:'无':'无'//其他联系方式
 	    	this.formdatas.form.createTime=response.data.information.createTime//举报时间
+	    	this.formdatas.form.alarmNumber=response.data.information.alarmNumber//举报单号
 //	    	report images url videos src
 	    	this.formdatas.reports[0].report=response.data.information.informContent//举报文字内容
 	    	

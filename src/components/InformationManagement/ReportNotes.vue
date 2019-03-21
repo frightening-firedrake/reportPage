@@ -186,7 +186,7 @@ export default {
                 message: "文章修改成功！！！",
                 type: "success"
               });
-              this.$router.go(-1);
+//            this.$router.go(-1);
               //				this.$router.push({path: '/index/evilCriminalCases/comprehensiveCriminalCaseList/criminalCasesView',query:{id:id,state:row.state}})
 
               //		        this.getDetails()

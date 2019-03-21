@@ -245,7 +245,7 @@ export default {
         },
         {
           icon: "icon-zixunliebiao",
-          title: "资讯快递",
+          title: "信息管理",
           linkto: "",
           level: 2,
           pid: 0,

@@ -334,14 +334,27 @@ export default {
   },
   created(){
 //  获取列表数据（第一页）
+	
+	if(this.$_has('information:getEncrypt')){
+//		this.datalistURL3=this.apiRoot + 'information/accessData'
+		if(this.userId==1){
+			this.datalistURL3=this.apiRoot + 'information/accessDataAll';	
+			this.datalistURL1=this.apiRoot + 'information/findSumAndValidAll';
+      		this.datalistURL2=this.apiRoot + 'information/findNumAll';
+		}else{			
+			this.datalistURL3=this.apiRoot + 'information/accessData';
+			this.datalistURL1=this.apiRoot + 'information/findSumAndValid';
+      		this.datalistURL2=this.apiRoot + 'information/findNum';
+		}
+	}else{
+		this.datalistURL3=this.apiRoot + 'information/noAccessData'
+		this.datalistURL1=this.apiRoot + 'information/findSumAndValid';
+      	this.datalistURL2=this.apiRoot + 'information/findNum';
+	}
+//	确定权限后执行方法
 	this.findSumAndValid()
 	this.findNum()
 	this.findAllIndustry()
-	if(this.$_has('information:getEncrypt')){
-		this.datalistURL3=this.apiRoot + 'information/accessData'
-	}else{
-		this.datalistURL3=this.apiRoot + 'information/noAccessData'
-	}
 	if(this.$_has('information:data')){
 		this.getdata()
 	}else{
@@ -352,15 +365,16 @@ export default {
 	
 	
   },
-  destroy(){
-  	
+  distroyed(){
+	clearInterval(this.T)
   },
-  beforeRouteLeave(to, from, next){
-  	console.log(this.T)
+beforeRouteLeave(to, from, next){
+//	console.log(this.T)
 	clearInterval(this.T)
 	next();
-  },
+},
   mounted() {
+
 //  this.setChart();
   },
   methods: {
@@ -374,6 +388,7 @@ export default {
 		}
 	},
 //	获取数据方法
+//	获取全部线报地域的方法
 	findAllIndustry(){
 		this.$http({
 		    method: 'post',
@@ -407,11 +422,14 @@ export default {
 		}.bind(this));
 	},
   	findSumAndValid(){
+  		var data={}
+  		if(this.userId!==1){
+  			data.userId=this.userId
+  		}
 		this.$http({
 		    method: 'post',
 			url: this.datalistURL1,
 			transformRequest: [function (data) {
-				// Do whatever you want to transform the data
 				let ret = ''
 				for (let it in data) {
 				ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
@@ -419,9 +437,7 @@ export default {
 				return ret
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			data: {
-			    userId:this.userId,
-			}
+			data: data
 	    }).then(function (response) {
 	    	var arr_sum=[];
 	    	var arr_validNumber=[];
@@ -444,6 +460,10 @@ export default {
 		}.bind(this));
   	},
   	findNum(){
+  		var data={}
+  		if(this.userId!==1){
+  			data.userId=this.userId
+  		}
 		this.$http({
 		    method: 'post',
 			url: this.datalistURL2,
@@ -456,9 +476,7 @@ export default {
 				return ret
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			data: {
-			    userId:this.userId,
-			}
+			data: data
 	    }).then(function (response) {
 			this.menu[0].subtitle=response.data.sum
 			this.menu[1].subtitle=response.data.invalidNumber
@@ -471,7 +489,13 @@ export default {
   	getdata(){
   		var params={};
 		params.state=-1
-
+		var data={}
+  			data.page=1;
+  			data.rows=10;
+  			data.params=JSON.stringify(params);
+  		if(this.userId!==1){
+  			data.userId=this.userId
+  		}
 		this.$http({
 		    method: 'post',
 			url: this.datalistURL3,
@@ -484,12 +508,7 @@ export default {
 				return ret
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			data: {
-				page:1,
-			    rows:10,
-			    userId:this.userId,
-			    params: JSON.stringify(params)
-			}
+			data: data
 	    }).then(function (response) {
 			this.msg=response.data.rows
 			this.msgTotal=response.data.total

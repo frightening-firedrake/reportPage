@@ -20,8 +20,17 @@
 		<el-form-item label="线报详址：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
 		    <el-input v-model="formdatas.form.clueAddress" :disabled="disabled"></el-input>
 		</el-form-item>
-		<el-form-item label="行业领域：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
+		<!--<el-form-item label="行业领域：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
 		    <el-input v-model="industryField" :disabled="disabled"></el-input>
+		</el-form-item>-->
+		<el-form-item label="行业领域：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
+		    <el-input
+		    	  class="row2"
+				  type="textarea"
+				  autosize
+				  disabled
+				  v-model="industryField">
+			</el-input>
 		</el-form-item>
 		<el-form-item label="举报类别：" prop="pnumber"  v-bind:class="{disabled:disabledshow}">
 		    <!--<el-input v-model="formdatas.form.informType" :disabled="disabled"></el-input>-->

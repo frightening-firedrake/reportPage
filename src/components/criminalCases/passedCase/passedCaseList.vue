@@ -54,7 +54,11 @@ export default {
   },
   created(){
   	if(this.$_has('information:getEncrypt')){
-		this.datalistURL=this.apiRoot + 'information/accessData'
+		if(this.userId==1){
+			this.datalistURL=this.apiRoot + 'information/accessDataAll'			
+		}else{			
+			this.datalistURL=this.apiRoot + 'information/accessData'
+		}
 	}else{
 		this.datalistURL=this.apiRoot + 'information/noAccessData'
 	}
@@ -214,7 +218,13 @@ export default {
 		if(this.searchText){
 			params.alarmNumber=this.searchText
 		}
-
+		var data={}
+  			data.page=page;
+  			data.rows=10;
+  			data.params=JSON.stringify(params);
+  		if(this.userId!==1){
+  			data.userId=this.userId
+  		}
   		this.loading=false;
   		// 获取列表数据（第？页）
 		this.$http({
@@ -229,12 +239,7 @@ export default {
 				return ret
 			}],
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			data: {
-				page:page,
-			    rows:this.page.size,
-			    userId:this.userId,
-				params:JSON.stringify(params)
-			}
+			data: data
 	    }).then(function (response) {
 //			console.log(response)
 		  	this.tabledatas=response.data.rows;
