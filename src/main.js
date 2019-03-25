@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+import 'es6-promise/auto'
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -17,10 +19,10 @@ Vue.use(VideoPlayer)
 
 Vue.use(ElementUI);
 //温馨提示注意同步修改ueditor.config.js
-//Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
+Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
 
 // Vue.prototype.apiRoot = 'http://192.168.1.219:8083/reportingSystem/'//bo
-   Vue.prototype.apiRoot = 'http://192.168.1.244:8083/reportingSystem/'//kun
+// Vue.prototype.apiRoot = 'http://192.168.1.244:8083/reportingSystem/'//kun
 
 //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 //axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'

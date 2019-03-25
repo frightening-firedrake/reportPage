@@ -20,7 +20,7 @@
   	right:14px;
   }
   .el-menu-vertical-demo{
-  	width:2.5rem;
+  	/*width:2.5rem;*//*兼容ie有问题*/
   	-webkit-box-orient:vertical;
   	border-right:none;
   	box-shadow: 0.03rem 0.004rem 0.11rem 0rem rgba(227, 227, 227, 0.75);
