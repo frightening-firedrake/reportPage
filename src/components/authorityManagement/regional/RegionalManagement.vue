@@ -102,8 +102,9 @@ export default {
 	},
 //	填入新建数据
 	createlibitem(data){
+		var reportNum=data.reportNum
 		var regionName=data[this.regionName]
-		this.addRegionP(regionName,this.pId)
+		this.addRegionP(regionName,this.pId,reportNum)
 	},
 //	关闭新建弹框
 	dialogClose(){
@@ -165,6 +166,7 @@ export default {
 		  		obj.id=item.id;
 		  		obj.pId=item.pId;
 		  		obj.name=item.regionName;
+		  		obj.reportNum=item.reportNum;
 		  		return obj
 		  	});
 
@@ -173,7 +175,7 @@ export default {
 		}.bind(this));
   	},
 //	新建地区方法
-  	addRegionP(regionName,pId){
+  	addRegionP(regionName,pId,reportNum){
 		this.$http({
 		    method: 'post',
 			url: this.addRegionURL,
@@ -188,6 +190,7 @@ export default {
 			}],
 			data: {
 			    regionName:regionName,
+			    reportNum:reportNum,
 			    pId:pId
 			}
 	    }).then(function (response) {
@@ -261,6 +264,11 @@ export default {
 			  			model:"sheng",
 			  			type:'input',
 			  		},
+			  		{
+			  			label:"举报电话:",
+			  			model:"reportNum",
+			  			type:'input',
+			  		},
 		  		],
 		  		submitText:'提交',
 		  	};
@@ -280,6 +288,11 @@ export default {
 			  		{
 			  			label:"市级:",
 			  			model:"shi",
+			  			type:'input',
+			  		},
+			  		{
+			  			label:"举报电话:",
+			  			model:"reportNum",
 			  			type:'input',
 			  		},
 		  		],
@@ -308,6 +321,11 @@ export default {
 			  		{
 			  			label:"县(区)级:",
 			  			model:"qu",
+			  			type:'input',
+			  		},
+			  		{
+			  			label:"举报电话:",
+			  			model:"reportNum",
 			  			type:'input',
 			  		},
 		  		],

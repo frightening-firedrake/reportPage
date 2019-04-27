@@ -40,7 +40,7 @@ export default {
   },
   computed:{
 	...mapState(["modal_id_number","viewdata","editdata","aultdata","messions","mask"]),
-	...mapGetters(["userName","userId"]),
+	...mapGetters(["userName","Token","userId"]),
 	tabledatasFilter(){
 
 		if(this.filterStatus=="全部"){

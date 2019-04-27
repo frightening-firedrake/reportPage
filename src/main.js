@@ -17,10 +17,10 @@ Vue.use(VideoPlayer)
 
 Vue.use(ElementUI);
 //温馨提示注意同步修改ueditor.config.js
-//Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
+Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
 
-// Vue.prototype.apiRoot = 'http://192.168.1.219:8083/reportingSystem/'//bo
-   Vue.prototype.apiRoot = 'https://192.168.1.244:8085/reportingSystem/'//kun
+//Vue.prototype.apiRoot = 'http://192.168.1.41:8085/reportingSystem/'//
+// Vue.prototype.apiRoot = 'http://192.168.1.244:8085/reportingSystem/'//kun
 
 //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 //axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'
