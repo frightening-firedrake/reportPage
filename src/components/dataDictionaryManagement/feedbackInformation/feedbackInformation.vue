@@ -237,7 +237,7 @@ export default {
   	},
 //	信息列表事件
 	addbtn(){
-		if(!this.$_ault_alert('feedbackInformation:finByTypeAndSave')){
+		if(!this.$_ault_alert('feedbackInformation:findByTypeAndSave')){
 			return
 		}
 	  	var modal={

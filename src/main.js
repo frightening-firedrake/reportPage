@@ -131,6 +131,8 @@ Vue.prototype.$_has = function(value) {
 Vue.prototype.$_ault_alert = function(value) {
 	let buttonpermsStr=store.getters.permissions;
 //	console.log(buttonpermsStr)
+//	console.log(value)
+	
 	if(!buttonpermsStr){
 //		console.log('无任何权限字段')	
     	app.$notify.error({

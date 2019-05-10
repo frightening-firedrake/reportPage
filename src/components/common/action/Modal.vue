@@ -2,7 +2,7 @@
 	<el-dialog :title="modal.title" :visible.sync="modalVisible" :custom-class="customClass" :width="dialogWidth" @close="dialogClose">
 	  	<el-form :model="form" ref="modalform">
 	  		<template v-for="(item, index) in modal.formdatas">
-	  			<el-form-item v-if="!item.position&&item.type=='input'&&!item.hidden" :label="item.label" :prop="item.model" :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled}" :rules="[{ required: true, message: '内容不能为空'}]">
+	  			<el-form-item v-if="!item.position&&item.type=='input'&&!item.hidden" :label="item.label" :prop="item.model" :label-width="formLabelWidth"  v-bind:class="{disabled:item.disabled}" :rules="[{ required: !item.noRequired, message: '内容不能为空'}]">
 			        <el-input  v-model="form[item.model]" auto-complete="off" :disabled="item.disabled"></el-input>
 	  			</el-form-item>
 			    <input  v-if="!item.position&&item.type=='input'&&item.hidden" type="hidden"  v-model="form[item.model]" name="" />
