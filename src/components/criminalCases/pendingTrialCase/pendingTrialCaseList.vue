@@ -405,7 +405,7 @@ export default {
       },
       {
         id: 2,
-        prop:'threadArea',
+        prop:'tipRegion',
         label: "线报地域",
         width:100,
 //      status:true,

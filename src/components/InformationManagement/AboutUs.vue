@@ -93,6 +93,7 @@ export default {
 						if(response.data.length){
 							this.detailsId=response.data[0].id
 							let res = response.data[0];
+							console.log(res);
 							let form = {
 							  organizationName: res.organizationName,
 							  phoneNum: res.phoneNum,
@@ -220,7 +221,7 @@ export default {
 
   data() {
     return {
-      DetailsURL: this.apiRoot + "about/findAll",
+      DetailsURL: this.apiRoot + "about/findAll",   //获取关于我们的数据 
       articleSaveURL: this.apiRoot + "about/save",
       articleEditURL: this.apiRoot + "about/edit",
       editURL: this.apiRoot + "/grain/safetyReport/edit",

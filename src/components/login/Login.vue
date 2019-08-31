@@ -3,7 +3,7 @@
         <div class="login_box">
         	<span class="sjx"></span>
         	<img class="loginbj2" src="static/images/login/bj2.png" alt="" />
-        	<span class="auth">山西硬汉网络科技科技有限公司 版权所有</span>
+        	<span class="auth">山西硬汉网络科技有限公司 版权所有</span>
             <el-form ref="form"  class="login_form" :model="loginForm">
             	<h1 class="title">登录账户</h1>
             	<p v-if="loginError" class="loginError"><span class="el-icon-warning"></span>{{errorMessage}}</p>
@@ -94,6 +94,12 @@ export default {
 //          this.captcha = this.apiRoot + '/grain/captcha?d='+new Date().getTime()
         },
         submitForm() {
+
+			if(! this.intercept){
+				alert('您的浏览器内核版本过低，有潜在安全风险！建议更换其他浏览器进行访问')
+				return;
+			}
+
 //      	if(this.test){
 //             	this.$router.push({ path: '/index'});
 //      		return
@@ -165,7 +171,45 @@ export default {
 				return false;
 			}
        	},
-    },
+		
+
+		
+		IEVersion() {
+			var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+			var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+			var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+			var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+			if(isIE) {
+				var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+				reIE.test(userAgent);
+				var fIEVersion = parseFloat(RegExp["$1"]);
+				if(fIEVersion == 7) {
+					return 7;
+				} else if(fIEVersion == 8) {
+					return 8;
+				} else if(fIEVersion == 9) {
+					return 9;
+				} else if(fIEVersion == 10) {
+					return 10;
+				} else {
+					return 6;//IE版本<=7
+				}   
+			} else if(isEdge) {
+				return 'edge';//edge
+			} else if(isIE11) {
+				return 11; //IE11  
+			}else{
+				return -1;//不是ie浏览器
+			}
+		}
+		
+		
+
+
+
+
+
+	},
     data() {
         return {
         	test:true,
@@ -180,8 +224,26 @@ export default {
                 password:"",
                 number:"",
             },
-            errorMessage:"",
+			errorMessage:"",
+			intercept : true,
         }
-    }
+	},
+	mounted(){
+		
+		var sys = this.IEVersion();
+		console.log(sys);
+		if(sys !== -1){
+			this.intercept = false; 
+			alert('您的浏览器内核版本过低，有潜在安全风险！建议更换其他浏览器进行访问')
+		}
+		// -1	Number	 不是ie浏览器
+		// 6	Number	ie版本<=6
+		// 7	Number	ie7
+		// 8	Number	ie8
+		// 9	Number	ie9
+		// 10	Number	ie10
+		// 11	Number	ie11
+		// ‘edge’	String	ie的edge浏览器
+	}
 }
 </script>

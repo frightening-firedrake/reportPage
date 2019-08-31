@@ -1,31 +1,37 @@
 <template>
     <div class='listpagewrap dataCollection'>
+		<div class="number" v-if="datashow" > 	
+			<div  class="box" v-for="(item,index) in numDataBg" :key="index" :style="{backgroundImage:'url('+item.bg+')'}">
+				<p>{{numData[index].title}}</p>
+				<div>{{numData[index].num}}</div>
+			</div>
+		</div>
     	
     	<div class="rowL2">
     		
     		<div class="right">
     			<div class="chartWrap3">
-	    			<p class="title">
+	    			<!-- <p class="title">
 	    				<span>
 	    					扫黑除恶案件行业领域占比
 	    				</span>
-	    			</p>
+	    			</p> -->
 	    			<div class="chart3" id="chart3"></div>
     			</div>
     		</div>
     		<div class="left">
     			<div class="chartWrap1">
-					<p class="title">
+					<!-- <p class="title">
 	    				<span>扫黑除恶案件数量质量统计表</span>
-	    			</p>
+	    			</p> -->
 	    			<div class="chart1" id="chart1">
 	    				
 	    			</div>
     			</div>
     			<div class="chartWrap2">
-					<p class="title">
+					<!-- <p class="title">
 	    				<span>扫黑除恶案件行业领域统计表</span>
-	    			</p>
+	    			</p> -->
 	    			<div class="chart2" id="chart2">
 	    				
 	    			</div>
@@ -42,21 +48,53 @@
 	/*border-top:1px solid rgba(0,0,0,0);*/
 	/*background-color:rgba(241, 241, 241, 1);*/
 	background:#fdfdfd;
-	border-top:0.4rem solid rgba(241, 241, 241, 1);
+	border-top:0.1rem solid rgba(241, 241, 241, 1);
 	height:100%;
 	/*padding-bottom:0.2rem;*/
+	
+}
+.number{
+	height: 20%;
+	padding-top:20px ;
+	padding-bottom:11px; 
+	display: flex;
+	 justify-content:center
+}
+.number .box{
+	height: 100%;
+	width: 19%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	
+}
+.number .box p{
+	margin:.2rem .2rem 0; 
+	font-size: .17rem ;
+	color: #ffffff;
+
+}
+.number .box div{
+	margin-left:.2rem ; 
+	font-size: .5rem ;
+	color: #ffffff;
+
 }
 
 .dataCollection .rowL2{
 	padding-top:0.25rem;
 	width:auto;
-	height:100%;
+	height:80%;
+	border-radius: 30px;
 }
 .dataCollection .rowL2 .right{
 	float:right;
 	height:100%;
 	width:32%;
 	padding-right:0.25rem;
+	
+}
+.chartWrap3{
+	border-top: 1px solid  #e4ebf1;
 }
 .dataCollection .rowL2 .right .chart3{
 	padding-top:0.5rem;
@@ -76,6 +114,11 @@
 	overflow: hidden;
 	padding:0 0.25rem;
 }
+
+
+.dataCollection .rowL2 .left .chartWrap1{
+	border-top: solid 1px #e4ebf1;
+}
 .dataCollection .rowL2 .left .chart1{
 	padding-top:0.5rem;
 	border-left:solid 1px #e4ebf1;
@@ -86,7 +129,8 @@
 	min-height:100%;
 }
 .dataCollection .rowL2 .left .chart2{
-	padding-top:0.5rem;
+	/* padding-top:0.5rem; */
+	border-top:solid 1px #e4ebf1;
 	border-left:solid 1px #e4ebf1;
 	border-right:solid 1px #e4ebf1;
 	border-bottom:solid 1px #e4ebf1;
@@ -176,13 +220,22 @@ export default {
   created(){
 //  获取列表数据（第一页）
 	if(this.userId==1){
-		this.datalistURL1=this.apiRoot + 'information/findSumAndValidAll';
-  		this.datalistURL2=this.apiRoot + 'information/findAllInformerTypeAll';
+		// this.datalistURL1=this.apiRoot + 'information/findSumAndValidAll';
+		this.datalistURL2=this.apiRoot + 'information/findAllInformerTypeAll';
+		this.datalistURL3=this.apiRoot + '/information/findNumAll';
+		this.datalistURL4=this.apiRoot + '/information/findAllRegionNum';
+		this.datalistURL5=this.apiRoot + '/information/findRegionNum';
+
 	}else{			
-		this.datalistURL1=this.apiRoot + 'information/findSumAndValid';
-  		this.datalistURL2=this.apiRoot + 'information/findAllInformerType';
+		// this.datalistURL1=this.apiRoot + 'information/findSumAndValid';
+		this.datalistURL2=this.apiRoot + 'information/findAllInformerType';
+		this.datalistURL3= this.apiRoot + '/information/findNum';
+		this.datalistURL4=this.apiRoot + '/information/findAllRegionNum';
+		this.datalistURL5=this.apiRoot + '/information/findRegionNum'
+
 	}
 	this.getlistdata()
+	this.gatbroken()
 	this.findAllInformerType()
   },
   destroy(){
@@ -204,7 +257,7 @@ export default {
   		}
 		this.$http({
 		    method: 'post',
-			url: this.datalistURL1,
+			url: this.datalistURL3,
 			transformRequest: [function (data) {
 				// Do whatever you want to transform the data
 				let ret = ''
@@ -216,21 +269,76 @@ export default {
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			data: data
 	    }).then(function (response) {
-	    	var arr_sum=[];
-	    	var arr_validNumber=[];
-	    	response.data.forEach((value)=>{
-	    		var obj_sum=[];
-	    		var obj_validNumber=[];
-	    		obj_sum[0]=value.createTime;
-	    		obj_sum[1]=value.sum;
-	    		obj_validNumber[0]=value.createTime;
-	    		obj_validNumber[1]=value.validNumber;
-	    		arr_sum.push(obj_sum);
-	    		arr_validNumber.push(obj_validNumber);
-	    	})
-			this.sum=arr_sum;
-      		this.validNumber=arr_validNumber;
-    		this.setChart1();
+			console.log(response);
+			console.log(response.data);
+			this.numData[0].num = response.data.pendingNumber;
+			this.numData[1].num = response.data.invalidNumber;
+			this.numData[2].num = response.data.validNumber;
+			this.numData[3].num = response.data.probingNumber;
+			this.numData[4].num = response.data.endNumber;
+			this.annulus.forEach((item,index)=>{
+				item.sum = response.data.sum
+				console.log(item.sum)
+			})
+			let black = response.data.sum - response.data.pendingNumber - response.data.invalidNumber;
+			this.annulus[0]['value'] = black;
+			this.annulus[1]['value'] = response.data.invalidNumber;
+			this.annulus[2]['value'] = response.data.validNumber;
+			this.annulus[3]['value'] = response.data.probingNumber;
+			this.annulus[4]['value'] = response.data.endNumber;
+			this.setChart2();
+	    	this.datashow = true;
+		}.bind(this)).catch(function (error) {
+		    console.log(error);
+		}.bind(this));
+	  },   
+	  gatbroken(){
+		var data={}
+  		if(this.userId!==1){
+  			data.userId=this.userId
+		  }
+		this.$http({
+		    method: 'post',
+			url: this.datalistURL4,
+			transformRequest: [function (data) {
+				// Do whatever you want to transform the data
+				let ret = ''
+				for (let it in data) {
+				ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+				}
+				return ret
+			}],
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			data: data
+	    }).then(function (response) {
+			// reportSum : [20, 12, 11, 14, 9, 20, 10,15,5,23,5],
+			// Black : [8, 5, 30, 18, 15, 20, 9, 15, 12, 3, 20],
+			console.log("这是第一个");
+			this.reportSum=this.cityName(response.data);
+			this.setChart1();
+	    	
+		}.bind(this)).catch(function (error) {
+		    console.log(error);
+		}.bind(this));
+		this.$http({
+		    method: 'post',
+			url: this.datalistURL5,
+			transformRequest: [function (data) {
+				// Do whatever you want to transform the data
+				let ret = ''
+				for (let it in data) {
+				ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+				}
+				return ret
+			}],
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			data: data
+	    }).then(function (response) {
+			console.log("这是第二个");
+			console.log(response.data);
+			this.Black=this.cityName(response.data);
+			this.setChart1();
+	    	
 		}.bind(this)).catch(function (error) {
 		    console.log(error);
 		}.bind(this));
@@ -273,275 +381,235 @@ export default {
 	    	this.industryData[15].value=response.data.KHZRNumber;	    	
 	    	this.industryData[16].value=response.data.WLWXNumber;	    	
 	    	
-	    	this.setChart2();
+	    	// this.setChart2();
     		this.setChart3();
 		}.bind(this)).catch(function (error) {
 		    console.log(error);
 		}.bind(this));
-  	},
+	  },
+	cityName(obj){
+		let newObj = [];
+		let city = ['TaiyuanNumber','DatongNumber','XinzhouNumber','LinfenNumber','YangquanNumber','ChangzhiNumber','JinchengNumber','ShuozhouNumber','JinzhongNumber','LvliangNumber','YunchengNumber']
+		for(let item in city){
+			newObj.push( parseInt(obj[city[item]] ) )
+		}
+		console.log(newObj)
+		return newObj
+	},
 	setChart1() {
-	    let myChart = echarts.init(document.getElementById('chart1'))
-	    var lastdata=this.sum[this.sum.length-1][0]
-	    var dataNow=new Date();//今天
-	    var dataLast=new Date(lastdata);//数据最后一天
-		var oneDay = 24 * 3600 * 1000;//一天毫秒
-//		var datastart = new Date(dataNow-oneDay*7);//默认最后7天
-		var datastart = new Date(dataLast-oneDay*7);//默认最后7天
-	    myChart.setOption({
-	        title: {
-		        text: '扫黑除恶案件数量质量统计表',
-		        show:false,
-		    },
-		    color:['#2474bd','#dba85b'],
-		    tooltip: {
-		        trigger: 'axis',
-		        backgroundColor:'#ffffff',
-		        extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);',
-//		        alwaysShowContent:true,
-		        textStyle:{
-		        	color:'#333'
-		        },
-		        formatter: function (params) {
-		        	var str2="<div><p><span style='color:#333;'>"+params[0].data[0]+"</span></p><p>&nbsp;&nbsp;&nbsp;总数：<span style='color:"+params[0].color+";'>"+params[0].data[1]+"起</span></p><p>有效数：<span style='color:"+params[1].color+";'>"+params[1].data[1]+"起</span></p><p>有效率：<span style='color:#2abb03;'>"+Math.round(params[1].data[1]/params[0].data[1]*100)+"%</span></p><p style='text-align:center;'><span style='color:#333;'>"+params[0].name+"</span></p></div>";
-		            return str2;
-		        },
-		        padding:[5,10,5,10],
-		    },
-		    legend: {
-		    	top:20,
-//		    	bottom:25,
-		        data:['扫黑除恶接警总数','扫黑除恶接警有效数']
-		    },
-		    grid: {
-//		        left: '80',
-//		        right: '85',
-//		     	bottom: '80',
-		     	left: '100',
-		        right: '105',
-		     	bottom: '80',
-//		      	containLabel: true
-		    },
-		    toolbox: {
-		    	orient:'vertical',
-		        feature: {
-		            mark: {show: true},
-		            dataView: {
-		            	show: true,
-		            	readOnly: false,
-		            	optionToContent: function(opt) {
-						    var axisData = opt.series[0].data;
-						    var series = opt.series;
-						    var table = '<table style="width:100%;text-align:center"><tbody><tr>'
-						                 + '<td>时间</td>'
-						                 + '<td>' + series[0].name + '</td>'
-						                 + '<td>' + series[1].name + '</td>'
-						                 + '<td>有效率</td>'
-						                 + '</tr>';
-						    for (var i = 0, l = axisData.length; i < l; i++) {
-						        table += '<tr>'
-						                 + '<td>' + axisData[i][0] + '</td>'
-						                 + '<td>' + series[0].data[i][1] + '起</td>'
-						                 + '<td>' + series[1].data[i][1] + '起</td>'
-						                 + '<td>' + Math.round(series[1].data[i][1]/series[0].data[i][1]*100) + '%</td>'
-						                 + '</tr>';
-						    }
-						    table += '</tbody></table>';
-						    return table;
-						},
-						contentToOption:function(a,b){
-//							console.log(a,b)
-						},
-		            },
-//		            magicType: {show: true, type: ['line', 'bar','tiled']},
-//		            magicType: {show: true, 
-//		            	type: ['line', 'bar',]
-//		            },
-		            restore: {show: true},
-		            saveAsImage: {show: true}
-		        },
-//		        itemGap:20, 
-//		        top:50,
-//		        right:30,
-		        itemGap:20, 
-		        top:15,
-		        right:30,
-		    },
-		    xAxis: {
-		    	type: 'time',
-//		        boundaryGap: false,
-//		        boundaryGap: [3600 * 24 * 1000, 3600 * 24 * 1000],
-//		        min:'dataMin',
-//				min: function(value) {
-//				    return value.min - 3600 * 24 * 1000;
-//				},
-//				max: function(value) {
-//				    return value.max + 3600 * 24 * 1000;
-//				},
-				minInterval: 3600 * 24 * 1000,
-		        axisLabel:{
-			        formatter: function (value, index) {
-			        	var date = new Date(value);
-		    			var time=date.getFullYear()+'年\n'+(date.getMonth() + 1)+'月'+date.getDate()+'日';
-					    return time;
-					},		        	
-		        },
-		    },
-		    yAxis: {
-		        type: 'value'
-		    },
-		    dataZoom: [
-		    	{
-			        type: 'inside',
-			        start: 0,
-//			        startValue:datastart,
-			        end: 100,
-//			        minValueSpan:3600 * 24 * 1000 * 7,
-			    }, 
-			    {
-			        start: 0,
-			        end: 10,
-			        handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
-			        handleSize: '80%',
-			        handleStyle: {
-			            color: '#fff',
-			            shadowBlur: 3,
-			            shadowColor: 'rgba(0, 0, 0, 0.6)',
-			            shadowOffsetX: 2,
-			            shadowOffsetY: 2
-			        },
-			        labelFormatter: function (value) {
-					    var date = new Date(value);
-		    			var time=date.getFullYear()+'年\n'+(date.getMonth() + 1)+'月'+date.getDate()+'日';
-					    return time;
+		let myChart=echarts.init(document.getElementById('chart1'));
+
+		let city=this.city;
+		let option = {
+			title: {
+				text: '扫黑除恶案件地域分布',
+				x:'center',
+				show:true,
+				top : '0',
+				textStyle: {
+                    fontWeight: '500',
+					fontSize: '16',
+                },
+			},
+			legend: {
+				data:['举报总数','黑恶案件'],
+				x: 'right'
+			},
+			tooltip: {
+				trigger: 'axis',
+				backgroundColor:'#fff',
+				padding:[13,18,13,18],
+				textStyle:{
+					color:'#333'
+				},
+				extraCssText: 'box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);'
+			},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			
+			xAxis: {
+				type: 'category',
+				boundaryGap: false,
+				data: city,
+				// axisLine: {
+				// 	show: true
+				// },
+				splitLine: {
+					show: true
+				},
+				axisTick: {
+					show: true,
+					alignWithLabel: true,
+					lineStyle: {
+						type: 'solid',
+						color: '#ccc'
 					}
-		    	}
-			],
-		    series: [
-		        {
-		            name:'扫黑除恶接警总数',
-		            type:'line',
-		            data:this.sum
-		        },
-		        {
-		            name:'扫黑除恶接警有效数',
-		            type:'line',
-		            data:this.validNumber
-		        },
-		       
-		    ]
-		});	    
+				},
+			},
+			yAxis: {
+				name:"案件/起",
+				axisLine: {
+					show: true
+				},
+				splitLine: {
+					show: true,
+					lineStyle: {
+						type: 'solid',
+						color: '#ccc'
+					}
+				},
+				// 下标刻度
+				axisTick: {
+					show: true,
+					lineStyle: {
+						type: 'solid',
+						color: '#ccc'
+					}
+				}
+			},
+			series: [
+				{
+					name:'举报总数',
+					type:'line',
+					// stack: '总量',
+					data:this.reportSum,
+					symbol:'circle',
+					// symbolSize : 10,
+					lineStyle: {
+						normal: {
+							color: '#2474bd',
+							width : 1
+						}	
+					},
+					itemStyle: {
+						normal : {
+							color: '#2474bd',
+							borderWidth: 5,
+							borderColor: '#2474bd',
+						}
+					},
+				},
+				{
+					name:'黑恶案件',
+					type:'line',
+					symbol:'circle',
+					// stack: '总量',
+					data:this.Black,
+
+					lineStyle: {
+						normal:{
+							width : 1,
+							color: '#d6a85d',
+						}
+						
+					},
+					itemStyle: {
+						normal : {
+							color: '#d6a85d',
+							borderWidth: 5,
+							borderColor: '#d6a85d'
+						},
+
+						}
+						
+				},
+        ]
+
+
+		};
+
+
+		myChart.setOption(option);
+			
 	},
 setChart2() {
-	    let myChart = echarts.init(document.getElementById('chart2'))
-		var xAxisData=this.industryData.map((item)=>{
-	    	return item.name
-	    })
-//	    var xAxisData=['国家政治安全', '黄赌毒', '欺行霸市', '基层政治', '征地拆迁', '插手民间纠纷', '宗族势力村霸', '非法高利放贷、暴力讨债', '建设工程运输、矿产、渔业', '境外黑社会']
-//	    var xAxisData=['国家政治\n安全', '基层政治', '宗族势力\n村霸', '征地拆迁', '建设工程\n运输、矿\n产、渔业', '欺行霸市', '黄赌毒', '非法高利\n放贷、暴\n力讨债', '插手民间\n纠纷', '境外黑\n社会','盗掘古墓\n走私文物','黑恶势力\n保护伞','垄断经营\n逃税漏税\n敲诈勒索','以经济发\n展、志愿\n慈善捐款\n为幌子从\n事非法活\n动','以公司\n合作社等\n形式\n掩盖违法\n犯罪行为','恐吓滋扰\n聚众造势\n等软暴力','网络威胁\n恐吓侮辱\n诽谤滋扰']
-	    var color=this.color
-		var data=this.industryData
-	    myChart.setOption({
-	        title: {
-		        text: '扫黑除恶案件数量质量统计表',
-		        show:false,
-		    },
-		    tooltip: {
-		    	show:true,
-//		    	trigger: 'axis',
-		        backgroundColor:'#ffffff',
-		        extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);',
-//		        alwaysShowContent:true,
-		        textStyle:{
-		        	color:'#333',
-		        	fontSize:13, 
-		        },
-		    	
-		    },
-		    legend: {
-		    	show:false,
-//		    	top:25,
-//		    	bottom:25,
-//		        data:['扫黑除恶接警总数','扫黑除恶接警有效数']
-		    },
-		    grid: {
-		    	top:'15',
-		        left: '80',
-		        right: '85',
-//		     	bottom: '45',
-		     	bottom: '10',
-		//      containLabel: true
-		    },
-		    toolbox: {
-		    	orient:'vertical',
-		    	show:true,
-		        feature: {
-		            mark: {show: true},
-		            saveAsImage: {show: true}
-		        },
-		        itemGap:20, 
-		        top:15,
-		        right:30,
-		    },
-		    xAxis: {
-		    	type: 'category',
-		    	show: false,
-//		        boundaryGap: false,
-				axisTick:{
-					show:false,
-				},
-		        axisLabel:{
-		        	align:'center',
-		        	rotate:80,
-		        	interval:0,
-			        formatter: function (value, index) {
-			        	var str='';
-			        	var arr=value.split('')
-			        	for (var i=0;i<arr.length;i++){
-			        		if((i!==0)&&(i%3==0)){
-//			        			console.log(i)
-			        			str+=value[i]+"\n"
-			        		}else{
-			        			str+=value[i];
-			        		}
-			        	}
-//					    return str;
-					    return value;
-					},		        	
-		        },
-		        data: xAxisData
-		    },
-		    yAxis: {
-		        type: 'value'
-		    },
-		    
-		    series: [
-		        {
-		        	type:'bar',
-		        	name:'扫黑除恶案件数量质量统计表',
-		        	label: {
-			        	normal:{					        		
-				        	show:true,
-				        	formatter :function(params){
-				        		var value=params.value!=0?params.value:'';
-				        		return value
-				        	},
-				        	position:'top',
-				        	distance :5,
-				        	color:'#333333',
-				        	align:'center',
-			        	}
-			        },
-			        itemStyle:{
-			        	normal:{					        		
-			        		color:function(params){
-			        			return color[params.dataIndex]
-			        		},
-			        	}
-			       	},
-		            data:data,
-		        },
-		    ]
-		});
+		let myChart = echarts.init(document.getElementById('chart2'));
+		var data = this.annulus
+		console.log('数据构建完成')
+		
+    var titleArr= [], seriesArr=[];
+    var  colors=[['#d844d8', '#cacbcd'],['#e13d3e', '#cacbcd'],['#297ad5', '#cacbcd'], ['#20c26c', '#cacbcd'],['#20b8dd', '#cacbcd']]
+    data.forEach(function(item, index){
+        titleArr.push(
+            {
+                text:item.name,
+                left: index * 20 + 10 +'%',
+                top: '80%',
+                textAlign: 'center',
+                textStyle: {
+                    fontWeight: 'normal',
+                    fontSize: '12',
+                    // color: colors[index][0],
+                    textAlign: 'center',
+                },
+            }        
+        );
+        seriesArr.push(
+            {
+                name: item.name,
+                type: 'pie',
+                clockWise: false,
+                radius: [40, 50],
+                itemStyle:  {
+                    normal: {
+                        color: colors[index][0],
+                        shadowColor: colors[index][0],
+                        shadowBlur: 0,
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                    }
+                },
+                hoverAnimation: false,
+                center: [index * 20 + 10 +'%', '50%'],
+                data: [{
+                    value: item.value,
+                    label: {
+                        normal: {
+                            // formatter: function(params){
+							// 	console.log(params);
+                            //     return params.value     +'%';
+							// },
+							
+							 formatter: ((item.value/item.sum*100).toFixed(1))+ '%',
+                            position: 'center',
+                            show: true,
+                            textStyle: {
+                                fontSize: '20',
+                                fontWeight: 'bold',
+                                color: colors[index][0]
+                            }
+                        }
+                    },
+                }, {
+                    value: item.sum-item.value,
+                    name: 'invisible',
+                    itemStyle: {
+                        normal: {
+                            color: colors[index][1]
+                        },
+                        emphasis: {
+                            color: colors[index][1]
+                        }
+                    }
+                }]
+            }    
+        )
+	});
+	console.log('zoudao zhe li l ')
+	myChart.setOption({
+		title:titleArr,
+
+		series: seriesArr
+	})
+   
 	},
 	
 	setChart3() {
@@ -553,8 +621,14 @@ setChart2() {
 		var data=this.industryData
 	    myChart.setOption({
 	        title : {
-		        text: '扫黑除恶案件行业领域占比',
-		        show:false
+				text: '扫黑除恶案件行业领域占比',
+				left: 'center',
+				show:true,
+				top : '4%',
+				textStyle: {
+                    fontWeight: '500',
+                    fontSize: '16',
+                },
 		    },
 		    color:this.color,
 			tooltip : {
@@ -564,17 +638,18 @@ setChart2() {
 //		        alwaysShowContent:true,
 		        textStyle:{
 		        	color:'#333',
-		        	fontSize:13, 
+		        	fontSize:12, 
 		        },
 //		        trigger: 'item',
 		        formatter: "{a} <br/>{b} : {d}%"
 //		        formatter: function (params) {
 //					console.log(params)
 //		        }
-		    },
+			},
+			// 文字部分
 		    legend: {
 //		        orient: 'vertical',
-//		        top: '50%',
+		        top: '45%',
 		        bottom: 0,
 		        left: 0,
 		        right: 0,
@@ -587,7 +662,8 @@ setChart2() {
 					return name
 //				    return "\t"+name+"\t\t\t\t36%";
 				}
-		    },
+			},
+			// 下载图片
 		    toolbox: {
 		    	orient:'vertical',
 		    	show:true,
@@ -604,15 +680,10 @@ setChart2() {
 		            name: '扫黑除恶案件行业领域占比',
 		            type: 'pie',
 //		            stillShowZeroSum:false, 
-		            radius : '55%',
-		            center: ['50%', '32%'],
-//		            selectedMode :'single',
-		            
+		            radius : '40%',
+		            center: ['50%', '25%'],
+//		            selectedMode :'single',     
 					label: {
-
-
-
-
 			        	normal:{					        		
 				        	show:false,
 				        	position :'outside',
@@ -669,8 +740,54 @@ setChart2() {
 		    {value : 0,name:'恐吓、滋扰、聚众造势等软暴力'},
 		    {value : 0,name:'网络威胁、恐吓、侮辱诽谤、滋扰'},
         ],
-    	datalistURL1: this.apiRoot + 'information/findSumAndValid',
-      	datalistURL2: this.apiRoot + 'information/findAllInformerType',
+		datalistURL1: this.apiRoot + 'information/findSumAndValid',
+		datalistURL2: this.apiRoot + 'information/findAllInformerType',
+		datalistURL3: this.apiRoot + '/information/findNum',
+
+
+		
+		numDataBg : [
+			{bg :'static/images/data/databg1.png',  },   
+			{bg :'static/images/data/databg2.png',  },   
+			{bg :'static/images/data/databg3.png',  },   
+			{bg :'static/images/data/databg4.png',  },   
+			{bg :'static/images/data/databg5.png', },   
+		],
+		numData : [
+			{title : '待审核的案件/起',num : '0'},
+			{title : '未立案的案件/起',num : '0'},
+			{title : '已接案的案件/起',num : '0'},
+			{title : '侦办中的案件/起',num : '0'},
+			{title : '已结案的案件/起',num : '0'}
+		],
+		city: ['太原', '大同', '忻州', '临汾', '阳泉', '长治', '晋城', '朔州', '晋中', '吕梁', '运城'],
+		reportSum : [20, 12, 11, 14, 9, 20, 10,15,5,23,5],
+		Black : [8, 5, 30, 18, 15, 20, 9, 15, 12, 3, 20],
+		annulus:[
+			{
+				name: '黑恶势力占比',
+				value: 30,
+				sum :900
+			},{
+				name: '未立案案件占比',
+				value: 44,
+				sum :100
+			},{
+				name: '已接案案件占比',
+				value: 35,
+				sum :100
+			},{
+				name: '侦办中案件占比',
+				value: 30,
+				sum :100
+			},{
+				name: '已结案案件占比',
+				value: 20,
+				sum :1000
+			},
+		],
+		datashow : false
+
     }
   }
 }

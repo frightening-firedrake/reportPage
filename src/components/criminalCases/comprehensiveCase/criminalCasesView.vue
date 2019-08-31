@@ -138,7 +138,7 @@ export default {
 			}
 	    }).then(function (response) {
 //	    console.log(response.data)
-	    	this.formdatas.form.threadArea=response.data.information.threadArea//线报地域
+	    	this.formdatas.form.threadArea=response.data.information.tipRegion//线报地域
 	    	this.formdatas.form.clueAddress=response.data.information.clueAddress//线报详址
 	    	this.formdatas.form.industryField=response.data.information.industryField//行业领域
 	    	this.formdatas.form.informType=response.data.information.informType//举报类别

@@ -470,7 +470,7 @@ export default {
 //		this.getRegionAll()
     },
     mounted: function() {
-//		console.log(this.formdatas)
+		console.log(this.formdatas)
     },
     computed:{
 		...mapState(["industryFieldList","informTypeList"]),

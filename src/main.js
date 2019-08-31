@@ -1,4 +1,4 @@
-﻿import Vue from 'vue'
+import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
@@ -18,10 +18,12 @@ Vue.use(VideoPlayer)
 Vue.use(ElementUI);
 //温馨提示注意同步修改ueditor.config.js
 Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
+// Vue.prototype.apiRoot = 'http://192.168.1.215:8085/reportingSystem/'
 
+// Vue.prototype.apiRoot = 'http://192.168.1.244:8085/reportingSystem/'
 //Vue.prototype.apiRoot = 'http://192.168.1.41:8085/reportingSystem/'//
 // Vue.prototype.apiRoot = 'http://192.168.1.244:8085/reportingSystem/'//kun
-
+// Vue.prototype.apiRoot = 'http://192.168.1.41:8085/reportingSystem/'
 //axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 //axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'
 //axios.defaults.withCredentials=true;
