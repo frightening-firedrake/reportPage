@@ -59,7 +59,7 @@ const routes = [{
     {
         path: '/index',
         component: Layout,
-        redirect: '/index/home',
+        // redirect: '/index/home',
         children: [{
                 path: "home",
                 name: '首页',

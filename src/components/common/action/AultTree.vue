@@ -101,6 +101,7 @@ export default {
 //  	由于异步的原因监控数据加载完成时点
 		treeDataReady(){      	
 	      	if(this.tree.data.length){
+				  console.log(this.tree.data);
 	      		this.finddisablecheckkey(this.tree.data)
 	      		this.finddisablecheckedid(this.tree.data);
 	      		this.finddefaultcheckkey(this.tree.data);

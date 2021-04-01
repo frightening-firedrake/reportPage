@@ -108,7 +108,8 @@ import { mapState,mapMutations,mapGetters,mapActions} from 'vuex';
     		}
 	    },
 	    getBreadcrumbHistory(){
-	    	var name=this.$route.name;
+			var name=this.$route.name;
+			console.log(name);
 	    	var fullPath=this.$route.fullPath;
 	    	var res=name.match(/\//g).length;
 	    	var payload={};

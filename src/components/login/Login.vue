@@ -128,6 +128,7 @@ export default {
                 captcha:this.captchaId,
 			}
 	        }).then(function (response) {
+				console.log(response);
                	if(response.data.success == true) {
                		var payload={};
                		payload.libraryId=response.data.user.libraryId;
@@ -142,7 +143,7 @@ export default {
 //             		payload.userRole=response.data.user.userRole;
 //             		payload.userAuth='InformationManagement,AuthorityManagement';//grainDepot
                		this.setUserInfo(payload)
-                   	this.$router.push({ path: '/index'});
+                   	this.$router.push({ path: '/index/home'});
                	}else if(response.data.success == false){
                     this.loginError=true;
             		this.errorMessage=response.data.code+'!';    

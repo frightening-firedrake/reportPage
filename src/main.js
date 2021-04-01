@@ -17,7 +17,9 @@ Vue.use(VideoPlayer)
 
 Vue.use(ElementUI);
 //温馨提示注意同步修改ueditor.config.js
-Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
+// Vue.prototype.apiRoot = 'https://report.ityyedu.com/reportingSystem/'
+Vue.prototype.apiRoot = 'http://report.ityyedu.com/reportingSystem/'
+
 // Vue.prototype.apiRoot = 'http://192.168.1.215:8085/reportingSystem/'
 
 // Vue.prototype.apiRoot = 'http://192.168.1.244:8085/reportingSystem/'
