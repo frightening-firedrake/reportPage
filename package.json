@@ -19,7 +19,7 @@
     "babel-runtime": "^6.26.0",
     "echarts": "^3.8.5",
     "element-ui": "^2.3.6",
-    "eventsource": "^1.0.7",
+    "eventsource": "^2.0.2",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
     "vue": "^2.5.2",
